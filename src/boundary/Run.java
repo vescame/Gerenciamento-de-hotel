@@ -239,9 +239,9 @@ public class Run extends Application implements EventHandler<ActionEvent> {
 			if (c != null) {
 				clienteToBondary(c);
 			}
-			/*for (Cliente c : clientes) {
-				if (c.getCodigo() == Integer.parseInt((this.txtCodCli.getText()))) {
-					clienteToBondary(c);
+			/*for (Cliente cli : clientes) {
+				if (cli.getCodigo() == Integer.parseInt((this.txtCodCli.getText()))) {
+					clienteToBondary(cli);
 				}
 			}*/
 		}
@@ -272,6 +272,7 @@ public class Run extends Application implements EventHandler<ActionEvent> {
 							System.out.println("Preencha todos os campos possiveis");
 						}
 					}
+					limparCamposCliente();
 				}
 			}
 		});
