@@ -8,9 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -28,29 +26,29 @@ import java.util.Date;
 import java.util.List;
 
 public class Run extends Application implements EventHandler<ActionEvent>{
-    private ObservableList<String> tamanhos = FXCollections.observableArrayList("Pequeno", "Medio", "Grande");
+    private final ObservableList<String> tamanhos = FXCollections.observableArrayList("Pequeno", "Medio", "Grande");
 
     /* cliente */
-    private List<Cliente> clientes = new ArrayList<>();
-    private TextField txtCodCli = new TextField();
-    private TextField txtNomeCli = new TextField();
-    private TextField txtSobrenomeCli = new TextField();
-    private TextField txtSexoCli = new TextField();
-    private TextField txtDataCadCli = new TextField();
-    private Button btnBuscaCli = new Button("Buscar cliente");
+    private final List<Cliente> clientes = new ArrayList<>();
+    private final TextField txtCodCli = new TextField();
+    private final TextField txtNomeCli = new TextField();
+    private final TextField txtSobrenomeCli = new TextField();
+    private final TextField txtSexoCli = new TextField();
+    private final TextField txtDataCadCli = new TextField();
+    private final Button btnBuscaCli = new Button("Buscar cliente");
 
     /* quarto */
-    private TextField txtCodQuarto = new TextField();
-    private TextField txtPrecoQuarto = new TextField();
-    private ComboBox<String> cmbTamanhoQuarto = new ComboBox<String>(tamanhos);
-    private TextField txtDatCheckInQuarto = new TextField();
-    private Button btnChkInQuarto = new Button("Check In");
-    private Button btnChkOutQuarto = new Button("Check Out");
+    private final TextField txtCodQuarto = new TextField();
+    private final TextField txtPrecoQuarto = new TextField();
+    private final ComboBox<String> cmbTamanhoQuarto = new ComboBox<>(tamanhos);
+    private final TextField txtDatCheckInQuarto = new TextField();
+    private final Button btnChkInQuarto = new Button("Check In");
+    private final Button btnChkOutQuarto = new Button("Check Out");
 
-    private List<Quarto> quartosEmCheckIn = new ArrayList<>();
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private final List<Quarto> quartosEmCheckIn = new ArrayList<>();
+    private final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         // Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Cliente c = new Cliente();
         c.setCodigo(0);
@@ -104,12 +102,9 @@ public class Run extends Application implements EventHandler<ActionEvent>{
         stage.setTitle("Gestão de Pizzas");
         stage.setResizable(false);
         stage.show();
-        stage.onCloseRequestProperty().set(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                if (event.getEventType().equals(WindowEvent.WINDOW_CLOSE_REQUEST)) {
-                    System.exit(0);
-                }
+        stage.onCloseRequestProperty().set(event -> {
+            if (event.getEventType().equals(WindowEvent.WINDOW_CLOSE_REQUEST)) {
+                System.exit(0);
             }
         });
     }
@@ -138,7 +133,7 @@ public class Run extends Application implements EventHandler<ActionEvent>{
         }
     }
 
-    public void mostrarTelaCliente() {
+    private void mostrarTelaCliente() {
         Stage stgCli = stageCliente();
         stgCli.setResizable(false);
         stgCli.show();
@@ -166,7 +161,7 @@ public class Run extends Application implements EventHandler<ActionEvent>{
         txtNomeCli.setText(c.getNome());
         txtSobrenomeCli.setText(c.getSobrenome());
         txtSexoCli.setText(String.valueOf(c.getSexo()));
-        txtDataCadCli.setText(String.valueOf(new SimpleDateFormat("dd/MM/yyyy").format(c.getDataCadastro())));
+        txtDataCadCli.setText(new SimpleDateFormat("dd/MM/yyyy").format(c.getDataCadastro()));
     }
 
     private void limparCamposCliente() {
@@ -226,9 +221,7 @@ public class Run extends Application implements EventHandler<ActionEvent>{
                 q.setDataCheckIn(d);
             }
 
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (NumberFormatException | ParseException e) {
             e.printStackTrace();
         }
         return q;
@@ -249,44 +242,33 @@ public class Run extends Application implements EventHandler<ActionEvent>{
 			}*/
         }
         Button btnOk = new Button("OK");
-        btnOk.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                    boolean clienteNaoExiste = false;
-                    Cliente cliente = buscarCliente(Integer.parseInt((txtCodCli.getText())));
-                    if (cliente == null) {
-                        clienteNaoExiste = true;
-                    } else {
-                        System.out.println("Insira outro codigo, esse ja existe.");
-                        return;
-                    }
-					/*for (Cliente c : clientes) {
-						if (c.getCodigo() == Integer.parseInt((txtCodCli.getText()))) {
-							clienteExiste = true;
-						}
-					}*/
-                    if (clienteNaoExiste) {
-                        if (!txtNomeCli.getText().equals("") && !txtSobrenomeCli.getText().equals("")
-                                && !txtSexoCli.getText().equals("")) {
-                            clientes.add(clienteCadastrado());
-                            stageCli.close();
-                        } else {
-                            System.out.println("Preencha todos os campos possiveis");
-                        }
-                    }
-                    limparCamposCliente();
+        btnOk.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                Cliente cliente = buscarCliente(Integer.parseInt((txtCodCli.getText())));
+                if (cliente != null) {
+                    System.out.println("Insira outro codigo, esse ja existe.");
+                    return;
                 }
+                /*for (Cliente c : clientes) {
+                    if (c.getCodigo() == Integer.parseInt((txtCodCli.getText()))) {
+                        clienteExiste = true;
+                    }
+                }*/
+                if (!txtNomeCli.getText().equals("") && !txtSobrenomeCli.getText().equals("")
+                        && !txtSexoCli.getText().equals("")) {
+                    clientes.add(clienteCadastrado());
+                    stageCli.close();
+                } else {
+                    System.out.println("Preencha todos os campos possiveis");
+                }
+                limparCamposCliente();
             }
         });
         Button btnSair = new Button("Sair");
-        btnSair.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                    limparCamposCliente();
-                    stageCli.close();
-                }
+        btnSair.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                limparCamposCliente();
+                stageCli.close();
             }
         });
         GridPane gridCli = new GridPane();
