@@ -1,9 +1,10 @@
-package entity;
+package com.fatec.gerenciamentohotel.entity;
 
 public class Quarto {
     private long id;
     private TipoDeQuarto tipoDeQuarto;
     private short andar;
+    private boolean status;
 
     public long getId() {
         return id;
@@ -27,6 +28,14 @@ public class Quarto {
 
     public void setAndar(short andar) {
         this.andar = andar;
+    }
+
+    public boolean getStatus() {
+        return this.status;
+    }
+
+    public void setStaus(boolean status) {
+        this.status = status;
     }
 
 }

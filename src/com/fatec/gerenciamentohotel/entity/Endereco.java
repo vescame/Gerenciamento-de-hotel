@@ -1,21 +1,11 @@
-package entity;
+package com.fatec.gerenciamentohotel.entity;
 
 public class Endereco {
-    private long id;
     private String cep;
-    private String numero;
     private String rua;
     private String bairro;
     private String cidade;
     private String uf;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getCep() {
         return cep;
@@ -23,14 +13,6 @@ public class Endereco {
 
     public void setCep(String cep) {
         this.cep = cep;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
     }
 
     public String getRua() {

@@ -1,12 +1,11 @@
-package entity;
+package com.fatec.gerenciamentohotel.entity;
 
 public class Hospede {
     private Endereco endereco;
     private long id;
     private String cpf;
     private String nome;
-    private String login;
-    private String senha;
+    private boolean status;
 
     public Endereco getEndereco() {
         return endereco;
@@ -32,20 +31,12 @@ public class Hospede {
         this.nome = nome;
     }
 
-    public String getLogin() {
-        return login;
+    public boolean getStatus() {
+        return this.status;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setStaus(boolean status) {
+        this.status = status;
     }
 
 }

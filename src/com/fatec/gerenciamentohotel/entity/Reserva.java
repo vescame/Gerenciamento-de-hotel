@@ -1,4 +1,4 @@
-package entity;
+package com.fatec.gerenciamentohotel.entity;
 
 import java.util.Date;
 
@@ -8,6 +8,7 @@ public class Reserva {
     private Date checkOut;
     private Hospede hospede;
     private Quarto quarto;
+    private String status;
 
     public long getId() {
         return id;
@@ -49,4 +50,11 @@ public class Reserva {
         this.quarto = quarto;
     }
 
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStaus(String status) {
+        this.status = status;
+    }
 }

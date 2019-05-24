@@ -1,4 +1,4 @@
-package entity;
+package com.fatec.gerenciamentohotel.entity;
 
 public class ItemServico {
     private long id;

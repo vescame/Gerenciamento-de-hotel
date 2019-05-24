@@ -1,4 +1,4 @@
-package entity;
+package com.fatec.gerenciamentohotel.entity;
 
 public class Funcionario {
     private EFuncionario tipoFuncionario;
@@ -11,6 +11,7 @@ public class Funcionario {
     private String nome;
     private String login;
     private String senha;
+    private boolean status;
 
     public long getId() {
         return id;
@@ -90,6 +91,14 @@ public class Funcionario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean getStatus() {
+        return this.status;
+    }
+
+    public void setStaus(boolean status) {
+        this.status = status;
     }
 
 }

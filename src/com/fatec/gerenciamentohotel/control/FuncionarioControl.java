@@ -1,12 +1,12 @@
-package controller;
+package com.fatec.gerenciamentohotel.control;
 
 import entity.Funcionario;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FuncionarioCtrl {
+public class FuncionarioControl {
     List<Funcionario> funcionarios = new ArrayList<>();
 
     public void insert(Funcionario f) {

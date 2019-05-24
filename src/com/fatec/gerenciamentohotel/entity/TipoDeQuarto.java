@@ -1,4 +1,4 @@
-package entity;
+package com.fatec.gerenciamentohotel.entity;
 
 public class TipoDeQuarto {
     private long id;
@@ -6,6 +6,7 @@ public class TipoDeQuarto {
     private float valorDiaria;
     private short quantidadeAdultos;
     private short quantidateCriacas;
+    private boolean status;
 
     public long getId() {
         return id;
@@ -47,4 +48,11 @@ public class TipoDeQuarto {
         this.quantidateCriacas = quantidateCriacas;
     }
 
+    public boolean getStatus() {
+        return this.status;
+    }
+
+    public void setStaus(boolean status) {
+        this.status = status;
+    }
 }
