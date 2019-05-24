@@ -9,10 +9,6 @@ import java.util.List;
 public class FuncionarioCtrl {
     List<Funcionario> funcionarios = new ArrayList<>();
 
-    public FuncionarioCtrl() {
-
-    }
-
     public void insert(Funcionario f) {
         if (f.getNome().isEmpty()){
             msgError("Nome vazio");
