@@ -1,7 +1,7 @@
 package boundary;
 
-import entity.Cliente;
-import entity.Quarto;
+import old.entity.Cliente;
+import old.entity.Quarto;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -235,11 +235,13 @@ public class Run extends Application implements EventHandler<ActionEvent>{
             if (c != null) {
                 clienteToBondary(c);
             }
-			/*for (Cliente cli : clientes) {
+			/*
+			for (Cliente cli : clientes) {
 				if (cli.getCodigo() == Integer.parseInt((this.txtCodCli.getText()))) {
 					clienteToBondary(cli);
 				}
-			}*/
+			}
+			*/
         }
         Button btnOk = new Button("OK");
         btnOk.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -249,11 +251,13 @@ public class Run extends Application implements EventHandler<ActionEvent>{
                     System.out.println("Insira outro codigo, esse ja existe.");
                     return;
                 }
-                /*for (Cliente c : clientes) {
+                /*
+                for (Cliente c : clientes) {
                     if (c.getCodigo() == Integer.parseInt((txtCodCli.getText()))) {
                         clienteExiste = true;
                     }
-                }*/
+                }
+                */
                 if (!txtNomeCli.getText().equals("") && !txtSobrenomeCli.getText().equals("")
                         && !txtSexoCli.getText().equals("")) {
                     clientes.add(clienteCadastrado());
