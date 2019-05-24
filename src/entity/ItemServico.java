@@ -5,6 +5,7 @@ public class ItemServico {
     private String descricao;
     private float valor;
     private boolean disponibilidade;
+    private int quantidade;
 
     public long getId() {
         return id;
@@ -45,7 +46,4 @@ public class ItemServico {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-
-    private int quantidade;
-
 }
