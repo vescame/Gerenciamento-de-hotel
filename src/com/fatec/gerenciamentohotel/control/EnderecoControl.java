@@ -11,23 +11,23 @@ public class EnderecoControl {
 	List<Endereco> enderecos = new ArrayList<>();
 	
 	public void insert(Endereco e) {
-		if(e.getCep().isEmpty()) {
+		if(e.getCep().trim().isEmpty()) {
 			msgError("Cep Vazio");
 			return ;
 		}
-		if(e.getRua().isEmpty()) {
+		if(e.getRua().trim().isEmpty()) {
 			msgError("Rua Vazia");
 			return ;
 		}
-		if(e.getBairro().isEmpty()) {
+		if(e.getBairro().trim().isEmpty()) {
 			msgError("Bairro Vazio");
 			return ;
 		}
-		if(e.getCidade().isEmpty()) {
+		if(e.getCidade().trim().isEmpty()) {
 			msgError("Cidade Vazia");
 			return ;
 		}
-		if(e.getUf().isEmpty()) {
+		if(e.getUf().trim().isEmpty()) {
 			msgError("UF Vazio");
 			return ;
 		}

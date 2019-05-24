@@ -10,19 +10,19 @@ public class FuncionarioControl {
     List<Funcionario> funcionarios = new ArrayList<>();
 
     public void insert(Funcionario f) {
-        if (f.getNome().isEmpty()){
+        if (f.getNome().trim().isEmpty()){
             msgError("Nome vazio");
             return ;
         }
-        if (f.getCelular().isEmpty()){
+        if (f.getCelular().trim().isEmpty()){
             msgError("Celular vazio");
             return ;
         }
-        if (f.getCpf().isEmpty()){
+        if (f.getCpf().trim().isEmpty()){
             msgError("Cpf vazio");
             return;
         }
-        if (f.getEmail().isEmpty()){
+        if (f.getEmail().trim().isEmpty()){
             msgError("Email vazio");
             return;
         }
@@ -30,7 +30,7 @@ public class FuncionarioControl {
             msgError("Endereco vazio");
             return;
         }
-        if (f.getTelefone().isEmpty()){
+        if (f.getTelefone().trim().isEmpty()){
             msgError("Telefone vazio");
             return;
         }
@@ -42,11 +42,11 @@ public class FuncionarioControl {
             msgError("Tipo funcionario vazio");
             return;
         }
-        if (f.getLogin().isEmpty()){
+        if (f.getLogin().trim().isEmpty()){
             msgError("Login vazio");
             return;
         }
-        if (f.getSenha().isEmpty()){
+        if (f.getSenha().trim().isEmpty()){
             msgError("Senha vazio");
             return;
         }

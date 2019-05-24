@@ -23,7 +23,7 @@ public class ItemServicoControl {
 			msgError("Valor Vazio");
 			return;
 		}
-		if(i.getDescricao().isEmpty()) {
+		if(i.getDescricao().trim().isEmpty()) {
 			msgError("Descricao Vazio");
 			return;
 		}

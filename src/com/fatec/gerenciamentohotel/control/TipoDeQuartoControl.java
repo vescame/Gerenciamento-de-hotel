@@ -15,7 +15,7 @@ public class TipoDeQuartoControl {
 			msgError("Id Vazio");
 			return ;
 		}
-		if(t.getTipo().isEmpty()) {
+		if(t.getTipo().trim().isEmpty()) {
 			msgError("Tipo Vazio");
 			return ;
 		}

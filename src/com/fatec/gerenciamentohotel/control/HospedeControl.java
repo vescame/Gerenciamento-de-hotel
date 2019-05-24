@@ -11,11 +11,11 @@ public class HospedeControl {
 	List<Hospede> hospedes = new ArrayList<>();
 	
 	public void insert(Hospede h) {
-		if(h.getNome().isEmpty()) {
+		if(h.getNome().trim().isEmpty()) {
 			msgError("Nome Vazio");
 			return;
 		}
-		if(h.getCpf().isEmpty()) {
+		if(h.getCpf().trim().isEmpty()) {
 			msgError("Cpf Vazio");
 			return;
 		}
