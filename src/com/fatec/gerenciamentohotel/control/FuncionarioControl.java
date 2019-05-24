@@ -1,6 +1,6 @@
 package com.fatec.gerenciamentohotel.control;
 
-import entity.Funcionario;
+import com.fatec.gerenciamentohotel.entity.Funcionario;
 
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
