@@ -1,25 +1,9 @@
 package com.fatec.gerenciamentohotel.entity;
 
-public class Funcionario {
+public class Funcionario extends Pessoa {
     private EFuncionario tipoFuncionario;
-    private Endereco endereco;
-    private long id;
-    private String telefone;
-    private String celular;
-    private String email;
-    private String cpf;
-    private String nome;
     private String login;
     private String senha;
-    private boolean status;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getLogin() {
         return login;
@@ -43,62 +27,6 @@ public class Funcionario {
 
     public void setTipoFuncionario(EFuncionario tipoFuncionario) {
         this.tipoFuncionario = tipoFuncionario;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public boolean getStatus() {
-        return this.status;
-    }
-
-    public void setStaus(boolean status) {
-        this.status = status;
     }
 
 }
