@@ -8,27 +8,29 @@ import javax.swing.JOptionPane;
 import com.fatec.gerenciamentohotel.entity.Quarto;
 
 public class QuartoControl {
-	List<Quarto> quartos = new ArrayList<>();
-	
-	public void insert(Quarto q) {
-		if(q.getId() == 0) {
-			msgError("Id Vazio");
-			return;
-		}
-		if(q.getAndar() == 0) {
-			msgError("N° do Andar Vazio");
-			return;
-		}
-		if(q.getTipoDeQuarto() == null) {
-			msgError("Tipo de Quarto Vazio");
-			return;
-		}
-		this.quartos.add(q);
-	}
-	private void msgError(String corpo){
-        JOptionPane.showMessageDialog(null, corpo, "ERRO",JOptionPane.ERROR_MESSAGE);
+    List<Quarto> quartos = new ArrayList<>();
+
+    public void insert(Quarto q) {
+        if (q.getId() == 0) {
+            msgError("Id Vazio");
+            return;
+        }
+        if (q.getAndar() == 0) {
+            msgError("Nï¿½ do Andar Vazio");
+            return;
+        }
+        if (q.getTipoDeQuarto() == null) {
+            msgError("Tipo de Quarto Vazio");
+            return;
+        }
+        this.quartos.add(q);
     }
-	public Quarto selectQuarto(long id) {
+
+    private void msgError(String corpo) {
+        JOptionPane.showMessageDialog(null, corpo, "ERRO", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public Quarto selectQuarto(long id) {
         for (Quarto q : this.quartos) {
             if (q.getId() == id) {
                 return q;

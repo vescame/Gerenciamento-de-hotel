@@ -32,9 +32,9 @@ public class MainWindow extends JFrame {
 	private JMenu menuFuncionarios, menuHospedes, menuReservas, menuQuartos, menuServicoQuarto, menuTipoQuarto;
 	private JLabel lblData, lblHora;
 	private JDesktopPane desktopPane;
-	private JMenuItem mItemCadastroFuncionario, mItemConsultarFuncionario;	
+	private JMenuItem mItemCadastroFuncionario, mItemConsultarFuncionario;
 	private JMenuItem mItemCadastroDeHospede, mItemConsultaDeHospede;
-	private JMenuItem mItemNovaReserva, mItemConsultarReserva, mItemCheckIn, mItemCheckOut, mItemConsultarGastos;	
+	private JMenuItem mItemNovaReserva, mItemConsultarReserva, mItemCheckIn, mItemCheckOut, mItemConsultarGastos;
 	private JMenuItem mItemCadastrarQuartos, mItemConsultarQuartos, mItemCadastrarTipo, mItemConsultarTipos;
 	private JMenuItem mntmSolicitarServio, mntmConsultarServios;
 	private JSeparator separatorReserva, separatorQuartos;
@@ -44,18 +44,18 @@ public class MainWindow extends JFrame {
 		setTitle("Gerenciamento de Reservas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(screenSize.width / 2 - 800, screenSize.height / 2 - 450, 1600, 900);
-		
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
 				timer = new Timer(1000, new ActionListener() {
-					
+
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-						SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");						
-						lblHora.setText("Hora: "+ timeFormat.format(new Date()));
-						lblData.setText("Data: "+ dateFormat.format(new Date()));
+						SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						lblHora.setText("Hora: " + timeFormat.format(new Date()));
+						lblData.setText("Data: " + dateFormat.format(new Date()));
 					}
 				});
 				timer.start();
@@ -123,7 +123,7 @@ public class MainWindow extends JFrame {
 		desktopPane = new JDesktopPane();
 		desktopPane.setBackground(SystemColor.desktop);
 		contentPane.add(desktopPane, BorderLayout.CENTER);
-		
+
 		StatusBar = new JPanel();
 		StatusBar.setBackground(SystemColor.windowBorder);
 		StatusBar.setPreferredSize(new Dimension(50, 25));
@@ -136,6 +136,5 @@ public class MainWindow extends JFrame {
 		lblHora = new JLabel("Hora");
 		StatusBar.add(lblHora, BorderLayout.WEST);
 
-		
 	}
 }

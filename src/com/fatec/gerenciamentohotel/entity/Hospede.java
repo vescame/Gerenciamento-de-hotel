@@ -1,50 +1,26 @@
 package com.fatec.gerenciamentohotel.entity;
 
-public class Hospede {
-    private Endereco endereco;
-    private long id;
-    private String cpf;
-    private String nome;
-    private boolean status;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Endereco getEndereco() {
-        return endereco;
+public class Hospede extends Pessoa {
+    private Reserva reserva;
+    private List<ItemServico> itemsServicos  = new ArrayList<>();
+
+    public Reserva getReserva() {
+        return reserva;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
     }
 
-    public String getCpf() {
-        return cpf;
+    public List<ItemServico> getItemsServicos() {
+        return itemsServicos;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setItemsServicos(List<ItemServico> itemsServicos) {
+        this.itemsServicos = itemsServicos;
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public boolean getStatus() {
-        return this.status;
-    }
-
-    public void setStaus(boolean status) {
-        this.status = status;
-    }
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 }

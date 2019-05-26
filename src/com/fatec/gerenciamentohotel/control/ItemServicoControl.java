@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import com.fatec.gerenciamentohotel.entity.Hospede;
 import com.fatec.gerenciamentohotel.entity.ItemServico;
 
 public class ItemServicoControl {
@@ -33,7 +34,8 @@ public class ItemServicoControl {
 	private void msgError(String corpo) {
 		JOptionPane.showMessageDialog(null, corpo, "ERRO", JOptionPane.ERROR_MESSAGE);
 	}
-	public ItemServico selectItem(long id) {
+
+	public ItemServico selectItemServico(long id) {
         for (ItemServico i : this.itens) {
             if (i.getId() == id) {
                 return i;

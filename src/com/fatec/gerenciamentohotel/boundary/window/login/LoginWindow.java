@@ -23,7 +23,7 @@ public class LoginWindow extends JFrame {
 
 	private JPanel panelClientes, panelFuncionarios;
 	private JTextField txtLogin;
-	private JFormattedTextField txtCPF; 
+	private JFormattedTextField txtCPF;
 	private JPasswordField txtSenha;
 	private JLabel lblCpf, lblLogin, lblSenha;
 	private JButton btnAcessarCliente, btnAcessarFuncionario;
@@ -75,7 +75,7 @@ public class LoginWindow extends JFrame {
 		btnAcessarCliente = new JButton("Acessar");
 		btnAcessarCliente.setBounds(123, 89, 114, 25);
 		panelClientes.add(btnAcessarCliente);
-		
+
 		try {
 			txtCPF = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
 		} catch (ParseException e) {
