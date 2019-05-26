@@ -1,9 +1,11 @@
 package com.fatec.gerenciamentohotel.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Hospede extends Pessoa {
     private Reserva reserva;
-
-    private ItemServico itemServico;
+    private List<ItemServico> itemsServicos  = new ArrayList<>();
 
     public Reserva getReserva() {
         return reserva;
@@ -13,11 +15,12 @@ public class Hospede extends Pessoa {
         this.reserva = reserva;
     }
 
-    public ItemServico getItemServico() {
-        return itemServico;
+    public List<ItemServico> getItemsServicos() {
+        return itemsServicos;
     }
 
-    public void setItemServico(ItemServico itemServico) {
-        this.itemServico = itemServico;
+    public void setItemsServicos(List<ItemServico> itemsServicos) {
+        this.itemsServicos = itemsServicos;
     }
+
 }

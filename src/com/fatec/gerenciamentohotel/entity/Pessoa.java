@@ -77,7 +77,6 @@ public abstract class Pessoa {
         this.dataNascimento = dataNascimento;
     }
 
-
     public boolean getStatus() {
         return this.status;
     }
