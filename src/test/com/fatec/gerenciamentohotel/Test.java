@@ -31,8 +31,8 @@ public class Test {
         FuncionarioControl funcionarioControl = new FuncionarioControl();
         funcionarioControl.insert(f);
         try {
-            System.out.println(funcionarioControl.selectDocumento(f.getCpf()).getNome());
-            System.out.println(funcionarioControl.selectDocumento("125").getNome());
+            System.out.println(funcionarioControl.selectDocFuncionario(f.getCpf()).getNome());
+            System.out.println(funcionarioControl.selectDocFuncionario("125").getNome());
         } catch (NullPointerException e) {
             e.printStackTrace();
             System.out.println("Não há registros deste documento para este funcionário");

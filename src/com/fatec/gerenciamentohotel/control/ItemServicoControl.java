@@ -35,7 +35,7 @@ public class ItemServicoControl {
 		JOptionPane.showMessageDialog(null, corpo, "ERRO", JOptionPane.ERROR_MESSAGE);
 	}
 
-	public ItemServico selectItem(long id) {
+	public ItemServico selectItemServico(long id) {
         for (ItemServico i : this.itens) {
             if (i.getId() == id) {
                 return i;

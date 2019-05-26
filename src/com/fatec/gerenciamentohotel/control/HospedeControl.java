@@ -38,7 +38,7 @@ public class HospedeControl {
         JOptionPane.showMessageDialog(null, corpo, "ERRO", JOptionPane.ERROR_MESSAGE);
     }
 
-    public Hospede selectDocumento(String doc) {
+    public Hospede selectDocHospede(String doc) {
         for (Hospede h : this.hospedes) {
             if (h.getCpf().contains(doc)) {
                 return h;

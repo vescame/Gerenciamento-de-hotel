@@ -38,7 +38,7 @@ public class TipoDeQuartoControl {
         JOptionPane.showMessageDialog(null, corpo, "ERROR", JOptionPane.ERROR_MESSAGE);
     }
 
-    public TipoDeQuarto selectTipo(long id) {
+    public TipoDeQuarto selectTipoQuarto(long id) {
         for (TipoDeQuarto t : this.tipos) {
             if (t.getId() == id) {
                 return t;

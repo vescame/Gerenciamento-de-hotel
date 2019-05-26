@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import com.fatec.gerenciamentohotel.entity.Quarto;
 import com.fatec.gerenciamentohotel.entity.Reserva;
 
 public class ReservaControl {
@@ -38,4 +39,12 @@ public class ReservaControl {
         JOptionPane.showMessageDialog(null, corpo, "ERRO", JOptionPane.ERROR_MESSAGE);
     }
 
+    public Reserva selectReserva(long id) {
+        for (Reserva r : this.reservas) {
+            if (r.getId() == id) {
+                return r;
+            }
+        }
+        return null;
+    }
 }

@@ -38,7 +38,7 @@ public class EnderecoControl {
         JOptionPane.showMessageDialog(null, corpo, "ERROR", JOptionPane.ERROR_MESSAGE);
     }
 
-    public Endereco selectDocumento(String cep) {
+    public Endereco selectCep(String cep) {
         for (Endereco e : this.enderecos) {
             if (e.getCep().contains(cep)) {
                 return e;

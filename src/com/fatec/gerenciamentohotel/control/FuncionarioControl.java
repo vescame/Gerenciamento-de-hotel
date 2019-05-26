@@ -57,7 +57,7 @@ public class FuncionarioControl {
         JOptionPane.showMessageDialog(null, corpo, "ERRO", JOptionPane.ERROR_MESSAGE);
     }
 
-    public Funcionario selectDocumento(String doc) {
+    public Funcionario selectDocFuncionario(String doc) {
         for (Funcionario f : this.funcionarios) {
             if (f.getCpf().contains(doc)) {
                 return f;
