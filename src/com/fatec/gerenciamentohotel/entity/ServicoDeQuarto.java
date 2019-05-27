@@ -1,4 +1,4 @@
-package com.fatec.gerenciamentohotel.entity;
+package src.com.fatec.gerenciamentohotel.entity;
 
 import java.util.Date;
 import java.util.List;
@@ -7,8 +7,9 @@ public class ServicoDeQuarto {
     private long id;
     private List<ItemServico> itemsServicos;
     private Date dataSolicitacao;
+    private int qtd_solicitado;
 
-    public long getId() {
+	public long getId() {
         return id;
     }
 
@@ -31,4 +32,13 @@ public class ServicoDeQuarto {
     public void setDataSolicitacao(Date dataSolicitacao) {
         this.dataSolicitacao = dataSolicitacao;
     }
+    
+    public int getQtd_solicitado() {
+		return qtd_solicitado;
+	}
+
+	public void setQtd_solicitado(int qtd_solicitado) {
+		this.qtd_solicitado = qtd_solicitado;
+	}
+
 }

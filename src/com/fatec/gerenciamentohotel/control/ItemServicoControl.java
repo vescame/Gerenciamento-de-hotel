@@ -1,12 +1,12 @@
-package com.fatec.gerenciamentohotel.control;
+package src.com.fatec.gerenciamentohotel.control;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import com.fatec.gerenciamentohotel.entity.Hospede;
-import com.fatec.gerenciamentohotel.entity.ItemServico;
+import src.com.fatec.gerenciamentohotel.entity.Hospede;
+import src.com.fatec.gerenciamentohotel.entity.ItemServico;
 
 public class ItemServicoControl {
 	List<ItemServico> itens = new ArrayList<>();
@@ -14,10 +14,6 @@ public class ItemServicoControl {
 	public void insert(ItemServico i) {
 		if(i.getId() == 0) {
 			msgError("Id Vazio");
-			return;
-		}
-		if(i.getQuantidade() == 0) {
-			msgError("Quantidade Vazia");
 			return;
 		}
 		if(i.getValor() == 0) {

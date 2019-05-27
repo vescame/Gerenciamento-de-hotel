@@ -1,9 +1,11 @@
-package com.fatec.gerenciamentohotel.entity;
+package src.com.fatec.gerenciamentohotel.entity;
 
 public class Endereco {
-    private String cep;
+	// LAYOUT DO BANCO É IGUAL AO DA DECLARACAO
+    private String cep; // CEP É INT NA TABELA
     private String rua;
-    private String bairro;
+    private int numero;
+	private String bairro;
     private String cidade;
     private String uf;
 
@@ -22,6 +24,14 @@ public class Endereco {
     public void setRua(String rua) {
         this.rua = rua;
     }
+    
+    public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
 
     public String getBairro() {
         return bairro;

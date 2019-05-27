@@ -1,4 +1,4 @@
-package com.fatec.gerenciamentohotel.boundary.window.login;
+package src.com.fatec.gerenciamentohotel.boundary.window.login;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;

@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="jgoodies-forms-1.8.0.jar" sourcepath="jgoodies-forms-1.8.0-sources.jar"/>
-=======
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="src"/>
->>>>>>> 00a8d6139e9d486f9ffb65cc2545f0c128ac48ab
+	<classpathentry kind="src" path=""/>
+	<classpathentry kind="lib" path="/home/copyfmt/Documents/FATEC/4o_semestre/poo/Projeto/Gerenciamento-de-Hotel/lib/mariadb-java-client-2.4.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

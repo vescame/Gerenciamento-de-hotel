@@ -1,4 +1,4 @@
-package com.fatec.gerenciamentohotel.entity;
+package src.com.fatec.gerenciamentohotel.entity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,42 +1,58 @@
-package test.com.fatec.gerenciamentohotel.dev;
+package src.test.com.fatec.gerenciamentohotel.dev;
 
-import com.fatec.gerenciamentohotel.control.FuncionarioControl;
-import com.fatec.gerenciamentohotel.control.connection.DatabaseController;
-import com.fatec.gerenciamentohotel.entity.EFuncionario;
-import com.fatec.gerenciamentohotel.entity.Endereco;
-import com.fatec.gerenciamentohotel.entity.Funcionario;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
+import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
+import src.com.fatec.gerenciamentohotel.entity.Endereco;
+import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 
 public class Test {
-    public static void main(String[] args) {
-        DatabaseController db = new DatabaseController();
-        Funcionario f = new Funcionario();
-        f.setCpf("1234");
-        f.setCelular("12345");
-        f.setEmail("duasihduiasd");
+	public static void main(String[] args) {
+		Endereco e = new Endereco();
 
-        Endereco end = new Endereco();
-        end.setCep("123");
-        end.setBairro("dsadasd");
-        end.setCidade("sp");
-        end.setUf("SP");
-        end.setRua("Rua qualquer");
+		e.setCep("03570200");
+		e.setNumero(182);
+		e.setBairro("Parque Savoy City");
+		e.setCidade("São Paulo");
+		e.setUf("SP");
+		e.setRua("Rua José Torres Lima");
 
-        f.setEndereco(end);
-        f.setId(1);
-        f.setNome("Funcionario");
-        f.setLogin("func1");
-        f.setSenha("123");
-        f.setStatus(false);
-        f.setTelefone("151516");
-        f.setTipoFuncionario(EFuncionario.SERV_DE_QUARTO);
-        FuncionarioControl funcionarioControl = new FuncionarioControl();
-        funcionarioControl.insert(f);
-        try {
-//            System.out.println(funcionarioControl.selectDocFuncionario(f.getCpf()).getNome());
-//            System.out.println(funcionarioControl.selectDocFuncionario("125").getNome());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("Não há registros deste documento para este funcionário");
-        }
-    }
+		Funcionario f = new Funcionario();
+
+		f.setEndereco(e);
+		f.setCpf("43207052894");
+		f.setNome("Vinicius Escame");
+		f.setTelefone("151516");
+		f.setCelular("011987628162");
+		f.setEmail("v.escame@gmail.com");
+
+		try {
+			DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			String nascString = "11/01/1996";
+			Date nasc = sdf.parse(nascString);
+			f.setDataNascimento(nasc);
+		} catch (ParseException except) {
+			except.printStackTrace();
+		}
+
+		f.setLogin("vesca");
+		f.setSenha("vesca1");
+		// f.setStatus('A');
+		f.setTipoFuncionario(EFuncionario.ADMINISTRADOR);
+
+		FuncionarioControl fc = new FuncionarioControl();
+		fc.insert(f);
+
+		try {
+			System.out.println(fc.selectDocFuncionario(f.getCpf()).getNome());
+			System.out.println(fc.selectDocFuncionario("125").getNome());
+		} catch (NullPointerException except) {
+			except.printStackTrace();
+			System.out.println("Não há registros deste documento para este funcionário");
+		}
+	}
 }

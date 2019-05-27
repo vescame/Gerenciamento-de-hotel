@@ -1,6 +1,6 @@
-package com.fatec.gerenciamentohotel.control;
+package src.com.fatec.gerenciamentohotel.control;
 
-import com.fatec.gerenciamentohotel.entity.ServicoDeQuarto;
+import src.com.fatec.gerenciamentohotel.entity.ServicoDeQuarto;
 
 import java.util.ArrayList;
 import java.util.List;

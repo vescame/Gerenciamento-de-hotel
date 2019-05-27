@@ -1,10 +1,9 @@
-package com.fatec.gerenciamentohotel.entity;
+package src.com.fatec.gerenciamentohotel.entity;
 
 public class ItemServico {
     private long id;
     private String descricao;
     private float valor;
-    private int quantidade;
 
     public long getId() {
         return id;
@@ -30,11 +29,4 @@ public class ItemServico {
         this.valor = valor;
     }
 
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
 }

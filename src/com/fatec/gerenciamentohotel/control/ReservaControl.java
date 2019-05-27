@@ -1,12 +1,12 @@
-package com.fatec.gerenciamentohotel.control;
+package src.com.fatec.gerenciamentohotel.control;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import com.fatec.gerenciamentohotel.entity.Quarto;
-import com.fatec.gerenciamentohotel.entity.Reserva;
+import src.com.fatec.gerenciamentohotel.entity.Quarto;
+import src.com.fatec.gerenciamentohotel.entity.Reserva;
 
 public class ReservaControl {
     List<Reserva> reservas = new ArrayList<>();

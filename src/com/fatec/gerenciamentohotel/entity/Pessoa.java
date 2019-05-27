@@ -1,4 +1,4 @@
-package com.fatec.gerenciamentohotel.entity;
+package src.com.fatec.gerenciamentohotel.entity;
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ public abstract class Pessoa {
     private String celular;
     private String email;
     private Date dataNascimento;
-    private boolean status;
+    private char status;
 
     public long getId() {
         return id;
@@ -77,11 +77,11 @@ public abstract class Pessoa {
         this.dataNascimento = dataNascimento;
     }
 
-    public boolean getStatus() {
+    public char getStatus() {
         return this.status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(char status) {
         this.status = status;
     }
 }

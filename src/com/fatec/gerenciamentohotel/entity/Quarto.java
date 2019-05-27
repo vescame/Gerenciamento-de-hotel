@@ -1,4 +1,4 @@
-package com.fatec.gerenciamentohotel.entity;
+package src.com.fatec.gerenciamentohotel.entity;
 
 public class Quarto {
     private long id;

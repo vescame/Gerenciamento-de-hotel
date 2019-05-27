@@ -1,4 +1,4 @@
-package com.fatec.gerenciamentohotel.control.connection;
+package src.com.fatec.gerenciamentohotel.control.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

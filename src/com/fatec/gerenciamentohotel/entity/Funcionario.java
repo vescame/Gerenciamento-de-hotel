@@ -1,6 +1,22 @@
-package com.fatec.gerenciamentohotel.entity;
+package src.com.fatec.gerenciamentohotel.entity;
+
+import src.com.fatec.gerenciamentohotel.entity.enums.*;
 
 public class Funcionario extends Pessoa {
+	/* layout em banco
+	 * id
+	 * cep
+	 * cpf
+	 * nome
+	 * telefone
+	 * celular
+	 * email
+	 * dat_nascimento
+	 * status
+	 * login
+	 * senha
+	 * tipo_funcionario
+	 */
     private EFuncionario tipoFuncionario;
     private String login;
     private String senha;

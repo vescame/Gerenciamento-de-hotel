@@ -1,11 +1,11 @@
-package com.fatec.gerenciamentohotel.control;
+package src.com.fatec.gerenciamentohotel.control;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
+import src.com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
 
 public class TipoDeQuartoControl {
     List<TipoDeQuarto> tipos = new ArrayList<>();
