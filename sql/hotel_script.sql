@@ -22,7 +22,7 @@ COMMENT = 'Tabela gerenciadora de endereços';
 CREATE TABLE IF NOT EXISTS `admin_hotel`.`hospede` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `cep` CHAR(8) NOT NULL,
-  `cpf` VARCHAR(13) NULL,
+  `cpf` VARCHAR(11) NULL,
   `nome` VARCHAR(35) NOT NULL,
   `telefone` VARCHAR(15) NOT NULL,
   `celular` VARCHAR(15) NULL,
@@ -44,7 +44,7 @@ COMMENT = 'Tabela gerenciadora de hóspedes';
 CREATE TABLE IF NOT EXISTS `admin_hotel`.`funcionario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `cep` CHAR(8) NOT NULL,
-  `cpf` VARCHAR(13) NULL,
+  `cpf` VARCHAR(11) NULL,
   `nome` VARCHAR(35) NOT NULL,
   `telefone` VARCHAR(15) NOT NULL,
   `celular` VARCHAR(15) NULL,

@@ -45,4 +45,15 @@ public class Funcionario extends Pessoa {
         this.tipoFuncionario = tipoFuncionario;
     }
 
+	@Override
+	public String toString() {
+		return "Funcionario [tipoFuncionario=" + tipoFuncionario + ", login=" + login + ", senha=" + senha
+				+ ", getId()=" + getId() + ", getEndereco()=" + getEndereco() + ", getCpf()=" + getCpf()
+				+ ", getNome()=" + getNome() + ", getTelefone()=" + getTelefone() + ", getCelular()=" + getCelular()
+				+ ", getEmail()=" + getEmail() + ", getDataNascimento()=" + getDataNascimento() + ", getStatus()="
+				+ getStatus() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
+
+    
 }

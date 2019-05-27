@@ -48,7 +48,8 @@ public class Test {
 		fc.insert(f);
 
 		try {
-			System.out.println(fc.selectDocFuncionario(f.getCpf()).getNome());
+			Funcionario f1 = fc.selectDocFuncionario(f.getCpf());
+			System.out.println(f1);
 			System.out.println(fc.selectDocFuncionario("125").getNome());
 		} catch (NullPointerException except) {
 			except.printStackTrace();

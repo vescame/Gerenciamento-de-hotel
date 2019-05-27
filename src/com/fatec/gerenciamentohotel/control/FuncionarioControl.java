@@ -65,6 +65,7 @@ public class FuncionarioControl {
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
+			// omitir o ID já que no banco ele é AUTO_INCREMENT
 			pstmt = con.prepareStatement(
 					" Insert into funcionario "
 					+ " (cep, cpf, nome, telefone, celular, email, dat_nascimento, status, login, senha, tipo_funcionario) "
@@ -93,6 +94,8 @@ public class FuncionarioControl {
 				EnderecoControl ec = new EnderecoControl();
 				ec.insert(f.getEndereco());
 				this.insert(f);
+			} else if (errParser.contains("'cpf_UNIQUE'")){
+				msgError("CPF já existe", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
 				except.printStackTrace();
 			}
