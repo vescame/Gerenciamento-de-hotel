@@ -1,9 +1,9 @@
 package com.fatec.gerenciamentohotel.entity;
 
 public enum EFuncionario {
-    ADMIN("Administrador"),
-    RECEPCIONISTA("Recepcionista"),
-    SERV_DE_QUARTO("Servico de Quarto");
+    ADMIN("ADM"),
+    RECEPCIONISTA("Recep"),
+    SERV_DE_QUARTO("ServQuarto");
 
     public String role;
 
