@@ -7,16 +7,16 @@ import java.sql.SQLException;
 public class ConnectionDB {
 	private static ConnectionDB instance;
 	private Connection conn;
-	// alterar a string de connexão !!!!! 
-	private String connectionURL = "jdbc:mariadb://localhost:3306/hoteldb?allowMultiQueries=true";
-	private String user = "root";
-	private String psswrd = "";
+	private String connectionURL = "jdbc:mariadb://localhost:3306/admin_hotel?allowMultiQueries=true";
+	private String user = "admin";
+	private String psswrd = "Mysqladmin1*";
 
 	private ConnectionDB() {
 		try {
-			Class.forName("org.maria.db.jdbc.Driver");
+			Class.forName("org.mariadb.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
+			System.out.println("Erro ao carregar driver mariaDB");
 		}
 	}
 
@@ -29,7 +29,7 @@ public class ConnectionDB {
 	
 	public Connection getConnection() throws SQLException {
 		if (conn == null || conn.isClosed()) {
-			conn = DriverManager.getConnection(connectionURL, user, psswrd);
+			conn = DriverManager.getConnection(connectionURL,  user, psswrd);
 		}
 		return conn;
 	}
