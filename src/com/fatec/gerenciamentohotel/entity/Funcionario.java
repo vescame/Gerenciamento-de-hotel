@@ -3,7 +3,7 @@ package src.com.fatec.gerenciamentohotel.entity;
 import src.com.fatec.gerenciamentohotel.entity.enums.*;
 
 public class Funcionario extends Pessoa {
-	/* layout em banco
+	/*
 	 * id
 	 * cep
 	 * cpf
@@ -16,6 +16,7 @@ public class Funcionario extends Pessoa {
 	 * login
 	 * senha
 	 * tipo_funcionario
+	 * num_residencia
 	 */
     private EFuncionario tipoFuncionario;
     private String login;
@@ -47,11 +48,11 @@ public class Funcionario extends Pessoa {
 
 	@Override
 	public String toString() {
-		return "Funcionario [tipoFuncionario=" + tipoFuncionario + ", login=" + login + ", senha=" + senha
-				+ ", getId()=" + getId() + ", getEndereco()=" + getEndereco() + ", getCpf()=" + getCpf()
-				+ ", getNome()=" + getNome() + ", getTelefone()=" + getTelefone() + ", getCelular()=" + getCelular()
-				+ ", getEmail()=" + getEmail() + ", getDataNascimento()=" + getDataNascimento() + ", getStatus()="
-				+ getStatus() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+		return "Funcionario [tipoFuncionario=" + tipoFuncionario + "\nlogin=" + login + "\nsenha=" + senha
+				+ "\ngetId()=" + getId() + "\ngetEndereco()=" + getEndereco() + "\ngetCpf()=" + getCpf()
+				+ "\ngetNome()=" + getNome() + "\ngetTelefone()=" + getTelefone() + "\ngetCelular()=" + getCelular()
+				+ "\ngetEmail()=" + getEmail() + "\ngetDataNascimento()=" + getDataNascimento() + "\ngetStatus()="
+				+ getStatus() + "\ngetClass()=" + getClass() + "\nhashCode()=" + hashCode() + "\ntoString()="
 				+ super.toString() + "]";
 	}
 

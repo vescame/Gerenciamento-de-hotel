@@ -12,6 +12,7 @@ public abstract class Pessoa {
     private String email;
     private Date dataNascimento;
     private char status;
+    private int numResidencia;
 
     public long getId() {
         return id;
@@ -84,4 +85,14 @@ public abstract class Pessoa {
     public void setStatus(char status) {
         this.status = status;
     }
+
+	public int getNumResidencia() {
+		return numResidencia;
+	}
+
+	public void setNumResidencia(int numResidencia) {
+		this.numResidencia = numResidencia;
+	}
+    
+    
 }

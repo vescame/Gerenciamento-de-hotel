@@ -8,7 +8,6 @@ USE `admin_hotel` ;
 CREATE TABLE IF NOT EXISTS `admin_hotel`.`endereco` (
   `cep` CHAR(8) NOT NULL,
   `rua` VARCHAR(50) NOT NULL,
-  `numero` INT NOT NULL,
   `bairro` VARCHAR(50) NOT NULL,
   `cidade` VARCHAR(50) NOT NULL,
   `uf` CHAR(2) NOT NULL,
@@ -29,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `admin_hotel`.`hospede` (
   `email` VARCHAR(35) NULL,
   `dat_nascimento` DATE NOT NULL,
   `status` CHAR(1) NOT NULL,
+  `num_residencia` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
   INDEX `fk_endereco_idh` (`cep` ASC),
@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `admin_hotel`.`funcionario` (
   `login` VARCHAR(15) NOT NULL,
   `senha` VARCHAR(15) NOT NULL,
   `tipo_funcionario` VARCHAR(25) NOT NULL,
+  `num_residencia` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
   INDEX `fk_endereco_idf` (`cep` ASC),

@@ -54,8 +54,12 @@ public class FuncionarioControl {
 			msgError("Senha vazia", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		if (f.getStatus() == ' ') {
+		if (f.getStatus() == Character.MIN_VALUE) {
 			msgError("Status vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if (f.getTipoFuncionario() == null) {
+			msgError("Tipo funcionario vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getTipoFuncionario() == null) {
@@ -68,9 +72,9 @@ public class FuncionarioControl {
 			// omitir o ID já que no banco ele é AUTO_INCREMENT
 			pstmt = con.prepareStatement(
 					" Insert into funcionario "
-					+ " (cep, cpf, nome, telefone, celular, email, dat_nascimento, status, login, senha, tipo_funcionario) "
+					+ " (cep, cpf, nome, telefone, celular, email, dat_nascimento, status, login, senha, tipo_funcionario, num_residencia) "
 					+ " values "
-					+ " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+					+ " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 			pstmt.setString(1, f.getEndereco().getCep());
 			pstmt.setString(2, f.getCpf());
 			pstmt.setString(3, f.getNome());
@@ -79,14 +83,15 @@ public class FuncionarioControl {
 			pstmt.setString(6, f.getEmail());
 			DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			String nascString = sdf.format(f.getDataNascimento());
-			Date nascD = sdf.parse(nascString);
-			f.setDataNascimento(nascD);
-			pstmt.setDate(7, new java.sql.Date(nascD.getTime()));
+			Date nasc = sdf.parse(nascString);
+			f.setDataNascimento(nasc);
+			pstmt.setDate(7, new java.sql.Date(nasc.getTime()));
 			// se "A" funcionario Ativo, caso contrário, "I" para Inativo
 			pstmt.setString(8, String.valueOf(f.getStatus()));
 			pstmt.setString(9, f.getLogin());
 			pstmt.setString(10, f.getSenha());
 			pstmt.setString(11, EFuncionario.ADMINISTRADOR.role);
+			pstmt.setInt(12, f.getNumResidencia());
 			pstmt.executeQuery();
 		} catch (SQLException | ParseException except) {
 			String errParser = except.getMessage();
@@ -97,7 +102,7 @@ public class FuncionarioControl {
 			} else if (errParser.contains("'cpf_UNIQUE'")){
 				msgError("CPF já existe", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
-				except.printStackTrace();
+				msgError("Erro desconhecido...\nContate um administrador", "ERRO", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

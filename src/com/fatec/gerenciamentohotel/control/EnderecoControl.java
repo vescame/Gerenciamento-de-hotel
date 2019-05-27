@@ -13,14 +13,20 @@ import src.com.fatec.gerenciamentohotel.control.connection.ConnectionDB;
 import src.com.fatec.gerenciamentohotel.entity.Endereco;
 
 public class EnderecoControl {
+	/*
+	 * id
+	 * cep
+	 * rua
+	 * numero
+	 * bairro
+	 * cidade
+	 * uf
+	 */
 
 	public void insert(Endereco e) {
 		if (e.getCep().trim().isEmpty()) {
 			msgError("Cep Vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
-		}
-		if (e.getNumero() == 0) {
-			msgError("Numero vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 		if (e.getRua().trim().isEmpty()) {
 			msgError("Rua Vazia", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -42,13 +48,14 @@ public class EnderecoControl {
 		PreparedStatement pstmt;
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
-			pstmt = con.prepareStatement("insert into endereco values" + "(?, ?, ?, ?, ?, ?)");
+			pstmt = con.prepareStatement("insert into endereco "
+					+ " (cep, rua, bairro, cidade, uf) "
+					+ "values" + "(?, ?, ?, ?, ?)");
 			pstmt.setString(1, e.getCep());
 			pstmt.setString(2, e.getRua());
-			pstmt.setInt(3, e.getNumero());
-			pstmt.setString(4, e.getBairro());
-			pstmt.setString(5, e.getCidade());
-			pstmt.setString(6, e.getUf());
+			pstmt.setString(3, e.getBairro());
+			pstmt.setString(4, e.getCidade());
+			pstmt.setString(5, e.getUf());
 			pstmt.execute();
 		} catch (SQLException except) {
 			String errParser = except.getMessage();
@@ -74,7 +81,6 @@ public class EnderecoControl {
 				while (rs.next()) {
 					e.setCep(rs.getString("cep"));
 					e.setRua(rs.getString("rua"));
-					e.setNumero(rs.getInt("numero"));
 					e.setBairro(rs.getString("bairro"));
 					e.setCidade(rs.getString("cidade"));
 					e.setUf(rs.getString("uf"));
