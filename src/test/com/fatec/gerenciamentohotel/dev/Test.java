@@ -8,17 +8,19 @@ import java.util.Date;
 import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
 import src.com.fatec.gerenciamentohotel.control.HospedeControl;
 import src.com.fatec.gerenciamentohotel.control.QuartoControl;
+import src.com.fatec.gerenciamentohotel.control.ReservaControl;
 import src.com.fatec.gerenciamentohotel.control.TipoDeQuartoControl;
 import src.com.fatec.gerenciamentohotel.entity.Endereco;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
 import src.com.fatec.gerenciamentohotel.entity.Quarto;
+import src.com.fatec.gerenciamentohotel.entity.Reserva;
 import src.com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
 import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
 
 public class Test {
 	public static void main(String[] args) {
-		/*Endereco e = new Endereco();
+		Endereco e = new Endereco();
 
 		e.setCep("03570200");
 		e.setBairro("Parque Savoy City");
@@ -45,7 +47,7 @@ public class Test {
 		f.setNumResidencia(182);
 
 		FuncionarioControl fc = new FuncionarioControl();
-		fc.insert(f);
+		//fc.insert(f);
 
 		Hospede h = new Hospede();
 		h.setEndereco(e);
@@ -59,7 +61,7 @@ public class Test {
 		h.setNumResidencia(182);
 
 		HospedeControl hc = new HospedeControl();
-		hc.insert(h);
+		//hc.insert(h);
 		
 		TipoDeQuarto t = new TipoDeQuarto();
 		t.setTipo("Forever Alone");
@@ -68,36 +70,66 @@ public class Test {
 		t.setQuantidadeCriancas((short) 0);
 
 		TipoDeQuartoControl tqc = new TipoDeQuartoControl();
-		tqc.insert(t);
+		//tqc.insert(t);
 		
 		Quarto q = new Quarto();
 		q.setNumQuarto(125);
 		q.setAndar((short) 1);
 		q.setTipoDeQuarto(tqc.selectTipoQuarto(1));
 		
-		*/
 		QuartoControl qc = new QuartoControl();
-		// qc.insert(q);
+		//qc.insert(q);
 		
+		Reserva r0 = new Reserva();
+		r0.setHospede(hc.selectDocHospede("43207052894"));
+		r0.setFuncionario(fc.selectDocFuncionario("43207052894"));
+		r0.setQuarto(qc.selectQuarto(125));
+		r0.setStatus('I');
+		r0.setCheckIn(new Date());
+		
+		Reserva r1 = new Reserva();
+		r1.setHospede(hc.selectDocHospede("43207052894"));
+		r1.setFuncionario(fc.selectDocFuncionario("43207052894"));
+		r1.setQuarto(qc.selectQuarto(125));
+		r1.setStatus('I');
+		r1.setCheckIn(new Date());
+		
+		Reserva r2 = new Reserva();
+		r2.setHospede(hc.selectDocHospede("43207052894"));
+		r2.setFuncionario(fc.selectDocFuncionario("43207052894"));
+		r2.setQuarto(qc.selectQuarto(125));
+		r2.setStatus('A');
+		r2.setCheckIn(new Date());
+		
+		ReservaControl rc = new ReservaControl();
+		
+		rc.insert(r0);
+		rc.insert(r1);
+		rc.insert(r2);
 		try {
-			/*// select funcionario
-			System.out.println(f);
+			/*
+			// select funcionario
 			System.out.println(fc.selectDocFuncionario(f.getCpf()).getNome());
 
 			// select hospede
-			System.out.println(h);
 			System.out.println(hc.selectDocHospede(h.getCpf()).getNome());
 
 			// select tipo quarto
-			System.out.println(t);
-			System.out.println(tqc.selectTipoQuarto(1));*/
+			System.out.println(tqc.selectTipoQuarto(1));
 			
 			// select quarto
-			// System.out.println(q);
+			System.out.println(q);
 			System.out.println(qc.selectQuarto(125));
+			
+			// select reserva
+			System.out.println(rc.selectReserva(r.getHospede().getCpf()));
+			*/
+			
+			// select historico de reservas de hospede
+			System.out.println(rc.selectHistoricoReservas("43207052894"));
 		} catch (NullPointerException except) {
 			except.printStackTrace();
-			System.out.println("Não há registros deste documento para este funcionário");
+			System.out.println("Não há registros");
 		}
 	}
 

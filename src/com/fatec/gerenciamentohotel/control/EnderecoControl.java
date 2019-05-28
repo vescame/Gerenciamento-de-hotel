@@ -14,13 +14,7 @@ import src.com.fatec.gerenciamentohotel.entity.Endereco;
 
 public class EnderecoControl {
 	/*
-	 * id
-	 * cep
-	 * rua
-	 * numero
-	 * bairro
-	 * cidade
-	 * uf
+	 * id cep rua numero bairro cidade uf
 	 */
 
 	public void insert(Endereco e) {
@@ -48,9 +42,7 @@ public class EnderecoControl {
 		PreparedStatement pstmt;
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
-			pstmt = con.prepareStatement("insert into endereco "
-					+ " (cep, rua, bairro, cidade, uf) "
-					+ "values" + "(?, ?, ?, ?, ?)");
+			pstmt = con.prepareStatement("insert into endereco (cep, rua, bairro, cidade, uf) values (?, ?, ?, ?, ?)");
 			pstmt.setString(1, e.getCep());
 			pstmt.setString(2, e.getRua());
 			pstmt.setString(3, e.getBairro());
@@ -61,6 +53,9 @@ public class EnderecoControl {
 			String errParser = except.getMessage();
 			if (errParser.contains("Duplicate entry")) {
 				msgError("Cep já cadastrado", "Aviso!", JOptionPane.WARNING_MESSAGE);
+			} else {
+				msgError("Erro desconhecido...\nContate um administrador", "Endereco", JOptionPane.ERROR_MESSAGE);
+				except.printStackTrace();
 			}
 		}
 	}
@@ -73,23 +68,29 @@ public class EnderecoControl {
 		Endereco e;
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
-			PreparedStatement pstmt = con.prepareStatement("Select * from endereco where cep = ?");
+			PreparedStatement pstmt = con.prepareStatement("select * from endereco where cep = ?");
 			pstmt.setInt(1, Integer.parseInt(cep));
 			ResultSet rs = pstmt.executeQuery();
-			if (!rs.wasNull()) {
+			if (rs.first()) {
 				e = new Endereco();
-				while (rs.next()) {
+				do {
 					e.setCep(rs.getString("cep"));
 					e.setRua(rs.getString("rua"));
 					e.setBairro(rs.getString("bairro"));
 					e.setCidade(rs.getString("cidade"));
 					e.setUf(rs.getString("uf"));
-				}
+				} while (rs.next());
 				return e;
 			}
 		} catch (SQLException | ParseException except) {
 			String errParser = except.getMessage();
-			errParser.toUpperCase();
+			if (errParser.contains("Unknown column")) {
+				msgError("Coluna incorreta", "Endereco", JOptionPane.CLOSED_OPTION);
+			} else if (errParser.contains("Unknown database")) {
+				msgError("Base de dados desconhecida...", "Endereco", JOptionPane.CLOSED_OPTION);
+			} else {
+				except.printStackTrace();
+			}
 		}
 		return null;
 	}

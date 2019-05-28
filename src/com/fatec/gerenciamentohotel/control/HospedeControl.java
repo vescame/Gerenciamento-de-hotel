@@ -33,10 +33,10 @@ public class HospedeControl {
 			msgError("Telefone vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		if (h.getCelular().trim().isEmpty()) {
-			msgError("Celular vazio", "Erro", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
+		/*
+		 * celular pode ser null if (h.getCelular().trim().isEmpty()) {
+		 * msgError("Celular vazio", "Erro", JOptionPane.ERROR_MESSAGE); return; }
+		 */
 		if (h.getEmail().trim().isEmpty()) {
 			msgError("Email vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
@@ -48,12 +48,17 @@ public class HospedeControl {
 		if (h.getStatus() == Character.MIN_VALUE) {
 			msgError("Status vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
+		} else if (h.getStatus() != 'A') {
+			if (h.getStatus() != 'I' ) {
+				msgError("Status deve ser A (Ativo) ou I (Inativo)", "Status Incorreto", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 		}
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
 			// omitir o ID já que no banco ele é AUTO_INCREMENT
-			pstmt = con.prepareStatement(" Insert into hospede "
+			pstmt = con.prepareStatement(" insert into hospede "
 					+ " (cep, cpf, nome, telefone, celular, email, dat_nascimento, status, num_residencia) "
 					+ " values " + " (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 			pstmt.setString(1, h.getEndereco().getCep());
@@ -81,6 +86,7 @@ public class HospedeControl {
 				msgError("CPF já existe", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
 				msgError("Erro desconhecido...\nContate um administrador", "Hospede", JOptionPane.ERROR_MESSAGE);
+				except.printStackTrace();
 			}
 		}
 	}
@@ -93,12 +99,12 @@ public class HospedeControl {
 		Hospede hosp;
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
-			PreparedStatement pstmt = con.prepareStatement("Select * from hospede where cpf = ?");
+			PreparedStatement pstmt = con.prepareStatement("select * from hospede where cpf = ?");
 			pstmt.setString(1, doc);
 			ResultSet rs = pstmt.executeQuery();
-			if (!rs.wasNull()) {
+			if (rs.first()) {
 				hosp = new Hospede();
-				while (rs.next()) {
+				do {
 					EnderecoControl ec = new EnderecoControl();
 					hosp.setId(rs.getInt("id"));
 					hosp.setEndereco(ec.selectCep(rs.getString("cep")));
@@ -108,14 +114,19 @@ public class HospedeControl {
 					hosp.setCelular(rs.getString("celular"));
 					hosp.setEmail(rs.getString("email"));
 					hosp.setDataNascimento(rs.getDate("dat_nascimento"));
+					hosp.setNumResidencia(rs.getInt("num_residencia"));
 					hosp.setStatus(rs.getString("status").charAt(0));
-				}
+				} while (rs.next());
 				return hosp;
 			}
 		} catch (SQLException except) {
 			String errParser = except.getMessage();
-			if (errParser.contains("not found")) {
-				msgError("Não encontrado", "Hospede", JOptionPane.CLOSED_OPTION);
+			if (errParser.contains("Unknown column")) {
+				msgError("Coluna incorreta", "Hospede", JOptionPane.CLOSED_OPTION);
+			} else if (errParser.contains("Unknown database")) {
+				msgError("Base de dados desconhecida...", "Hospede", JOptionPane.CLOSED_OPTION);
+			} else {
+				except.printStackTrace();
 			}
 		}
 		return null;

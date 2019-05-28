@@ -3,12 +3,22 @@ package src.com.fatec.gerenciamentohotel.entity;
 import java.util.Date;
 
 public class Reserva {
+	/*
+	 * id
+	 * id_funcionario
+	 * id_hospede
+	 * id_num_quarto
+	 * dat_checkin
+	 * dat_checkout                             
+	 * status
+	 */
     private long id;
     private Date checkIn;
     private Date checkOut;
     private Hospede hospede;
+    private Funcionario funcionario;
     private Quarto quarto;
-    private String status;
+    private char status;
 
     public long getId() {
         return id;
@@ -17,7 +27,7 @@ public class Reserva {
     public void setId(long id) {
         this.id = id;
     }
-
+    
     public Date getCheckIn() {
         return checkIn;
     }
@@ -33,6 +43,22 @@ public class Reserva {
     public void setCheckOut(Date checkOut) {
         this.checkOut = checkOut;
     }
+    
+	public void setStatus(char status) {
+		this.status = status;
+	}
+    
+    public char getStatus() {
+        return this.status;
+    }
+    
+    public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
 
     public Hospede getHospede() {
         return hospede;
@@ -42,7 +68,7 @@ public class Reserva {
         this.hospede = hospede;
     }
 
-    public Quarto getQuarto() {
+	public Quarto getQuarto() {
         return quarto;
     }
 
@@ -50,11 +76,12 @@ public class Reserva {
         this.quarto = quarto;
     }
 
-    public String getStatus() {
-        return this.status;
-    }
+	@Override
+	public String toString() {
+		return "Reserva [id=" + id + "\ncheckIn=" + checkIn + "\ncheckOut=" + checkOut + "\nhospede=" + hospede
+				+ "\nfuncionario=" + funcionario + "\nquarto=" + quarto + "\nstatus=" + status + "]";
+	}
 
-    public void setStaus(String status) {
-        this.status = status;
-    }
+    
+    
 }

@@ -29,7 +29,7 @@ public class QuartoControl {
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
 			// ID não é AUTO_INCREMENT, representa o numero da porta dos quartos
-			pstmt = con.prepareStatement(" Insert into quarto values (?, ?, ?) ");
+			pstmt = con.prepareStatement(" insert into quarto values (?, ?, ?) ");
 			pstmt.setInt(1, q.getNumQuarto());
 			pstmt.setLong(2, q.getTipoDeQuarto().getId());
 			pstmt.setShort(3, q.getAndar());
@@ -39,8 +39,11 @@ public class QuartoControl {
 			if (errParser.contains("foreign key constraint")) {
 				msgError("Insira um codigo valido para o tipo de quarto", "Tipo de Quarto Invalido",
 						JOptionPane.ERROR_MESSAGE);
+			} else if (errParser.contains("Duplicate entry")) {
+				msgError("Quarto já existe", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
 				msgError("Erro desconhecido...\nContate um administrador", "Quarto", JOptionPane.ERROR_MESSAGE);
+				except.printStackTrace();
 			}
 		}
 	}
@@ -53,17 +56,17 @@ public class QuartoControl {
 		Quarto quar;
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
-			PreparedStatement pstmt = con.prepareStatement("Select * from quarto where num_quarto = ?");
+			PreparedStatement pstmt = con.prepareStatement("select * from quarto where num_quarto = ?");
 			pstmt.setLong(1, id);
 			ResultSet rs = pstmt.executeQuery();
-			if (!rs.wasNull()) {
+			if (rs.first()) {
 				quar = new Quarto();
-				while (rs.next()) {
+				do {
 					TipoDeQuartoControl tqc = new TipoDeQuartoControl();
 					quar.setNumQuarto(rs.getInt("num_quarto"));
 					quar.setTipoDeQuarto(tqc.selectTipoQuarto(rs.getInt("id_tipo_quarto")));
 					quar.setAndar(rs.getShort("andar"));
-				}
+				} while (rs.next());
 				return quar;
 			}
 		} catch (SQLException except) {

@@ -1,23 +1,23 @@
 package src.com.fatec.gerenciamentohotel.control;
 
-import src.com.fatec.gerenciamentohotel.control.connection.ConnectionDB;
-import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
-import src.com.fatec.gerenciamentohotel.entity.Funcionario;
-
-import javax.swing.JOptionPane;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
+
+import src.com.fatec.gerenciamentohotel.control.connection.ConnectionDB;
+import src.com.fatec.gerenciamentohotel.entity.Funcionario;
+import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
+
 public class FuncionarioControl {
 
 	public void insert(Funcionario f) {
-		/*if (f.getId() == 0) {
-			msgError("Id vazio", "Erro", JOptionPane.ERROR_MESSAGE);
-			return;
-		}*/
 		if (f.getEndereco() == null) {
 			msgError("Endereco vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
@@ -34,14 +34,16 @@ public class FuncionarioControl {
 			msgError("Telefone vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		/* celular pode ser null
 		if (f.getCelular().trim().isEmpty()) {
 			msgError("Celular vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
-		}
+		}*/
+		/* email pode ser null
 		if (f.getEmail().trim().isEmpty()) {
 			msgError("Email vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
-		}
+		}*/
 		if (f.getDataNascimento() == null) {
 			msgError("Data de Nascimento vazia", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
@@ -57,7 +59,12 @@ public class FuncionarioControl {
 		if (f.getStatus() == Character.MIN_VALUE) {
 			msgError("Status vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
-		}
+		} else if (f.getStatus() != 'A') {
+			if (f.getStatus() != 'I' ) {
+				msgError("Status deve ser A (Ativo) ou I (Inativo)", "Status Incorreto", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}		
 		if (f.getTipoFuncionario() == null) {
 			msgError("Tipo funcionario vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
@@ -66,11 +73,9 @@ public class FuncionarioControl {
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
 			// omitir o ID já que no banco ele é AUTO_INCREMENT
-			pstmt = con.prepareStatement(
-					" Insert into funcionario "
+			pstmt = con.prepareStatement(" insert into funcionario "
 					+ " (cep, cpf, nome, telefone, celular, email, dat_nascimento, status, login, senha, tipo_funcionario, num_residencia) "
-					+ " values "
-					+ " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+					+ " values " + " (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 			pstmt.setString(1, f.getEndereco().getCep());
 			pstmt.setString(2, f.getCpf());
 			pstmt.setString(3, f.getNome());
@@ -80,7 +85,7 @@ public class FuncionarioControl {
 			DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			String nascString = sdf.format(f.getDataNascimento());
 			Date nasc = sdf.parse(nascString);
-			f.setDataNascimento(nasc);
+			// f.setDataNascimento(nasc);
 			pstmt.setDate(7, new java.sql.Date(nasc.getTime()));
 			// se "A" funcionario Ativo, caso contrário, "I" para Inativo
 			pstmt.setString(8, String.valueOf(f.getStatus()));
@@ -95,10 +100,11 @@ public class FuncionarioControl {
 				EnderecoControl ec = new EnderecoControl();
 				ec.insert(f.getEndereco());
 				this.insert(f);
-			} else if (errParser.contains("'cpf_UNIQUE'")){
+			} else if (errParser.contains("'cpf_UNIQUE'")) {
 				msgError("CPF já existe", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
 				msgError("Erro desconhecido...\nContate um administrador", "Funcionario", JOptionPane.ERROR_MESSAGE);
+				except.printStackTrace();
 			}
 		}
 	}
@@ -107,16 +113,16 @@ public class FuncionarioControl {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 
-	public Funcionario selectDocFuncionario(String doc) {
+	public Funcionario selectDocFuncionario(String docFuncionario) {
 		Funcionario func;
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
-			PreparedStatement pstmt = con.prepareStatement("Select * from funcionario where cpf = ?");
-			pstmt.setString(1, doc);
+			PreparedStatement pstmt = con.prepareStatement("select * from funcionario where cpf = ?");
+			pstmt.setString(1, docFuncionario);
 			ResultSet rs = pstmt.executeQuery();
-			if (!rs.wasNull()) {
+			if (rs.first()) {
 				func = new Funcionario();
-				while (rs.next()) {
+				do {
 					EnderecoControl ec = new EnderecoControl();
 					func.setId(rs.getInt("id"));
 					func.setEndereco(ec.selectCep(rs.getString("cep")));
@@ -130,13 +136,17 @@ public class FuncionarioControl {
 					func.setLogin(rs.getString("login"));
 					func.setSenha(rs.getString("senha"));
 					func.setTipoFuncionario((EFuncionario.valueOf(rs.getString("tipo_funcionario"))));
-				}
+				} while (rs.next());
 				return func;
 			}
-		} catch (SQLException e) {
-			String errParser = e.getMessage();
-			if (errParser.contains("not found")) {
-				msgError("Não encontrado", "Funcionario" , JOptionPane.CLOSED_OPTION);
+		} catch (SQLException except) {
+			String errParser = except.getMessage();
+			if (errParser.contains("Unknown column")) {
+				msgError("Não encontrado", "Funcionario", JOptionPane.CLOSED_OPTION);
+			} else if (errParser.contains("Unknown database")) {
+				msgError("Base de dados desconhecida...", "Funcionario", JOptionPane.CLOSED_OPTION);
+			} else {
+				except.printStackTrace();
 			}
 		}
 		return null;

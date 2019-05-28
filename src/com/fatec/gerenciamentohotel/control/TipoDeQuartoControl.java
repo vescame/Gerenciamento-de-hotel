@@ -39,7 +39,7 @@ public class TipoDeQuartoControl {
 		} catch (SQLException except) {
 			String errParser = except.getMessage();
 			if (errParser.contains("Duplicate entry")) {
-				msgError("Código já existe", "Aviso", JOptionPane.WARNING_MESSAGE);
+				msgError("Tipo de quarto já existe", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
 				except.printStackTrace();
 				msgError("Erro desconhecido...\nContate um administrador", "Tipo De Quarto", JOptionPane.ERROR_MESSAGE);
@@ -71,7 +71,10 @@ public class TipoDeQuartoControl {
 			}
 		} catch (SQLException except) {
 			String errParser = except.getMessage();
-			except.printStackTrace();
+			if (errParser.contains("Unknown column")) {
+				except.printStackTrace();
+			}
+			
 		}
 		return null;
 	}

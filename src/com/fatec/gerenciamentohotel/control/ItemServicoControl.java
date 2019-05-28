@@ -5,22 +5,21 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import src.com.fatec.gerenciamentohotel.entity.Hospede;
 import src.com.fatec.gerenciamentohotel.entity.ItemServico;
 
 public class ItemServicoControl {
 	List<ItemServico> itens = new ArrayList<>();
-	
+
 	public void insert(ItemServico i) {
-		if(i.getId() == 0) {
+		if (i.getId() == 0) {
 			msgError("Id Vazio");
 			return;
 		}
-		if(i.getValor() == 0) {
+		if (i.getValor() == 0) {
 			msgError("Valor Vazio");
 			return;
 		}
-		if(i.getDescricao().trim().isEmpty()) {
+		if (i.getDescricao().trim().isEmpty()) {
 			msgError("Descricao Vazio");
 			return;
 		}
@@ -32,11 +31,11 @@ public class ItemServicoControl {
 	}
 
 	public ItemServico selectItemServico(long id) {
-        for (ItemServico i : this.itens) {
-            if (i.getId() == id) {
-                return i;
-            }
-        }
-        return null;
-    }
+		for (ItemServico i : this.itens) {
+			if (i.getId() == id) {
+				return i;
+			}
+		}
+		return null;
+	}
 }
