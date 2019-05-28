@@ -21,7 +21,7 @@ COMMENT = 'Tabela gerenciadora de endereços';
 CREATE TABLE IF NOT EXISTS `admin_hotel`.`hospede` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `cep` CHAR(8) NOT NULL,
-  `cpf` VARCHAR(11) NULL,
+  `cpf` VARCHAR(11) NOT NULL,
   `nome` VARCHAR(35) NOT NULL,
   `telefone` VARCHAR(15) NOT NULL,
   `celular` VARCHAR(15) NULL,
@@ -44,7 +44,7 @@ COMMENT = 'Tabela gerenciadora de hóspedes';
 CREATE TABLE IF NOT EXISTS `admin_hotel`.`funcionario` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `cep` CHAR(8) NOT NULL,
-  `cpf` VARCHAR(11) NULL,
+  `cpf` VARCHAR(11) NOT NULL,
   `nome` VARCHAR(35) NOT NULL,
   `telefone` VARCHAR(15) NOT NULL,
   `celular` VARCHAR(15) NULL,
@@ -98,24 +98,24 @@ COMMENT = 'Tabela gerenciadora de quartos';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `admin_hotel`.`reserva` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `id_funcionario` INT NOT NULL,
-  `id_hospede` INT NOT NULL,
-  `id_num_quarto` INT NOT NULL,
+  `cpf_funcionario` VARCHAR(11) NOT NULL,
+  `cpf_hospede` VARCHAR(11) NOT NULL,
+  `num_quarto` INT NOT NULL,
   `dat_checkin` DATE NOT NULL,
   `dat_checkout` DATE NULL,
-  `status` CHAR(1) NULL,
+  `status` CHAR(1) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_hospede_idx` (`id_hospede` ASC),
-  INDEX `fk_funcionario_idx` (`id_funcionario` ASC),
-  INDEX `fk_quarto_idx` (`id_num_quarto` ASC),
+  INDEX `fk_hospede_idx` (`cpf_hospede` ASC),
+  INDEX `fk_funcionario_idx` (`cpf_funcionario` ASC),
+  INDEX `fk_quarto_idx` (`num_quarto` ASC),
   CONSTRAINT `fk_hospede`
-    FOREIGN KEY (`id_hospede`)
-    REFERENCES `admin_hotel`.`hospede` (`id`),
+    FOREIGN KEY (`cpf_hospede`)
+    REFERENCES `admin_hotel`.`hospede` (`cpf`),
   CONSTRAINT `fk_funcionario`
-    FOREIGN KEY (`id_funcionario`)
-    REFERENCES `admin_hotel`.`funcionario` (`id`),
+    FOREIGN KEY (`cpf_funcionario`)
+    REFERENCES `admin_hotel`.`funcionario` (`cpf`),
   CONSTRAINT `fk_quarto`
-    FOREIGN KEY (`id_num_quarto`)
+    FOREIGN KEY (`num_quarto`)
     REFERENCES `admin_hotel`.`quarto` (`num_quarto`))
 COMMENT = 'Tabela gerenciadora de reservas';
 
@@ -136,21 +136,21 @@ COMMENT = 'Tabela gerenciadora de serviços e items';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `admin_hotel`.`servico_de_quarto` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `id_hospede` INT NOT NULL,
-  `id_funcionario` INT NOT NULL,
+  `cpf_hospede` VARCHAR(11) NOT NULL,
+  `cpf_funcionario` VARCHAR(11) NOT NULL,
   `id_item_servico` INT NOT NULL,
-  `qtd_solicitado` INT NULL,
-  `dat_solicitacao` DATE NULL,
+  `qtd_solicitado` INT NOT NULL,
+  `dat_solicitacao` DATE NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_hospede_serv_idx` (`id_hospede` ASC),
-  INDEX `fk_funcionario_serv_idx` (`id_funcionario` ASC),
+  INDEX `fk_hospede_serv_idx` (`cpf_hospede` ASC),
+  INDEX `fk_funcionario_serv_idx` (`cpf_funcionario` ASC),
   INDEX `fk_item_servico_id` (`id_item_servico` ASC),
   CONSTRAINT `fk_servico_hospede`
-    FOREIGN KEY (`id_hospede`)
-    REFERENCES `admin_hotel`.`hospede` (`id`),
+    FOREIGN KEY (`cpf_hospede`)
+    REFERENCES `admin_hotel`.`hospede` (`cpf`),
   CONSTRAINT `fk_servico_funcionario`
-    FOREIGN KEY (`id_funcionario`)
-    REFERENCES `admin_hotel`.`funcionario` (`id`),
+    FOREIGN KEY (`cpf_funcionario`)
+    REFERENCES `admin_hotel`.`funcionario` (`cpf`),
   CONSTRAINT `fk_item`
     FOREIGN KEY (`id_item_servico`)
     REFERENCES `admin_hotel`.`item_servico` (`id`))
