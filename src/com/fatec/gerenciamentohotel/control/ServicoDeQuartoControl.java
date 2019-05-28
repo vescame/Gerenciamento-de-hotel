@@ -1,9 +1,9 @@
 package src.com.fatec.gerenciamentohotel.control;
 
-import src.com.fatec.gerenciamentohotel.entity.ServicoDeQuarto;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import src.com.fatec.gerenciamentohotel.entity.ServicoDeQuarto;
 
 public class ServicoDeQuartoControl {
     List<ServicoDeQuarto> reservas = new ArrayList<>();

@@ -1,6 +1,6 @@
 package src.com.fatec.gerenciamentohotel.entity;
 
-import src.com.fatec.gerenciamentohotel.entity.enums.*;
+import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
 
 public class Funcionario extends Pessoa {
 	/*

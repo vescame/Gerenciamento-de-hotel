@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import src.com.fatec.gerenciamentohotel.entity.Quarto;
 import src.com.fatec.gerenciamentohotel.entity.Reserva;
 
 public class ReservaControl {
