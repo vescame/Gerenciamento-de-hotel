@@ -50,8 +50,7 @@ public class Hospede extends Pessoa {
 				+ historicoReserva + "\ngetId()=" + getId() + "\ngetEndereco()=" + getEndereco() + "\ngetCpf()="
 				+ getCpf() + "\ngetNome()=" + getNome() + "\ngetTelefone()=" + getTelefone() + "\ngetCelular()="
 				+ getCelular() + "\ngetEmail()=" + getEmail() + "\ngetDataNascimento()=" + getDataNascimento()
-				+ "\ngetStatus()=" + getStatus() + "\ngetClass()=" + getClass() + "\nhashCode()=" + hashCode()
-				+ "\ntoString()=" + super.toString() + "]";
+				+ "\ngetStatus()=" + getStatus() + "]";
 	}
 
 }

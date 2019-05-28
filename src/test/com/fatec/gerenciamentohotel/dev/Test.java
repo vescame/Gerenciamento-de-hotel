@@ -7,14 +7,18 @@ import java.util.Date;
 
 import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
 import src.com.fatec.gerenciamentohotel.control.HospedeControl;
-import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
+import src.com.fatec.gerenciamentohotel.control.QuartoControl;
+import src.com.fatec.gerenciamentohotel.control.TipoDeQuartoControl;
 import src.com.fatec.gerenciamentohotel.entity.Endereco;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
+import src.com.fatec.gerenciamentohotel.entity.Quarto;
+import src.com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
+import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
 
 public class Test {
 	public static void main(String[] args) {
-		Endereco e = new Endereco();
+		/*Endereco e = new Endereco();
 
 		e.setCep("03570200");
 		e.setBairro("Parque Savoy City");
@@ -53,22 +57,50 @@ public class Test {
 		h.setDataNascimento(customStrToDate(strDate));
 		h.setStatus('I');
 		h.setNumResidencia(182);
-		
+
 		HospedeControl hc = new HospedeControl();
 		hc.insert(h);
 		
+		TipoDeQuarto t = new TipoDeQuarto();
+		t.setTipo("Forever Alone");
+		t.setValorDiaria(35.50f);
+		t.setQuantidadeAdultos((short) 1);
+		t.setQuantidadeCriancas((short) 0);
+
+		TipoDeQuartoControl tqc = new TipoDeQuartoControl();
+		tqc.insert(t);
+		
+		Quarto q = new Quarto();
+		q.setNumQuarto(125);
+		q.setAndar((short) 1);
+		q.setTipoDeQuarto(tqc.selectTipoQuarto(1));
+		
+		*/
+		QuartoControl qc = new QuartoControl();
+		// qc.insert(q);
+		
 		try {
-			Funcionario f1 = fc.selectDocFuncionario(f.getCpf());
-			System.out.println(f1);
+			/*// select funcionario
+			System.out.println(f);
 			System.out.println(fc.selectDocFuncionario(f.getCpf()).getNome());
+
+			// select hospede
 			System.out.println(h);
-			System.out.println(fc.selectDocFuncionario(h.getCpf()).getNome());
+			System.out.println(hc.selectDocHospede(h.getCpf()).getNome());
+
+			// select tipo quarto
+			System.out.println(t);
+			System.out.println(tqc.selectTipoQuarto(1));*/
+			
+			// select quarto
+			// System.out.println(q);
+			System.out.println(qc.selectQuarto(125));
 		} catch (NullPointerException except) {
 			except.printStackTrace();
 			System.out.println("Não há registros deste documento para este funcionário");
 		}
 	}
-	
+
 	public static Date customStrToDate(String strDate) {
 		Date nasc = null;
 		try {

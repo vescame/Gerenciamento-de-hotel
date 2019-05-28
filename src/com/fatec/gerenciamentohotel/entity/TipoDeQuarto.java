@@ -5,9 +5,8 @@ public class TipoDeQuarto {
     private String tipo;
     private float valorDiaria;
     private short quantidadeAdultos;
-    private short quantidateCriacas;
-    private boolean status;
-
+    private short quantidateCriancas;
+    
     public long getId() {
         return id;
     }
@@ -40,19 +39,19 @@ public class TipoDeQuarto {
         this.quantidadeAdultos = quantidadeAdultos;
     }
 
-    public short getQuantidateCriacas() {
-        return quantidateCriacas;
+    public short getQuantidadeCriancas() {
+        return quantidateCriancas;
     }
 
-    public void setQuantidateCriacas(short quantidateCriacas) {
-        this.quantidateCriacas = quantidateCriacas;
+    public void setQuantidadeCriancas(short quantidateCriancas) {
+        this.quantidateCriancas = quantidateCriancas;
     }
 
-    public boolean getStatus() {
-        return this.status;
-    }
-
-    public void setStaus(boolean status) {
-        this.status = status;
-    }
+	@Override
+	public String toString() {
+		return "TipoDeQuarto [id=" + id + "\ntipo=" + tipo + "\nvalorDiaria=" + valorDiaria + "\nquantidadeAdultos="
+				+ quantidadeAdultos + "\nquantidateCriancas=" + quantidateCriancas + "]";
+	}
+    
+    
 }

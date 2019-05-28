@@ -73,7 +73,8 @@ CREATE TABLE IF NOT EXISTS `admin_hotel`.`tipo_quarto` (
   `preco` DECIMAL(6,2) NOT NULL,
   `qtd_adultos` INT NOT NULL,
   `qtd_criancas` INT NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `tipo_quarto_UNIQUE` (`tipo_quarto` ASC))
 COMMENT = 'Tabela gerenciadora de tipos de quartos, valores, quantidade de hóspedes';
 
 
@@ -81,10 +82,10 @@ COMMENT = 'Tabela gerenciadora de tipos de quartos, valores, quantidade de hósp
 -- Table `admin_hotel`.`quarto`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `admin_hotel`.`quarto` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `num_quarto` INT NOT NULL,
   `id_tipo_quarto` INT NOT NULL,
   `andar` INT NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`num_quarto`),
   INDEX `fk_tipo_quarto_idx` (`id_tipo_quarto` ASC),
   CONSTRAINT `fk_tipo_quarto`
     FOREIGN KEY (`id_tipo_quarto`)
@@ -99,14 +100,14 @@ CREATE TABLE IF NOT EXISTS `admin_hotel`.`reserva` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_funcionario` INT NOT NULL,
   `id_hospede` INT NOT NULL,
-  `id_quarto` INT NOT NULL,
+  `id_num_quarto` INT NOT NULL,
   `dat_checkin` DATE NOT NULL,
   `dat_checkout` DATE NULL,
   `status` CHAR(1) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_hospede_idx` (`id_hospede` ASC),
   INDEX `fk_funcionario_idx` (`id_funcionario` ASC),
-  INDEX `fk_quarto_idx` (`id_quarto` ASC),
+  INDEX `fk_quarto_idx` (`id_num_quarto` ASC),
   CONSTRAINT `fk_hospede`
     FOREIGN KEY (`id_hospede`)
     REFERENCES `admin_hotel`.`hospede` (`id`),
@@ -114,8 +115,8 @@ CREATE TABLE IF NOT EXISTS `admin_hotel`.`reserva` (
     FOREIGN KEY (`id_funcionario`)
     REFERENCES `admin_hotel`.`funcionario` (`id`),
   CONSTRAINT `fk_quarto`
-    FOREIGN KEY (`id_quarto`)
-    REFERENCES `admin_hotel`.`quarto` (`id`))
+    FOREIGN KEY (`id_num_quarto`)
+    REFERENCES `admin_hotel`.`quarto` (`num_quarto`))
 COMMENT = 'Tabela gerenciadora de reservas';
 
 
@@ -136,15 +137,20 @@ COMMENT = 'Tabela gerenciadora de serviços e items';
 CREATE TABLE IF NOT EXISTS `admin_hotel`.`servico_de_quarto` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `id_hospede` INT NOT NULL,
+  `id_funcionario` INT NOT NULL,
   `id_item_servico` INT NOT NULL,
   `qtd_solicitado` INT NULL,
   `dat_solicitacao` DATE NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_hospede_idx` (`id_hospede` ASC),
+  INDEX `fk_hospede_serv_idx` (`id_hospede` ASC),
+  INDEX `fk_funcionario_serv_idx` (`id_funcionario` ASC),
   INDEX `fk_item_servico_id` (`id_item_servico` ASC),
   CONSTRAINT `fk_servico_hospede`
     FOREIGN KEY (`id_hospede`)
     REFERENCES `admin_hotel`.`hospede` (`id`),
+  CONSTRAINT `fk_servico_funcionario`
+    FOREIGN KEY (`id_funcionario`)
+    REFERENCES `admin_hotel`.`funcionario` (`id`),
   CONSTRAINT `fk_item`
     FOREIGN KEY (`id_item_servico`)
     REFERENCES `admin_hotel`.`item_servico` (`id`))

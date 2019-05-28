@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path=""/>
-	<classpathentry kind="lib" path="/home/copyfmt/Documents/FATEC/4o_semestre/poo/Projeto/Gerenciamento-de-Hotel/lib/mariadb-java-client-2.4.1.jar"/>
-	<classpathentry kind="output" path="bin"/>
-</classpath>

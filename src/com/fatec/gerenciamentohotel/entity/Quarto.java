@@ -1,17 +1,16 @@
 package src.com.fatec.gerenciamentohotel.entity;
 
 public class Quarto {
-    private long id;
+    private int numQuarto; // ID PRIMARY KEY
     private TipoDeQuarto tipoDeQuarto;
     private short andar;
-    private boolean status;
 
-    public long getId() {
-        return id;
+    public int getNumQuarto() {
+        return numQuarto;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setNumQuarto(int numQuarto) {
+        this.numQuarto = numQuarto;
     }
 
     public TipoDeQuarto getTipoDeQuarto() {
@@ -30,12 +29,8 @@ public class Quarto {
         this.andar = andar;
     }
 
-    public boolean getStatus() {
-        return this.status;
-    }
-
-    public void setStaus(boolean status) {
-        this.status = status;
-    }
-
+	@Override
+	public String toString() {
+		return "Quarto [id=" + numQuarto + "\ntipoDeQuarto=" + tipoDeQuarto + "\nandar=" + andar + "]";
+	}
 }

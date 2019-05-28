@@ -62,10 +62,6 @@ public class FuncionarioControl {
 			msgError("Tipo funcionario vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		if (f.getTipoFuncionario() == null) {
-			msgError("Tipo funcionario vazio", "Erro", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
@@ -102,7 +98,7 @@ public class FuncionarioControl {
 			} else if (errParser.contains("'cpf_UNIQUE'")){
 				msgError("CPF já existe", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
-				msgError("Erro desconhecido...\nContate um administrador", "ERRO", JOptionPane.ERROR_MESSAGE);
+				msgError("Erro desconhecido...\nContate um administrador", "Funcionario", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -140,7 +136,7 @@ public class FuncionarioControl {
 		} catch (SQLException e) {
 			String errParser = e.getMessage();
 			if (errParser.contains("not found")) {
-				msgError("Não encontrado","Funcionario" , JOptionPane.CLOSED_OPTION);
+				msgError("Não encontrado", "Funcionario" , JOptionPane.CLOSED_OPTION);
 			}
 		}
 		return null;

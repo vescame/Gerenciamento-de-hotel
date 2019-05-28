@@ -52,8 +52,7 @@ public class Funcionario extends Pessoa {
 				+ "\ngetId()=" + getId() + "\ngetEndereco()=" + getEndereco() + "\ngetCpf()=" + getCpf()
 				+ "\ngetNome()=" + getNome() + "\ngetTelefone()=" + getTelefone() + "\ngetCelular()=" + getCelular()
 				+ "\ngetEmail()=" + getEmail() + "\ngetDataNascimento()=" + getDataNascimento() + "\ngetStatus()="
-				+ getStatus() + "\ngetClass()=" + getClass() + "\nhashCode()=" + hashCode() + "\ntoString()="
-				+ super.toString() + "]";
+				+ getStatus() + "]";
 	}
 
     

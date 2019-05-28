@@ -15,7 +15,7 @@ import src.com.fatec.gerenciamentohotel.control.connection.ConnectionDB;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
 
 public class HospedeControl {
-	
+
 	public void insert(Hospede h) {
 		if (h.getEndereco() == null) {
 			msgError("Endereco vazio", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -53,11 +53,9 @@ public class HospedeControl {
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
 			// omitir o ID já que no banco ele é AUTO_INCREMENT
-			pstmt = con.prepareStatement(
-					" Insert into hospede "
+			pstmt = con.prepareStatement(" Insert into hospede "
 					+ " (cep, cpf, nome, telefone, celular, email, dat_nascimento, status, num_residencia) "
-					+ " values "
-					+ " (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+					+ " values " + " (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 			pstmt.setString(1, h.getEndereco().getCep());
 			pstmt.setString(2, h.getCpf());
 			pstmt.setString(3, h.getNome());
@@ -79,10 +77,10 @@ public class HospedeControl {
 				EnderecoControl ec = new EnderecoControl();
 				ec.insert(h.getEndereco());
 				this.insert(h);
-			} else if (errParser.contains("'cpf_UNIQUE'")){
+			} else if (errParser.contains("'cpf_UNIQUE'")) {
 				msgError("CPF já existe", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
-				msgError("Erro desconhecido...\nContate um administrador", "ERRO", JOptionPane.ERROR_MESSAGE);
+				msgError("Erro desconhecido...\nContate um administrador", "Hospede", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -114,10 +112,10 @@ public class HospedeControl {
 				}
 				return hosp;
 			}
-		} catch (SQLException e) {
-			String errParser = e.getMessage();
+		} catch (SQLException except) {
+			String errParser = except.getMessage();
 			if (errParser.contains("not found")) {
-				msgError("Não encontrado","Hospede" , JOptionPane.CLOSED_OPTION);
+				msgError("Não encontrado", "Hospede", JOptionPane.CLOSED_OPTION);
 			}
 		}
 		return null;
