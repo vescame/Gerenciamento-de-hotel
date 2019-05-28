@@ -2,27 +2,31 @@ package src.com.fatec.gerenciamentohotel.boundary.window;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Toolkit;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JLabel;
-
 import java.awt.SystemColor;
-import javax.swing.JDesktopPane;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
-import javax.swing.Timer;
-
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
+
+import src.com.fatec.gerenciamentohotel.boundary.window.cadastro.CadastroHospede;
+import src.com.fatec.gerenciamentohotel.boundary.window.cadastro.CadastroFuncionario;
+import src.com.fatec.gerenciamentohotel.boundary.window.cadastro.CadastroQuarto;
+import src.com.fatec.gerenciamentohotel.boundary.window.cadastro.CadastroTipoQuarto;
 
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = -5038047263946063083L;
@@ -38,6 +42,10 @@ public class MainWindow extends JFrame {
 	private JMenuItem mItemCadastrarQuartos, mItemConsultarQuartos, mItemCadastrarTipo, mItemConsultarTipos;
 	private JMenuItem mntmSolicitarServio, mntmConsultarServios;
 	private JSeparator separatorReserva, separatorQuartos;
+	private CadastroFuncionario cadastroFuncionario;
+	private CadastroHospede cadadastroHospede;
+	private CadastroQuarto cadastroQuarto;
+	private CadastroTipoQuarto cadastroTipoQuarto;
 	private Timer timer;
 
 	public MainWindow() {
@@ -67,12 +75,28 @@ public class MainWindow extends JFrame {
 		menuFuncionarios = new JMenu("Funcionários");
 		menuBar.add(menuFuncionarios);
 		mItemCadastroFuncionario = new JMenuItem("Cadastro de Funcionário");
+		mItemCadastroFuncionario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cadastroFuncionario == null) {
+					cadastroFuncionario = new CadastroFuncionario();
+				}
+				abrirJanelas(cadastroFuncionario);
+			}
+		});
 		menuFuncionarios.add(mItemCadastroFuncionario);
 		mItemConsultarFuncionario = new JMenuItem("Consultar Funcionário");
 		menuFuncionarios.add(mItemConsultarFuncionario);
 		menuHospedes = new JMenu("Hóspedes");
 		menuBar.add(menuHospedes);
 		mItemCadastroDeHospede = new JMenuItem("Cadastro de Hóspede");
+		mItemCadastroDeHospede.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cadadastroHospede == null) {
+					cadadastroHospede = new CadastroHospede();
+				}
+				abrirJanelas(cadadastroHospede);
+			}
+		});
 		menuHospedes.add(mItemCadastroDeHospede);
 		mItemConsultaDeHospede = new JMenuItem("Consulta de Hóspede");
 		menuHospedes.add(mItemConsultaDeHospede);
@@ -95,6 +119,14 @@ public class MainWindow extends JFrame {
 		menuQuartos = new JMenu("Quartos");
 		menuBar.add(menuQuartos);
 		mItemCadastrarQuartos = new JMenuItem("Cadastrar Quartos");
+		mItemCadastrarQuartos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cadastroQuarto == null) {
+					cadastroQuarto= new CadastroQuarto();
+				}
+				abrirJanelas(cadastroQuarto);
+			}
+		});
 		menuQuartos.add(mItemCadastrarQuartos);
 		mItemConsultarQuartos = new JMenuItem("Consultar Quartos");
 		menuQuartos.add(mItemConsultarQuartos);
@@ -104,6 +136,14 @@ public class MainWindow extends JFrame {
 		menuTipoQuarto = new JMenu("Tipos de Quarto");
 		menuQuartos.add(menuTipoQuarto);
 		mItemCadastrarTipo = new JMenuItem("Cadastrar Tipo");
+		mItemCadastrarTipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cadastroTipoQuarto == null) {
+					cadastroTipoQuarto = new CadastroTipoQuarto();
+				}
+				abrirJanelas(cadastroTipoQuarto);
+			}
+		});
 		menuTipoQuarto.add(mItemCadastrarTipo);
 		mItemConsultarTipos = new JMenuItem("Consultar Tipos");
 		menuTipoQuarto.add(mItemConsultarTipos);
@@ -136,5 +176,15 @@ public class MainWindow extends JFrame {
 		lblHora = new JLabel("Hora");
 		StatusBar.add(lblHora, BorderLayout.WEST);
 
+	}
+
+	private void abrirJanelas(JInternalFrame frame) {
+		if (frame.isVisible()) {
+			frame.requestFocus();
+			frame.toFront();
+		} else {
+			desktopPane.add(frame);
+			frame.setVisible(true);
+		}
 	}
 }

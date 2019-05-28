@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-
 import src.com.fatec.gerenciamentohotel.control.connection.ConnectionDB;
 import src.com.fatec.gerenciamentohotel.entity.Reserva;
 
