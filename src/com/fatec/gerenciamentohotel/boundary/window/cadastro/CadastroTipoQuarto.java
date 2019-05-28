@@ -6,6 +6,10 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class CadastroTipoQuarto extends JInternalFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8935897060030865111L;
 	private JTextField textFieldID;
 	private JTextField textFieldDescricao;
 	private JTextField textFieldValor;

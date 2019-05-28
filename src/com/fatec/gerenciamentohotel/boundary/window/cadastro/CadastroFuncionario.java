@@ -14,7 +14,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CadastroFuncionario extends JInternalFrame {
 
@@ -55,6 +58,8 @@ public class CadastroFuncionario extends JInternalFrame {
 	private JButton btnCadastrar;
 	private JButton btnCancelar;
 	private JComboBox<EFuncionario> comboBoxPermissoes;
+	private JButton buttonNovo;
+	private CadastroEndereco dialog;
 
 	public CadastroFuncionario() {
 		setTitle("Cadastro de Funcionários");
@@ -143,6 +148,19 @@ public class CadastroFuncionario extends JInternalFrame {
 		textFieldUF.setBounds(338, 115, 66, 25);
 		panelEndereco.add(textFieldUF);
 		textFieldUF.setColumns(10);
+
+		buttonNovo = new JButton("Novo");
+		buttonNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (dialog == null) {
+					dialog = new CadastroEndereco();
+				}
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
+			}
+		});
+		buttonNovo.setBounds(311, 17, 93, 25);
+		panelEndereco.add(buttonNovo);
 
 		lblDataDeNascimento = new JLabel("Data de Nascimento:");
 		lblDataDeNascimento.setBounds(12, 244, 147, 15);

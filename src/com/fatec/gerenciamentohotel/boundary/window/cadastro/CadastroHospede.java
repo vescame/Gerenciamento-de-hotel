@@ -8,6 +8,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CadastroHospede extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
@@ -39,6 +43,8 @@ public class CadastroHospede extends JInternalFrame {
 	private JLabel labelEmail;
 	private JButton buttonCancelar;
 	private JButton buttonCadastrar;
+	private JButton buttonNovo;
+	private CadastroEndereco dialog;
 
 	public CadastroHospede() {
 		setClosable(true);
@@ -147,6 +153,19 @@ public class CadastroHospede extends JInternalFrame {
 		textFieldUf.setColumns(10);
 		textFieldUf.setBounds(338, 115, 66, 25);
 		panelEndereco.add(textFieldUf);
+
+		buttonNovo = new JButton("Novo");
+		buttonNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (dialog == null) {
+					dialog = new CadastroEndereco();
+				}
+				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				dialog.setVisible(true);
+			}
+		});
+		buttonNovo.setBounds(311, 17, 93, 25);
+		panelEndereco.add(buttonNovo);
 
 		labelDataNascimento = new JLabel("Data de Nascimento:");
 		labelDataNascimento.setBounds(12, 256, 147, 15);
