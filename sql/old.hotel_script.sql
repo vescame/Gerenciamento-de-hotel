@@ -19,8 +19,9 @@ COMMENT = 'Tabela gerenciadora de endereços';
 -- Table `admin_hotel`.`hospede`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `admin_hotel`.`hospede` (
-  `cpf` VARCHAR(11) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `cep` CHAR(8) NOT NULL,
+  `cpf` VARCHAR(11) NOT NULL,
   `nome` VARCHAR(35) NOT NULL,
   `telefone` VARCHAR(15) NOT NULL,
   `celular` VARCHAR(15) NULL,
@@ -28,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `admin_hotel`.`hospede` (
   `dat_nascimento` DATE NOT NULL,
   `status` CHAR(1) NOT NULL,
   `num_residencia` INT NOT NULL,
-  PRIMARY KEY (`cpf`),
+  PRIMARY KEY (`id`),
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
   INDEX `fk_endereco_idh` (`cep` ASC),
   CONSTRAINT `fk_endereco_hospede`
@@ -41,8 +42,9 @@ COMMENT = 'Tabela gerenciadora de hóspedes';
 -- Table `admin_hotel`.`funcionario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `admin_hotel`.`funcionario` (
-  `cpf` VARCHAR(11) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `cep` CHAR(8) NOT NULL,
+  `cpf` VARCHAR(11) NOT NULL,
   `nome` VARCHAR(35) NOT NULL,
   `telefone` VARCHAR(15) NOT NULL,
   `celular` VARCHAR(15) NULL,
@@ -53,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `admin_hotel`.`funcionario` (
   `senha` VARCHAR(15) NOT NULL,
   `tipo_funcionario` VARCHAR(25) NOT NULL,
   `num_residencia` INT NOT NULL,
-  PRIMARY KEY (`cpf`),
+  PRIMARY KEY (`id`),
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
   INDEX `fk_endereco_idf` (`cep` ASC),
   CONSTRAINT `fk_endereco_funcionario`
@@ -117,3 +119,39 @@ CREATE TABLE IF NOT EXISTS `admin_hotel`.`reserva` (
     REFERENCES `admin_hotel`.`quarto` (`num_quarto`))
 COMMENT = 'Tabela gerenciadora de reservas';
 
+
+-- -----------------------------------------------------
+-- Table `admin_hotel`.`item_servico`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `admin_hotel`.`item_servico` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `descricao` VARCHAR(45) NOT NULL,
+  `valor` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`id`))
+COMMENT = 'Tabela gerenciadora de serviços e items';
+
+
+-- -----------------------------------------------------
+-- Table `admin_hotel`.`servico_de_quarto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `admin_hotel`.`servico_de_quarto` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `cpf_hospede` VARCHAR(11) NOT NULL,
+  `cpf_funcionario` VARCHAR(11) NOT NULL,
+  `id_item_servico` INT NOT NULL,
+  `qtd_solicitado` INT NOT NULL,
+  `dat_solicitacao` DATE NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_hospede_serv_idx` (`cpf_hospede` ASC),
+  INDEX `fk_funcionario_serv_idx` (`cpf_funcionario` ASC),
+  INDEX `fk_item_servico_id` (`id_item_servico` ASC),
+  CONSTRAINT `fk_servico_hospede`
+    FOREIGN KEY (`cpf_hospede`)
+    REFERENCES `admin_hotel`.`hospede` (`cpf`),
+  CONSTRAINT `fk_servico_funcionario`
+    FOREIGN KEY (`cpf_funcionario`)
+    REFERENCES `admin_hotel`.`funcionario` (`cpf`),
+  CONSTRAINT `fk_item`
+    FOREIGN KEY (`id_item_servico`)
+    REFERENCES `admin_hotel`.`item_servico` (`id`))
+COMMENT = 'Tabela gerenciadora de serviços e items solicitados pelo hóspede';
