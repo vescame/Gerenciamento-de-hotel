@@ -7,9 +7,8 @@ import java.util.List;
 
 public class Hospede extends Pessoa {
 	/*
-	 * id
-	 * cep
 	 * cpf
+	 * cep
 	 * nome
 	 * telefone
 	 * celular

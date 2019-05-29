@@ -59,10 +59,10 @@ public class HospedeControl {
 			PreparedStatement pstmt;
 			// omitir o ID já que no banco ele é AUTO_INCREMENT
 			pstmt = con.prepareStatement(" insert into hospede "
-					+ " (cep, cpf, nome, telefone, celular, email, dat_nascimento, status, num_residencia) "
+					// + " (cep, cpf, nome, telefone, celular, email, dat_nascimento, status, num_residencia) "
 					+ " values " + " (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
-			pstmt.setString(1, h.getEndereco().getCep());
-			pstmt.setString(2, h.getCpf());
+			pstmt.setString(1, h.getCpf());
+			pstmt.setString(2, h.getEndereco().getCep());
 			pstmt.setString(3, h.getNome());
 			pstmt.setString(4, h.getTelefone());
 			pstmt.setString(5, h.getCelular());
@@ -106,9 +106,8 @@ public class HospedeControl {
 				hosp = new Hospede();
 				do {
 					EnderecoControl ec = new EnderecoControl();
-					hosp.setId(rs.getInt("id"));
-					hosp.setEndereco(ec.selectCep(rs.getString("cep")));
 					hosp.setCpf(rs.getString("cpf"));
+					hosp.setEndereco(ec.selectCep(rs.getString("cep")));
 					hosp.setNome(rs.getString("nome"));
 					hosp.setTelefone(rs.getString("telefone"));
 					hosp.setCelular(rs.getString("celular"));

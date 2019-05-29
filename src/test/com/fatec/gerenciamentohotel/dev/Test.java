@@ -47,7 +47,7 @@ public class Test {
 		f.setNumResidencia(182);
 
 		FuncionarioControl fc = new FuncionarioControl();
-		//fc.insert(f);
+		fc.insert(f);
 
 		Hospede h = new Hospede();
 		h.setEndereco(e);
@@ -61,7 +61,7 @@ public class Test {
 		h.setNumResidencia(182);
 
 		HospedeControl hc = new HospedeControl();
-		//hc.insert(h);
+		hc.insert(h);
 		
 		TipoDeQuarto t = new TipoDeQuarto();
 		t.setTipo("Forever Alone");
@@ -70,7 +70,7 @@ public class Test {
 		t.setQuantidadeCriancas((short) 0);
 
 		TipoDeQuartoControl tqc = new TipoDeQuartoControl();
-		//tqc.insert(t);
+		tqc.insert(t);
 		
 		Quarto q = new Quarto();
 		q.setNumQuarto(125);
@@ -78,7 +78,7 @@ public class Test {
 		q.setTipoDeQuarto(tqc.selectTipoQuarto(1));
 		
 		QuartoControl qc = new QuartoControl();
-		//qc.insert(q);
+		qc.insert(q);
 		
 		Reserva r0 = new Reserva();
 		r0.setHospede(hc.selectDocHospede("43207052894"));
@@ -126,7 +126,7 @@ public class Test {
 			*/
 			
 			// select historico de reservas de hospede
-			System.out.println(rc.selectHistoricoReservas("43207052894"));
+			//System.out.println(rc.selectHistoricoReservas("43207052894"));
 		} catch (NullPointerException except) {
 			except.printStackTrace();
 			System.out.println("Não há registros");
