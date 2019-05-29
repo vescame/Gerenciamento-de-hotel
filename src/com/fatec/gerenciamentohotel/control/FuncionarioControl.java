@@ -60,7 +60,7 @@ public class FuncionarioControl {
 		try {
 			this.fdao.insert(f);
 		} catch (FuncionarioDAOException e) {
-			Map<String, String> h = ExceptionFormat.formatarTituloECorpo(e.getMessage());
+			Map<String, String> h = MensagemUsuario.formatarTituloECorpo(e.getMessage());
 			msgError(h.get("title"), h.get("description"), JOptionPane.WARNING_MESSAGE);
 		}
 	}
