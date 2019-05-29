@@ -3,7 +3,7 @@ package src.com.fatec.gerenciamentohotel.control;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MensagemUsuario {
+public class ExceptionFormat {
 	public static Map<String, String> formatarTituloECorpo(String exceptionMsg) {
 		String title, description;
 		Map<String, String> h = new HashMap<>();;
