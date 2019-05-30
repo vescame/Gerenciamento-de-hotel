@@ -4,55 +4,58 @@ import java.util.Date;
 
 public class Reserva {
 	/*
-	 * id
-	 * id_funcionario
-	 * id_hospede
-	 * id_num_quarto
-	 * dat_checkin
-	 * dat_checkout                             
-	 * status
+	 * id id_funcionario id_hospede id_num_quarto dat_checkin dat_checkout status
 	 */
-    private long id;
-    private Date checkIn;
-    private Date checkOut;
-    private Hospede hospede;
-    private Funcionario funcionario;
-    private Quarto quarto;
-    private char status;
+	private long id;
+	private Date checkIn;
+	private Date checkOut;
+	private Hospede hospede;
+	private Funcionario funcionario;
+	private Quarto quarto;
+	private char status;
+	private boolean ativo;
 
-    public long getId() {
-        return id;
-    }
+	public boolean isAtivo() {
+		return ativo;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
-    
-    public Date getCheckIn() {
-        return checkIn;
-    }
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
 
-    public void setCheckIn(Date checkIn) {
-        this.checkIn = checkIn;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public Date getCheckOut() {
-        return checkOut;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setCheckOut(Date checkOut) {
-        this.checkOut = checkOut;
-    }
-    
+	public Date getCheckIn() {
+		return checkIn;
+	}
+
+	public void setCheckIn(Date checkIn) {
+		this.checkIn = checkIn;
+	}
+
+	public Date getCheckOut() {
+		return checkOut;
+	}
+
+	public void setCheckOut(Date checkOut) {
+		this.checkOut = checkOut;
+	}
+
 	public void setStatus(char status) {
 		this.status = status;
 	}
-    
-    public char getStatus() {
-        return this.status;
-    }
-    
-    public Funcionario getFuncionario() {
+
+	public char getStatus() {
+		return this.status;
+	}
+
+	public Funcionario getFuncionario() {
 		return funcionario;
 	}
 
@@ -60,21 +63,21 @@ public class Reserva {
 		this.funcionario = funcionario;
 	}
 
-    public Hospede getHospede() {
-        return hospede;
-    }
+	public Hospede getHospede() {
+		return hospede;
+	}
 
-    public void setHospede(Hospede hospede) {
-        this.hospede = hospede;
-    }
+	public void setHospede(Hospede hospede) {
+		this.hospede = hospede;
+	}
 
 	public Quarto getQuarto() {
-        return quarto;
-    }
+		return quarto;
+	}
 
-    public void setQuarto(Quarto quarto) {
-        this.quarto = quarto;
-    }
+	public void setQuarto(Quarto quarto) {
+		this.quarto = quarto;
+	}
 
 	@Override
 	public String toString() {
@@ -82,6 +85,4 @@ public class Reserva {
 				+ "\nfuncionario=" + funcionario + "\nquarto=" + quarto + "\nstatus=" + status + "]";
 	}
 
-    
-    
 }

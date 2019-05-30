@@ -1,33 +1,42 @@
 package src.com.fatec.gerenciamentohotel.entity;
 
 public class Quarto {
-    private int numQuarto; // ID PRIMARY KEY
-    private TipoDeQuarto tipoDeQuarto;
-    private short andar;
+	private int numQuarto; // ID PRIMARY KEY
+	private TipoDeQuarto tipoDeQuarto;
+	private short andar;
+	private boolean disponivel;
 
-    public int getNumQuarto() {
-        return numQuarto;
-    }
+	public boolean isDisponivel() {
+		return disponivel;
+	}
 
-    public void setNumQuarto(int numQuarto) {
-        this.numQuarto = numQuarto;
-    }
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
+	}
 
-    public TipoDeQuarto getTipoDeQuarto() {
-        return tipoDeQuarto;
-    }
+	public int getNumQuarto() {
+		return numQuarto;
+	}
 
-    public void setTipoDeQuarto(TipoDeQuarto tipoDeQuarto) {
-        this.tipoDeQuarto = tipoDeQuarto;
-    }
+	public void setNumQuarto(int numQuarto) {
+		this.numQuarto = numQuarto;
+	}
 
-    public short getAndar() {
-        return andar;
-    }
+	public TipoDeQuarto getTipoDeQuarto() {
+		return tipoDeQuarto;
+	}
 
-    public void setAndar(short andar) {
-        this.andar = andar;
-    }
+	public void setTipoDeQuarto(TipoDeQuarto tipoDeQuarto) {
+		this.tipoDeQuarto = tipoDeQuarto;
+	}
+
+	public short getAndar() {
+		return andar;
+	}
+
+	public void setAndar(short andar) {
+		this.andar = andar;
+	}
 
 	@Override
 	public String toString() {
