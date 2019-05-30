@@ -26,9 +26,10 @@ public class ConsultaFuncionarios extends JInternalFrame {
 
 
 	public ConsultaFuncionarios() {
+		setIconifiable(true);
 		setClosable(true);
 		setTitle("Consulta Funcion\u00E1rios");
-		setBounds(100, 100, 467, 463);
+		setBounds(100, 100, 467, 494);
 		getContentPane().setLayout(null);
 		
 		JLabel lblCPF = new JLabel("CPF:");
@@ -39,10 +40,6 @@ public class ConsultaFuncionarios extends JInternalFrame {
 		textDoc.setBounds(56, 10, 163, 20);
 		getContentPane().add(textDoc);
 		textDoc.setColumns(10);
-		
-		JButton btnBusca = new JButton("Busca");
-		btnBusca.setBounds(229, 9, 85, 21);
-		getContentPane().add(btnBusca);
 		
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(10, 45, 46, 13);
@@ -145,6 +142,18 @@ public class ConsultaFuncionarios extends JInternalFrame {
 		textUF.setBounds(329, 104, 96, 19);
 		panelEndereco.add(textUF);
 		textUF.setColumns(10);
+		
+		JButton btnInativar = new JButton("Inativar");
+		btnInativar.setBounds(331, 425, 114, 25);
+		getContentPane().add(btnInativar);
+		
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setBounds(205, 425, 114, 25);
+		getContentPane().add(btnAlterar);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(79, 425, 114, 25);
+		getContentPane().add(btnCancelar);
 
 	}
 }

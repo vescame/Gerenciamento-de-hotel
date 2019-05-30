@@ -21,7 +21,7 @@ public class ConsultarReservas extends JInternalFrame {
 	public ConsultarReservas() {
 		setTitle("Consulta Reservas");
 		setClosable(true);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 460, 363);
 		getContentPane().setLayout(null);
 		
 		JLabel lblHospede = new JLabel("H\u00F3spede:");
@@ -42,16 +42,16 @@ public class ConsultarReservas extends JInternalFrame {
 		getContentPane().add(textField);
 		textField.setColumns(10);
 		
-		JButton btnBusca = new JButton("Busca");
-		btnBusca.addActionListener(new ActionListener() {
+		JButton btnCheckOut = new JButton("CheckOut");
+		btnCheckOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnBusca.setBounds(316, 29, 85, 21);
-		getContentPane().add(btnBusca);
+		btnCheckOut.setBounds(358, 74, 85, 21);
+		getContentPane().add(btnCheckOut);
 		
 		table = new JTable();
-		table.setBounds(10, 123, 418, 138);
+		table.setBounds(10, 123, 433, 138);
 		getContentPane().add(table);
 		
 		JLabel lblCheckin = new JLabel("Check-in:");
@@ -73,6 +73,18 @@ public class ConsultarReservas extends JInternalFrame {
 		textField_2.setBounds(250, 75, 96, 19);
 		getContentPane().add(textField_2);
 		textField_2.setColumns(10);
+		
+		JButton button = new JButton("Cancelar");
+		button.setBounds(62, 294, 114, 25);
+		getContentPane().add(button);
+		
+		JButton button_1 = new JButton("Alterar");
+		button_1.setBounds(188, 294, 114, 25);
+		getContentPane().add(button_1);
+		
+		JButton button_2 = new JButton("Inativar");
+		button_2.setBounds(314, 294, 114, 25);
+		getContentPane().add(button_2);
 
 	}
 
