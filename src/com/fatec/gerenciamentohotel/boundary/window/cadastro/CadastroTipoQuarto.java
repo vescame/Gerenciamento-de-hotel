@@ -3,18 +3,24 @@ package src.com.fatec.gerenciamentohotel.boundary.window.cadastro;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import src.com.fatec.gerenciamentohotel.control.TipoDeQuartoControl;
+import src.com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
+
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CadastroTipoQuarto extends JInternalFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8935897060030865111L;
-	private JTextField textFieldID;
-	private JTextField textFieldDescricao;
-	private JTextField textFieldValor;
-	private JTextField textFieldQtdeAdultos;
-	private JTextField textFieldQtdeCriancas;
+	private JTextField txtID;
+	private JTextField txtDescricao;
+	private JTextField txtValor;
+	private JTextField txtQtdeAdultos;
+	private JTextField txtQtdeCriancas;
 	private JLabel lblId;
 	private JLabel lblDescricao;
 	private JLabel lblValorDiaria;
@@ -49,32 +55,44 @@ public class CadastroTipoQuarto extends JInternalFrame {
 		lblQuantidadeCriancas.setBounds(46, 123, 165, 15);
 		getContentPane().add(lblQuantidadeCriancas);
 
-		textFieldID = new JTextField();
-		textFieldID.setBounds(49, 7, 78, 25);
-		getContentPane().add(textFieldID);
-		textFieldID.setColumns(10);
+		txtID = new JTextField();
+		txtID.setBounds(49, 7, 78, 25);
+		getContentPane().add(txtID);
+		txtID.setColumns(10);
 
-		textFieldDescricao = new JTextField();
-		textFieldDescricao.setColumns(10);
-		textFieldDescricao.setBounds(217, 7, 211, 25);
-		getContentPane().add(textFieldDescricao);
+		txtDescricao = new JTextField();
+		txtDescricao.setColumns(10);
+		txtDescricao.setBounds(217, 7, 211, 25);
+		getContentPane().add(txtDescricao);
 
-		textFieldValor = new JTextField();
-		textFieldValor.setColumns(10);
-		textFieldValor.setBounds(217, 44, 78, 25);
-		getContentPane().add(textFieldValor);
+		txtValor = new JTextField();
+		txtValor.setColumns(10);
+		txtValor.setBounds(217, 44, 78, 25);
+		getContentPane().add(txtValor);
 
-		textFieldQtdeAdultos = new JTextField();
-		textFieldQtdeAdultos.setColumns(10);
-		textFieldQtdeAdultos.setBounds(217, 81, 78, 25);
-		getContentPane().add(textFieldQtdeAdultos);
+		txtQtdeAdultos = new JTextField();
+		txtQtdeAdultos.setColumns(10);
+		txtQtdeAdultos.setBounds(217, 81, 78, 25);
+		getContentPane().add(txtQtdeAdultos);
 
-		textFieldQtdeCriancas = new JTextField();
-		textFieldQtdeCriancas.setColumns(10);
-		textFieldQtdeCriancas.setBounds(217, 118, 78, 25);
-		getContentPane().add(textFieldQtdeCriancas);
+		txtQtdeCriancas = new JTextField();
+		txtQtdeCriancas.setColumns(10);
+		txtQtdeCriancas.setBounds(217, 118, 78, 25);
+		getContentPane().add(txtQtdeCriancas);
 
 		btnConfirmar = new JButton("Confirmar");
+		btnConfirmar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TipoDeQuarto t = new TipoDeQuarto();
+				t.setId(Long.parseLong(txtID.getText()));
+				t.setQuantidadeAdultos(Short.parseShort(txtQtdeAdultos.getText()));
+				t.setQuantidadeCriancas(Short.parseShort(txtQtdeCriancas.getText()));
+				t.setTipo(txtDescricao.getText());
+				t.setValorDiaria(Float.parseFloat(txtValor.getText()));
+				new TipoDeQuartoControl().insert(t);
+			}
+		});
 		btnConfirmar.setBounds(314, 231, 114, 25);
 		getContentPane().add(btnConfirmar);
 

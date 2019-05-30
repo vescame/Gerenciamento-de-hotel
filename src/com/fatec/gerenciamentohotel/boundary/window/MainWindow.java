@@ -30,7 +30,7 @@ import src.com.fatec.gerenciamentohotel.boundary.window.cadastro.CadastroTipoQua
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultaFuncionarios;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarHospedes;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarQuarto;
-import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarServicos;
+//import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarServicos;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarTipoQuarto;
 import src.com.fatec.gerenciamentohotel.boundary.window.reserva.ReservasFrame;
 import src.com.fatec.gerenciamentohotel.boundary.window.servicos.SolicitarServico;
@@ -57,7 +57,7 @@ public class MainWindow extends JFrame {
 	private ConsultarQuarto consultarQuarto;
 	private CadastroTipoQuarto cadastroTipoQuarto;
 	private ConsultarTipoQuarto consultarTipoQuarto;
-	private ConsultarServicos consultarServicos;
+//	private ConsultarServicos consultarServicos;
 	private ReservasFrame reservas;
 	private SolicitarServico servico;
 	private Timer timer;
@@ -215,18 +215,18 @@ public class MainWindow extends JFrame {
 				abrirJanelas(servico);
 			}
 		});
-		menuServicoQuarto.add(mntmSolicitarServico);
-		mntmConsultarServicos = new JMenuItem("Consultar Serviços");
-		mntmConsultarServicos.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (consultarServicos == null) {
-					consultarServicos = new ConsultarServicos();
-				}
-				abrirJanelas(consultarServicos);
-			}
-		});
-		menuServicoQuarto.add(mntmConsultarServicos);
+//		menuServicoQuarto.add(mntmSolicitarServico);
+//		mntmConsultarServicos = new JMenuItem("Consultar Serviços");
+//		mntmConsultarServicos.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				if (consultarServicos == null) {
+//					consultarServicos = new ConsultarServicos();
+//				}
+//				abrirJanelas(consultarServicos);
+//			}
+//		});
+//		menuServicoQuarto.add(mntmConsultarServicos);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

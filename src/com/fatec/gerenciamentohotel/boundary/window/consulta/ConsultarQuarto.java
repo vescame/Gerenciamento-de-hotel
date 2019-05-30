@@ -18,7 +18,7 @@ public class ConsultarQuarto extends JInternalFrame {
 	public ConsultarQuarto() {
 		setTitle("Consulta Quartos");
 		setClosable(true);
-		setBounds(100, 100, 285, 300);
+		setBounds(100, 100, 401, 347);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNmeroDoQuarto = new JLabel("N\u00FAmero do Quarto:");
@@ -49,13 +49,21 @@ public class ConsultarQuarto extends JInternalFrame {
 		getContentPane().add(textTipoQuarto);
 		textTipoQuarto.setColumns(10);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(88, 106, 85, 21);
-		getContentPane().add(btnBuscar);
-		
 		table = new JTable();
-		table.setBounds(10, 152, 253, 95);
+		table.setBounds(10, 108, 366, 139);
 		getContentPane().add(table);
+		
+		JButton button = new JButton("Cancelar");
+		button.setBounds(10, 278, 114, 25);
+		getContentPane().add(button);
+		
+		JButton button_1 = new JButton("Alterar");
+		button_1.setBounds(136, 278, 114, 25);
+		getContentPane().add(button_1);
+		
+		JButton button_2 = new JButton("Inativar");
+		button_2.setBounds(262, 278, 114, 25);
+		getContentPane().add(button_2);
 
 	}
 

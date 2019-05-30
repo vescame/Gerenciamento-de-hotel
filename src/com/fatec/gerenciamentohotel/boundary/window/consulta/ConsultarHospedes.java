@@ -28,7 +28,7 @@ public class ConsultarHospedes extends JInternalFrame {
 	public ConsultarHospedes() {
 		setClosable(true);
 		setTitle("Consulta Hospedes");
-		setBounds(100, 100, 468, 491);
+		setBounds(100, 100, 468, 541);
 		getContentPane().setLayout(null);
 		
 		JLabel lblCpf = new JLabel("CPF:");
@@ -39,10 +39,6 @@ public class ConsultarHospedes extends JInternalFrame {
 		textCPF.setBounds(61, 17, 130, 19);
 		getContentPane().add(textCPF);
 		textCPF.setColumns(10);
-		
-		JButton btnBusca = new JButton("Busca");
-		btnBusca.setBounds(206, 16, 85, 21);
-		getContentPane().add(btnBusca);
 		
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setBounds(10, 50, 31, 13);
@@ -144,6 +140,18 @@ public class ConsultarHospedes extends JInternalFrame {
 		table = new JTable();
 		table.setBounds(10, 295, 436, 146);
 		getContentPane().add(table);
+		
+		JButton button = new JButton("Cancelar");
+		button.setBounds(80, 472, 114, 25);
+		getContentPane().add(button);
+		
+		JButton button_1 = new JButton("Alterar");
+		button_1.setBounds(206, 472, 114, 25);
+		getContentPane().add(button_1);
+		
+		JButton button_2 = new JButton("Inativar");
+		button_2.setBounds(332, 472, 114, 25);
+		getContentPane().add(button_2);
 
 	}
 

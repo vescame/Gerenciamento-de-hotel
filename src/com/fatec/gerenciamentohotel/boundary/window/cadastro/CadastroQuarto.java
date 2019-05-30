@@ -3,16 +3,24 @@ package src.com.fatec.gerenciamentohotel.boundary.window.cadastro;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import src.com.fatec.gerenciamentohotel.control.QuartoControl;
+import src.com.fatec.gerenciamentohotel.entity.Endereco;
+import src.com.fatec.gerenciamentohotel.entity.Quarto;
+import src.com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
+
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CadastroQuarto extends JInternalFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2084077809581858219L;
-	private JTextField textFieldNumeroQuarto;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtNumeroQuarto;
+	private JTextField txtTipo;
+	private JTextField txtAndar;
 	private JLabel lblNmeroDoQuarto;
 	private JLabel lblTipoDeQuarto;
 	private JLabel lblAndar;
@@ -35,31 +43,42 @@ public class CadastroQuarto extends JInternalFrame {
 		lblTipoDeQuarto.setBounds(12, 81, 106, 15);
 		getContentPane().add(lblTipoDeQuarto);
 
-		textFieldNumeroQuarto = new JTextField();
-		textFieldNumeroQuarto.setBounds(197, 7, 63, 25);
-		getContentPane().add(textFieldNumeroQuarto);
-		textFieldNumeroQuarto.setColumns(10);
+		txtNumeroQuarto = new JTextField();
+		txtNumeroQuarto.setBounds(197, 7, 63, 25);
+		getContentPane().add(txtNumeroQuarto);
+		txtNumeroQuarto.setColumns(10);
 
 		lblAndar = new JLabel("Andar:");
 		lblAndar.setBounds(12, 49, 51, 15);
 		getContentPane().add(lblAndar);
 
-		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.setBounds(136, 76, 124, 25);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		txtTipo = new JTextField();
+		txtTipo.setEnabled(false);
+		txtTipo.setBounds(136, 76, 124, 25);
+		getContentPane().add(txtTipo);
+		txtTipo.setColumns(10);
 
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(146, 113, 114, 25);
 		getContentPane().add(btnBuscar);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(197, 44, 63, 25);
-		getContentPane().add(textField_1);
+		txtAndar = new JTextField();
+		txtAndar.setColumns(10);
+		txtAndar.setBounds(197, 44, 63, 25);
+		getContentPane().add(txtAndar);
 
 		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Quarto quarto = new Quarto();
+				TipoDeQuarto tipo = new TipoDeQuarto();
+				quarto.setNumQuarto(Integer.parseInt(txtNumeroQuarto.getText()));
+				quarto.setAndar(Short.parseShort(txtAndar.getText()));
+				tipo.setTipo(txtTipo.getText());
+				new QuartoControl().insert(quarto);
+			}
+		});
 		btnCadastrar.setBounds(146, 231, 114, 25);
 		getContentPane().add(btnCadastrar);
 

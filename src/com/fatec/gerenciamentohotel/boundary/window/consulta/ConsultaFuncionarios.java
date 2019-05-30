@@ -32,9 +32,12 @@ public class ConsultaFuncionarios extends JInternalFrame {
 
 
 	public ConsultaFuncionarios() {
+		setIconifiable(true);
 		setClosable(true);
 		setTitle("Consulta Funcionarios");
 		setBounds(100, 100, 467, 463);
+		setTitle("Consulta Funcion\u00E1rios");
+		setBounds(100, 100, 467, 494);
 		getContentPane().setLayout(null);
 		
 		JLabel lblCPF = new JLabel("CPF:");
@@ -169,6 +172,18 @@ public class ConsultaFuncionarios extends JInternalFrame {
 		textUF.setBounds(329, 104, 96, 19);
 		panelEndereco.add(textUF);
 		textUF.setColumns(10);
+		
+		JButton btnInativar = new JButton("Inativar");
+		btnInativar.setBounds(331, 425, 114, 25);
+		getContentPane().add(btnInativar);
+		
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setBounds(205, 425, 114, 25);
+		getContentPane().add(btnAlterar);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(79, 425, 114, 25);
+		getContentPane().add(btnCancelar);
 
 	}
 }
