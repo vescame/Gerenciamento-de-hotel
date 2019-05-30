@@ -1,32 +1,39 @@
 package src.com.fatec.gerenciamentohotel.boundary.window.cadastro;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import src.com.fatec.gerenciamentohotel.entity.Endereco;
+import src.com.fatec.gerenciamentohotel.entity.Hospede;
 
 public class CadastroHospede extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
-	private JTextField textFieldNome;
-	private JTextField textFieldCPF;
-	private JTextField textFieldCelular;
-	private JTextField textFieldTelefone;
-	private JTextField textFieldCep;
-	private JTextField textFieldRua;
-	private JTextField textFieldBairro;
-	private JTextField textFieldCidade;
-	private JTextField textFieldNumero;
-	private JTextField textFieldUf;
-	private JTextField textFieldDataNascimento;
-	private JTextField textFieldEmail;
+	private JTextField txtNome;
+	private JTextField txtCPF;
+	private JTextField txtCelular;
+	private JTextField txtTelefone;
+	private JTextField txtdCep;
+	private JTextField txtRua;
+	private JTextField txtBairro;
+	private JTextField txtCidade;
+	private JTextField txtNumero;
+	private JTextField txtUf;
+	private JTextField txtDataNascimento;
+	private JTextField txtEmail;
 	private JLabel labelNome;
 	private JLabel labelCPF;
 	private JLabel labelCelular;
@@ -57,15 +64,15 @@ public class CadastroHospede extends JInternalFrame {
 		labelNome.setBounds(12, 14, 66, 15);
 		getContentPane().add(labelNome);
 
-		textFieldNome = new JTextField();
-		textFieldNome.setColumns(10);
-		textFieldNome.setBounds(61, 12, 157, 25);
-		getContentPane().add(textFieldNome);
+		txtNome = new JTextField();
+		txtNome.setColumns(10);
+		txtNome.setBounds(61, 12, 157, 25);
+		getContentPane().add(txtNome);
 
-		textFieldCPF = new JTextField();
-		textFieldCPF.setColumns(10);
-		textFieldCPF.setBounds(281, 12, 147, 25);
-		getContentPane().add(textFieldCPF);
+		txtCPF = new JTextField();
+		txtCPF.setColumns(10);
+		txtCPF.setBounds(281, 12, 147, 25);
+		getContentPane().add(txtCPF);
 
 		labelCPF = new JLabel("CPF:");
 		labelCPF.setBounds(236, 14, 66, 15);
@@ -75,15 +82,15 @@ public class CadastroHospede extends JInternalFrame {
 		labelCelular.setBounds(236, 54, 66, 15);
 		getContentPane().add(labelCelular);
 
-		textFieldCelular = new JTextField();
-		textFieldCelular.setColumns(10);
-		textFieldCelular.setBounds(304, 49, 124, 25);
-		getContentPane().add(textFieldCelular);
+		txtCelular = new JTextField();
+		txtCelular.setColumns(10);
+		txtCelular.setBounds(304, 49, 124, 25);
+		getContentPane().add(txtCelular);
 
-		textFieldTelefone = new JTextField();
-		textFieldTelefone.setColumns(10);
-		textFieldTelefone.setBounds(81, 49, 137, 25);
-		getContentPane().add(textFieldTelefone);
+		txtTelefone = new JTextField();
+		txtTelefone.setColumns(10);
+		txtTelefone.setBounds(81, 49, 137, 25);
+		getContentPane().add(txtTelefone);
 
 		labelTelefone = new JLabel("Telefone:");
 		labelTelefone.setBounds(12, 54, 66, 15);
@@ -120,39 +127,39 @@ public class CadastroHospede extends JInternalFrame {
 		labelNumero.setBounds(290, 54, 30, 15);
 		panelEndereco.add(labelNumero);
 
-		textFieldCep = new JTextField();
-		textFieldCep.setColumns(10);
-		textFieldCep.setBounds(47, 17, 154, 25);
-		panelEndereco.add(textFieldCep);
+		txtdCep = new JTextField();
+		txtdCep.setColumns(10);
+		txtdCep.setBounds(47, 17, 154, 25);
+		panelEndereco.add(txtdCep);
 
 		buttonBuscar = new JButton("Buscar");
 		buttonBuscar.setBounds(213, 17, 93, 25);
 		panelEndereco.add(buttonBuscar);
 
-		textFieldRua = new JTextField();
-		textFieldRua.setColumns(10);
-		textFieldRua.setBounds(47, 49, 221, 25);
-		panelEndereco.add(textFieldRua);
+		txtRua = new JTextField();
+		txtRua.setColumns(10);
+		txtRua.setBounds(47, 49, 221, 25);
+		panelEndereco.add(txtRua);
 
-		textFieldBairro = new JTextField();
-		textFieldBairro.setColumns(10);
-		textFieldBairro.setBounds(67, 81, 337, 25);
-		panelEndereco.add(textFieldBairro);
+		txtBairro = new JTextField();
+		txtBairro.setColumns(10);
+		txtBairro.setBounds(67, 81, 337, 25);
+		panelEndereco.add(txtBairro);
 
-		textFieldCidade = new JTextField();
-		textFieldCidade.setColumns(10);
-		textFieldCidade.setBounds(67, 115, 201, 25);
-		panelEndereco.add(textFieldCidade);
+		txtCidade = new JTextField();
+		txtCidade.setColumns(10);
+		txtCidade.setBounds(67, 115, 201, 25);
+		panelEndereco.add(txtCidade);
 
-		textFieldNumero = new JTextField();
-		textFieldNumero.setColumns(10);
-		textFieldNumero.setBounds(338, 49, 66, 25);
-		panelEndereco.add(textFieldNumero);
+		txtNumero = new JTextField();
+		txtNumero.setColumns(10);
+		txtNumero.setBounds(338, 49, 66, 25);
+		panelEndereco.add(txtNumero);
 
-		textFieldUf = new JTextField();
-		textFieldUf.setColumns(10);
-		textFieldUf.setBounds(338, 115, 66, 25);
-		panelEndereco.add(textFieldUf);
+		txtUf = new JTextField();
+		txtUf.setColumns(10);
+		txtUf.setBounds(338, 115, 66, 25);
+		panelEndereco.add(txtUf);
 
 		buttonNovo = new JButton("Novo");
 		buttonNovo.addActionListener(new ActionListener() {
@@ -171,15 +178,15 @@ public class CadastroHospede extends JInternalFrame {
 		labelDataNascimento.setBounds(12, 256, 147, 15);
 		getContentPane().add(labelDataNascimento);
 
-		textFieldDataNascimento = new JTextField();
-		textFieldDataNascimento.setColumns(10);
-		textFieldDataNascimento.setBounds(178, 251, 124, 25);
-		getContentPane().add(textFieldDataNascimento);
+		txtDataNascimento = new JTextField();
+		txtDataNascimento.setColumns(10);
+		txtDataNascimento.setBounds(178, 251, 124, 25);
+		getContentPane().add(txtDataNascimento);
 
-		textFieldEmail = new JTextField();
-		textFieldEmail.setColumns(10);
-		textFieldEmail.setBounds(81, 283, 221, 25);
-		getContentPane().add(textFieldEmail);
+		txtEmail = new JTextField();
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(81, 283, 221, 25);
+		getContentPane().add(txtEmail);
 
 		labelEmail = new JLabel("E-Mail:");
 		labelEmail.setBounds(12, 288, 66, 15);
@@ -187,10 +194,47 @@ public class CadastroHospede extends JInternalFrame {
 
 		buttonCancelar = new JButton("Cancelar");
 		buttonCancelar.setBounds(188, 418, 114, 25);
+		buttonCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		getContentPane().add(buttonCancelar);
 
 		buttonCadastrar = new JButton("Cadastrar");
+		buttonCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Endereco end = new Endereco();
+				Hospede h = new Hospede();
+				
+				end.setCep(txtdCep.getText());
+				end.setBairro(txtBairro.getText());
+				end.setCidade(txtCidade.getText());
+				end.setRua(txtRua.getText());
+				end.setUf(txtUf.getText());
+								
+				h.setCpf(txtCPF.getText());
+				h.setCelular(txtCelular.getText());
+				h.setDataNascimento(customStrToDate(txtDataNascimento.getText()));
+				h.setNumResidencia(Integer.parseInt(txtNumero.getText()));
+				h.setEmail(txtEmail.getText());
+				h.setNome(txtNome.getText());
+				h.setTelefone(txtTelefone.getText());
+				
+			}
+			public Date customStrToDate(String strDate) {
+				Date nasc = null;
+				try {
+					DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					nasc = sdf.parse(strDate);
+				} catch (ParseException except) {
+					except.printStackTrace();
+				}
+				return nasc;
+			}
+		});
 		buttonCadastrar.setBounds(314, 418, 114, 25);
+	
 		getContentPane().add(buttonCadastrar);
 	}
 
