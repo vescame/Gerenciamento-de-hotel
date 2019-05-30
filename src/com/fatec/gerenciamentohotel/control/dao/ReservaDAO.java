@@ -26,8 +26,8 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 		try {
 			// se retornar null, nao ha registros de reservas ativas pelo
 			// hospede
-			boolean podeCadastrar = this
-					.select(r.getHospede().getCpf()) == null;
+			boolean podeCadastrar = this.select(r.getHospede().getCpf()) == null
+					&& r.getQuarto().isDisponivel();
 			if (!podeCadastrar) {
 				return;
 			}
@@ -35,8 +35,8 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 			PreparedStatement pstmt;
 			// omitir o ID já que no banco ele é AUTO_INCREMENT
 			pstmt = con.prepareStatement(" insert into reserva "
-					+ " (cpf_funcionario, cpf_hospede, num_quarto, dat_checkin, dat_checkout, status) "
-					+ " values (?, ?, ?, ?, ?, ?) ");
+					+ " (cpf_funcionario, cpf_hospede, num_quarto, dat_checkin, "
+					+ "dat_checkout, status) values (?, ?, ?, ?, ?, ?) ");
 			// ID Funcionario vai ser uma propriedade estatica do sistema pra
 			// pegar o funcionario logado
 			pstmt.setString(1, r.getFuncionario().getCpf()); // Login.getIDFuncionario();
@@ -68,14 +68,15 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 			if (rs.first()) {
 				res = new Reserva();
 				do {
-					HospedeControl hc = new HospedeControl();
-					FuncionarioControl fc = new FuncionarioControl();
-					QuartoControl qc = new QuartoControl();
+					HospedeDAO hdao = new HospedeDAO();
+					FuncionarioDAO fdao = new FuncionarioDAO();
+					QuartoDAO qdao = new QuartoDAO();
 					res.setId(rs.getInt("id"));
 					res.setFuncionario(
-							fc.selectCPF(rs.getString("cpf_funcionario")));
-					res.setHospede(hc.selectCPF(rs.getString("cpf_hospede")));
-					res.setQuarto(qc.selectNumQuarto(rs.getLong("num_quarto")));
+							fdao.select(rs.getString("cpf_funcionario")));
+					res.setHospede(hdao.select(rs.getString("cpf_hospede")));
+					res.setQuarto(qdao
+							.select(String.valueOf(rs.getLong("num_quarto"))));
 					res.setCheckIn(rs.getDate("dat_checkin"));
 					res.setCheckOut(rs.getDate("dat_checkout"));
 					res.setStatus(rs.getString("status").charAt(0));

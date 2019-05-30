@@ -6,14 +6,6 @@ public class Quarto {
 	private short andar;
 	private boolean disponivel;
 
-	public boolean isDisponivel() {
-		return disponivel;
-	}
-
-	public void setDisponivel(boolean disponivel) {
-		this.disponivel = disponivel;
-	}
-
 	public int getNumQuarto() {
 		return numQuarto;
 	}
@@ -36,6 +28,14 @@ public class Quarto {
 
 	public void setAndar(short andar) {
 		this.andar = andar;
+	}
+	
+	public boolean isDisponivel() {
+		return disponivel;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
 	}
 
 	@Override

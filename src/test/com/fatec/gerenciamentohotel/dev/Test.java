@@ -47,7 +47,7 @@ public class Test {
 		f.setNumResidencia(1233);
 
 		FuncionarioControl fc = new FuncionarioControl();
-		fc.novoFuncionario(f);
+		// fc.novoFuncionario(f);
 
 		Hospede h = new Hospede();
 		h.setEndereco(e);
@@ -61,7 +61,7 @@ public class Test {
 		h.setNumResidencia(685);
 
 		HospedeControl hc = new HospedeControl();
-		hc.insert(h);
+		// hc.insert(h);
 
 		TipoDeQuarto t = new TipoDeQuarto();
 		t.setTipo("Sozinho No Bar");
@@ -70,43 +70,25 @@ public class Test {
 		t.setQuantidadeCriancas((short) 0);
 
 		TipoDeQuartoControl tqc = new TipoDeQuartoControl();
-		tqc.insert(t);
+		// tqc.insert(t);
 
 		Quarto q = new Quarto();
-		q.setNumQuarto(125);
+		q.setNumQuarto(740);
 		q.setAndar((short) 1);
 		q.setTipoDeQuarto(tqc.selectTipoQuarto(1));
-
+		
 		QuartoControl qc = new QuartoControl();
-		qc.insert(q);
+		//qc.insert(q);
 
 		ReservaControl rc = new ReservaControl();
 		
-		Reserva r0 = new Reserva();
-		r0.setHospede(hc.selectCPF(h.getCpf()));
-		r0.setFuncionario(fc.selectCPF(f.getCpf()));
-		r0.setQuarto(qc.selectNumQuarto(125));
-		r0.setStatus('I');
-		r0.setCheckIn(new Date());
-		rc.insert(r0);
-		
-		Reserva r1 = new Reserva();
-		r1.setHospede(hc.selectCPF("45620187568"));
-		r1.setFuncionario(fc.selectCPF("48522630297"));
-		r1.setQuarto(qc.selectNumQuarto(852));
-		r1.setStatus('A');
-		r1.setCheckIn(new Date());
-		rc.insert(r1);
-
-		/*
-		Reserva r2 = new Reserva();
-		r2.setHospede(hc.selectCPF("45620187568"));
-		r2.setFuncionario(fc.selectCPF("48522630297"));
-		r2.setQuarto(qc.selectNumQuarto(125));
-		r2.setStatus('A');
-		r2.setCheckIn(new Date());
-		rc.insert(r2);
-		*/
+		Reserva r = new Reserva();
+		r.setHospede(hc.selectCPF(h.getCpf()));
+		r.setFuncionario(fc.selectCPF(f.getCpf()));
+		r.setQuarto(qc.selectNumQuarto(q.getNumQuarto()));
+		r.setStatus('A');
+		r.setCheckIn(new Date());
+		rc.insert(r);
 
 		try {
 			/*
@@ -133,7 +115,7 @@ public class Test {
 			System.out.println(rc.selectReserva(r2.getHospede().getCpf()));
 			 */
 			// select historico de reservas de hospede
-			System.out.println(rc.selectHistoricoReservas(h.getCpf()));
+			System.out.println(rc.selectReserva(h.getCpf()));
 		} catch (NullPointerException except) {
 			except.printStackTrace();
 			System.out.println("Não há registros");

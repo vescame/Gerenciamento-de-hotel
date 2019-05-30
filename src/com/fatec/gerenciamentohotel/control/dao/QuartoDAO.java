@@ -28,7 +28,8 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 			pstmt.executeQuery();
 		} catch (SQLException e) {
 			if (e.getMessage().contains("Duplicate entry")) {
-				throw new DAOException("Quarto " + q.getNumQuarto() + " já existe...");
+				throw new DAOException(
+						"Quarto " + q.getNumQuarto() + " já existe...");
 			} else {
 				throw new DAOException("Erro ao inserir Quarto");
 			}
@@ -52,14 +53,35 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 					quar.setTipoDeQuarto(
 							tqc.selectTipoQuarto(rs.getInt("id_tipo_quarto")));
 					quar.setAndar(rs.getShort("andar"));
+					quar.setDisponivel(
+							this.quartoDisponível(Long.parseLong(numQuarto)));
 				} while (rs.next());
 				return quar;
 			} else {
-				throw new DAOException("Quarto " + numQuarto + " não cadastrado.");
+				throw new DAOException(
+						"Quarto " + numQuarto + " não cadastrado.");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Erro ao buscar Quarto");
 		}
+	}
+
+	private boolean quartoDisponível(long numQuarto) {
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con.prepareStatement(
+					"select num_quarto from reserva where dat_checkout is null and num_quarto = ?");
+			pstmt.setLong(1, numQuarto);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.first()) {
+				return false;
+			} else {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	@Override
