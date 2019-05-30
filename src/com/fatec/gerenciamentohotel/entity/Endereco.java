@@ -4,20 +4,11 @@ public class Endereco {
 	/*
 	 * cep rua bairro cidade uf
 	 */
-	private long id;
 	private String cep;
 	private String rua;
 	private String bairro;
 	private String cidade;
 	private String uf;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getCep() {
 		return cep;

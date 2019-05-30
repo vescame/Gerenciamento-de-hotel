@@ -5,6 +5,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import src.com.fatec.gerenciamentohotel.entity.Endereco;
+import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
 
 import javax.swing.border.LineBorder;
@@ -188,10 +190,29 @@ public class CadastroFuncionario extends JInternalFrame {
 
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setBounds(314, 431, 114, 25);
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Endereco end = new Endereco();
+				
+				end.setCep(textFieldCEP.getText());
+				end.setBairro(textFieldBairro.getText());
+				end.setCidade(textFieldCidade.getText());
+				end.setRua(textFieldRua.getText());
+				
+				Funcionario f = new Funcionario();
+				
+				f.setCpf(textFieldCPF.getText());
+			}
+		});
 		getContentPane().add(btnCadastrar);
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(188, 431, 114, 25);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		getContentPane().add(btnCancelar);
 
 		textFieldNome = new JTextField();
