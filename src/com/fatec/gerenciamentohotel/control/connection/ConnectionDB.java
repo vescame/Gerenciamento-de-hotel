@@ -26,10 +26,10 @@ public class ConnectionDB {
 		}
 		return instance;
 	}
-	
+
 	public Connection getConnection() throws SQLException {
 		if (conn == null || conn.isClosed()) {
-			conn = DriverManager.getConnection(connectionURL,  user, psswrd);
+			conn = DriverManager.getConnection(connectionURL, user, psswrd);
 		}
 		return conn;
 	}

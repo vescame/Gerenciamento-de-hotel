@@ -1,4 +1,4 @@
-package src.com.fatec.gerenciamentohotel.control.dao;
+package src.com.fatec.gerenciamentohotel.control.dao.exceptions;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -6,6 +6,17 @@ import java.io.PrintWriter;
 public class DAOException extends Exception {
 
 	private static final long serialVersionUID = 1L;
+	private String desc;
+
+	public DAOException(String desc) {
+		this.desc = desc;
+	}
+
+	@Override
+	public String getMessage() {
+		// return super.getMessage();
+		return String.format("Erro DAO: " + "[ %s ]", this.desc);
+	}
 
 	@Override
 	public synchronized Throwable fillInStackTrace() {
@@ -20,11 +31,6 @@ public class DAOException extends Exception {
 	@Override
 	public String getLocalizedMessage() {
 		return super.getLocalizedMessage();
-	}
-	
-	@Override
-	public String getMessage() {
-		return super.getMessage();
 	}
 
 	@Override

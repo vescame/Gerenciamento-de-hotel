@@ -4,7 +4,12 @@ import java.util.Date;
 
 public class Reserva {
 	/*
+<<<<<<< Updated upstream
 	 * id id_funcionario id_hospede id_num_quarto dat_checkin dat_checkout status
+=======
+	 * id id_funcionario id_hospede id_num_quarto dat_checkin dat_checkout
+	 * status
+>>>>>>> Stashed changes
 	 */
 	private long id;
 	private Date checkIn;
@@ -81,8 +86,10 @@ public class Reserva {
 
 	@Override
 	public String toString() {
-		return "Reserva [id=" + id + "\ncheckIn=" + checkIn + "\ncheckOut=" + checkOut + "\nhospede=" + hospede
-				+ "\nfuncionario=" + funcionario + "\nquarto=" + quarto + "\nstatus=" + status + "]";
+		return "Reserva [id=" + id + "\ncheckIn=" + checkIn + "\ncheckOut="
+				+ checkOut + "\nhospede=" + hospede + "\nfuncionario="
+				+ funcionario + "\nquarto=" + quarto + "\nstatus=" + status
+				+ "]";
 	}
 
 }

@@ -40,6 +40,7 @@ public class Quarto {
 
 	@Override
 	public String toString() {
-		return "Quarto [id=" + numQuarto + "\ntipoDeQuarto=" + tipoDeQuarto + "\nandar=" + andar + "]";
+		return "Quarto [id=" + numQuarto + "\ntipoDeQuarto=" + tipoDeQuarto
+				+ "\nandar=" + andar + "]";
 	}
 }
