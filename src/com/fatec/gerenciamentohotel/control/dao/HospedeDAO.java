@@ -81,7 +81,7 @@ public class HospedeDAO implements IObjectDAO<Hospede, String> {
 					hosp.setStatus(rs.getString("status").charAt(0));
 				} while (rs.next());
 				return hosp;
-			}else {
+			} else {
 				throw new DAOException("Hóspede com CPF: " + cpf + " não existe");
 			}
 		} catch (SQLException except) {

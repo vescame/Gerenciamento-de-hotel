@@ -54,11 +54,12 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 					quar.setAndar(rs.getShort("andar"));
 				} while (rs.next());
 				return quar;
+			} else {
+				throw new DAOException("Quarto " + numQuarto + " não cadastrado.");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Erro ao buscar Quarto");
 		}
-		return null;
 	}
 
 	@Override

@@ -81,13 +81,11 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 					res.setStatus(rs.getString("status").charAt(0));
 				} while (rs.next());
 				return res;
-			} else {
-				throw new DAOException(
-						"Não há reserva ligada ao CPF: " + cpfHospede + ".");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Erro ao buscar Reserva.");
 		}
+		return null;
 	}
 
 	@Override

@@ -80,35 +80,36 @@ public class Test {
 		QuartoControl qc = new QuartoControl();
 		qc.insert(q);
 
+		ReservaControl rc = new ReservaControl();
+		
 		Reserva r0 = new Reserva();
-		r0.setHospede(hc.selectCPF("45620187568"));
-		r0.setFuncionario(fc.selectCPF("48522630297"));
+		r0.setHospede(hc.selectCPF(h.getCpf()));
+		r0.setFuncionario(fc.selectCPF(f.getCpf()));
 		r0.setQuarto(qc.selectNumQuarto(125));
 		r0.setStatus('I');
 		r0.setCheckIn(new Date());
-
+		rc.insert(r0);
+		
 		Reserva r1 = new Reserva();
 		r1.setHospede(hc.selectCPF("45620187568"));
 		r1.setFuncionario(fc.selectCPF("48522630297"));
 		r1.setQuarto(qc.selectNumQuarto(852));
-		r1.setStatus('I');
+		r1.setStatus('A');
 		r1.setCheckIn(new Date());
+		rc.insert(r1);
 
+		/*
 		Reserva r2 = new Reserva();
 		r2.setHospede(hc.selectCPF("45620187568"));
 		r2.setFuncionario(fc.selectCPF("48522630297"));
 		r2.setQuarto(qc.selectNumQuarto(125));
 		r2.setStatus('A');
 		r2.setCheckIn(new Date());
-
-		ReservaControl rc = new ReservaControl();
-
-		rc.insert(r0);
-		rc.insert(r1);
 		rc.insert(r2);
+		*/
 
 		try {
-
+			/*
 			// select funcionario
 			// System.out.println(fc.selectCPF(f.getCpf()).getNome());
 			System.out.println(fc.selectCPF("48556622359").getNome());
@@ -130,9 +131,9 @@ public class Test {
 			System.out.println(rc.selectReserva("455200"));
 			System.out.println(rc.selectReserva(r1.getHospede().getCpf()));
 			System.out.println(rc.selectReserva(r2.getHospede().getCpf()));
-
+			 */
 			// select historico de reservas de hospede
-			System.out.println(rc.selectHistoricoReservas("45620187568"));
+			System.out.println(rc.selectHistoricoReservas(h.getCpf()));
 		} catch (NullPointerException except) {
 			except.printStackTrace();
 			System.out.println("Não há registros");
