@@ -1,25 +1,31 @@
 package src.com.fatec.gerenciamentohotel.boundary.window.cadastro;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-
-import src.com.fatec.gerenciamentohotel.entity.Endereco;
-import src.com.fatec.gerenciamentohotel.entity.Funcionario;
-import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
-
-import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+
+import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
+import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
+import src.com.fatec.gerenciamentohotel.entity.Endereco;
+import src.com.fatec.gerenciamentohotel.entity.Funcionario;
+import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
 
 public class CadastroFuncionario extends JInternalFrame {
 
@@ -87,7 +93,8 @@ public class CadastroFuncionario extends JInternalFrame {
 		getContentPane().add(lblCelular);
 
 		panelEndereco = new JPanel();
-		panelEndereco.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Endereco",
+		panelEndereco.setBorder(new TitledBorder(
+				new LineBorder(new Color(0, 0, 0), 1, true), "Endereco",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelEndereco.setBounds(12, 79, 416, 153);
 		getContentPane().add(panelEndereco);
@@ -124,6 +131,16 @@ public class CadastroFuncionario extends JInternalFrame {
 
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(213, 17, 93, 25);
+		btnBuscar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Endereco end = new EnderecoControl().selectCep(textFieldCEP.getText());
+				textFieldBairro.setText(end.getBairro());
+				textFieldCidade.setText(end.getCidade());
+				textFieldRua.setText(end.getRua());
+				textFieldUF.setText(end.getUf());
+			}
+		});
 		panelEndereco.add(btnBuscar);
 
 		textFieldRua = new JTextField();
@@ -193,15 +210,51 @@ public class CadastroFuncionario extends JInternalFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Endereco end = new Endereco();
-				
+
 				end.setCep(textFieldCEP.getText());
 				end.setBairro(textFieldBairro.getText());
 				end.setCidade(textFieldCidade.getText());
 				end.setRua(textFieldRua.getText());
-				
+				end.setUf(textFieldUF.getText());
+
 				Funcionario f = new Funcionario();
-				
+
 				f.setCpf(textFieldCPF.getText());
+				f.setEndereco(end);
+				f.setNome(textFieldNome.getText());
+				f.setTelefone(textFieldTelefone.getText());
+				f.setCelular(textFieldCelular.getText());
+				f.setEmail(textFieldEMail.getText());
+				String strDate = textFieldData.getText();
+				Date nasc = null;
+				try {
+					DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					nasc = sdf.parse(strDate);
+				} catch (ParseException except) {
+					except.printStackTrace();
+				}
+				f.setDataNascimento(nasc);
+				f.setStatus('A');
+				f.setLogin(textFieldLogin.getText());
+				String senha = String.valueOf(textFieldSenha.getPassword());
+				String confSenha = String.valueOf(textFieldConfirmarSenha.getPassword());
+				if (confSenha.equals(senha)) {
+					f.setSenha(confSenha);
+				} else {
+					JOptionPane.showMessageDialog(null, "Senhas não conferem",
+							"Senha", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				f.setTipoFuncionario(EFuncionario.valueOf(
+						comboBoxPermissoes.getSelectedItem().toString()));
+				try {
+					f.setNumResidencia(Integer.parseInt(textFieldNumero.getText()));
+				} catch (NumberFormatException ex) {
+					f.setNumResidencia(0);
+				}
+				
+				new FuncionarioControl().novoFuncionario(f);
 			}
 		});
 		getContentPane().add(btnCadastrar);
@@ -246,7 +299,8 @@ public class CadastroFuncionario extends JInternalFrame {
 		textFieldEMail.setColumns(10);
 
 		comboBoxPermissoes = new JComboBox<>();
-		comboBoxPermissoes.setModel(new DefaultComboBoxModel<>(EFuncionario.values()));
+		comboBoxPermissoes
+				.setModel(new DefaultComboBoxModel<>(EFuncionario.values()));
 		comboBoxPermissoes.setBounds(155, 308, 147, 25);
 		getContentPane().add(comboBoxPermissoes);
 

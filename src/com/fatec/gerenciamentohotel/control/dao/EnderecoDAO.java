@@ -56,11 +56,12 @@ public class EnderecoDAO implements IObjectDAO<Endereco, String> {
 					e.setUf(rs.getString("uf"));
 				} while (rs.next());
 				return e;
+			} else {
+				throw new DAOException("Endereco não existe");
 			}
 		} catch (SQLException | ParseException except) {
 			throw new DAOException("Erro ao buscar Endereco");
 		}
-		return null;
 	}
 
 	@Override

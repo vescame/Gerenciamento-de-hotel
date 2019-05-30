@@ -1,17 +1,22 @@
 package src.com.fatec.gerenciamentohotel.boundary.window.cadastro;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+
+import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
+import src.com.fatec.gerenciamentohotel.entity.Endereco;
 
 public class CadastroEndereco extends JDialog {
 
@@ -21,7 +26,6 @@ public class CadastroEndereco extends JDialog {
 	private JTextField textFieldRua;
 	private JTextField textFieldBairro;
 	private JTextField textFieldCidade;
-	private JTextField textFieldNumero;
 	private JTextField textFieldUf;
 	private JPanel panel;
 	private JLabel labelCep;
@@ -29,7 +33,6 @@ public class CadastroEndereco extends JDialog {
 	private JLabel labelBairro;
 	private JLabel labelCidade;
 	private JLabel labelUf;
-	private JLabel labelNumero;
 	private JPanel buttonPane;
 	private JButton okButton;
 	private JButton cancelButton;
@@ -70,10 +73,6 @@ public class CadastroEndereco extends JDialog {
 		labelUf.setBounds(290, 120, 66, 15);
 		panel.add(labelUf);
 
-		labelNumero = new JLabel("Nº:");
-		labelNumero.setBounds(290, 54, 30, 15);
-		panel.add(labelNumero);
-
 		textFieldCep = new JTextField();
 		textFieldCep.setColumns(10);
 		textFieldCep.setBounds(47, 17, 154, 25);
@@ -94,11 +93,6 @@ public class CadastroEndereco extends JDialog {
 		textFieldCidade.setBounds(67, 115, 201, 25);
 		panel.add(textFieldCidade);
 
-		textFieldNumero = new JTextField();
-		textFieldNumero.setColumns(10);
-		textFieldNumero.setBounds(338, 49, 66, 25);
-		panel.add(textFieldNumero);
-
 		textFieldUf = new JTextField();
 		textFieldUf.setColumns(10);
 		textFieldUf.setBounds(338, 115, 66, 25);
@@ -110,11 +104,32 @@ public class CadastroEndereco extends JDialog {
 
 		okButton = new JButton("Cadastrar");
 		okButton.setActionCommand("OK");
+		okButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Endereco end = new Endereco();
+				end.setCep(textFieldCep.getText());
+				end.setBairro(textFieldBairro.getText());
+				end.setRua(textFieldRua.getText());
+				end.setCidade(textFieldCidade.getText());
+				end.setUf(textFieldUf.getText());
+				
+				new EnderecoControl().insert(end);
+				
+				cancelButton.doClick();
+			}
+		});
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 
 		cancelButton = new JButton("Cancelar");
 		cancelButton.setActionCommand("Cancel");
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		buttonPane.add(cancelButton);
 	}
 

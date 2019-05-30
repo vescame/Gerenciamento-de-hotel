@@ -83,6 +83,7 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 					func.setSenha(rs.getString("senha"));
 					func.setTipoFuncionario((EFuncionario
 							.valueOf(rs.getString("tipo_funcionario"))));
+					func.setNumResidencia(rs.getInt("num_residencia"));
 				} while (rs.next());
 				return func;
 			} else {

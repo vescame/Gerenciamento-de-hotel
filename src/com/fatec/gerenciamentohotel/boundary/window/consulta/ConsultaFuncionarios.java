@@ -1,12 +1,18 @@
 package src.com.fatec.gerenciamentohotel.boundary.window.consulta;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JTable;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
+import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 
 public class ConsultaFuncionarios extends JInternalFrame {
 
@@ -27,7 +33,7 @@ public class ConsultaFuncionarios extends JInternalFrame {
 
 	public ConsultaFuncionarios() {
 		setClosable(true);
-		setTitle("Consulta Funcion\u00E1rios");
+		setTitle("Consulta Funcionarios");
 		setBounds(100, 100, 467, 463);
 		getContentPane().setLayout(null);
 		
@@ -42,6 +48,24 @@ public class ConsultaFuncionarios extends JInternalFrame {
 		
 		JButton btnBusca = new JButton("Busca");
 		btnBusca.setBounds(229, 9, 85, 21);
+		btnBusca.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Funcionario f = new FuncionarioControl().selectCPF(textDoc.getText());
+				if (f != null) {
+					textNome.setText(f.getNome());
+					textDataNasc.setText(String.valueOf(f.getDataNascimento()));
+					textCelular.setText(f.getCelular());
+					textTelefone.setText(f.getTelefone());
+					textCEP.setText(f.getEndereco().getCep());
+					textRua.setText(f.getEndereco().getRua());
+					textCidade.setText(f.getEndereco().getCidade());
+					textBairro.setText(f.getEndereco().getBairro());
+					textUF.setText(f.getEndereco().getUf());
+					textNum.setText(String.valueOf(f.getNumResidencia()));
+				}
+			}
+		});
 		getContentPane().add(btnBusca);
 		
 		JLabel lblNome = new JLabel("Nome:");

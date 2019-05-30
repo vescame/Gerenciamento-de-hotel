@@ -54,6 +54,11 @@ public class FuncionarioControl {
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		if (f.getNumResidencia() == 0) {
+			msgError("Numero da casa vazio", "Erro",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
 			fdao.insert(f);
@@ -74,7 +79,7 @@ public class FuncionarioControl {
 		return null;
 	}
 
-	private void msgError(String titulo, String mensagem, int errorType) {
+	private void msgError(String mensagem, String titulo, int errorType) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 }
