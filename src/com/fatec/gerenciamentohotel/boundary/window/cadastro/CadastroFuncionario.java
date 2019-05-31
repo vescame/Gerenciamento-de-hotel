@@ -230,8 +230,8 @@ public class CadastroFuncionario extends JInternalFrame {
 				try {
 					DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 					nasc = sdf.parse(strDate);
-				} catch (ParseException except) {
-					except.printStackTrace();
+				} catch (ParseException ex) {
+					ex.printStackTrace();
 				}
 				f.setDataNascimento(nasc);
 				f.setStatus('A');

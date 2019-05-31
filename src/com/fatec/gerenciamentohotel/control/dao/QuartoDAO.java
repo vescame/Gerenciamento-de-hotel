@@ -30,7 +30,11 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 			if (e.getMessage().contains("Duplicate entry")) {
 				throw new DAOException(
 						"Quarto " + q.getNumQuarto() + " já existe...");
+			} else if (e.getMessage()
+					.contains("foreign key constraint fails")) {
+				throw new DAOException("Tipo de Quarto não cadastrado");
 			} else {
+				e.printStackTrace();
 				throw new DAOException("Erro ao inserir Quarto");
 			}
 		}

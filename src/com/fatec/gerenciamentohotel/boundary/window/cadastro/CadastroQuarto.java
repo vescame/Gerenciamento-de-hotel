@@ -1,17 +1,17 @@
 package src.com.fatec.gerenciamentohotel.boundary.window.cadastro;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import src.com.fatec.gerenciamentohotel.control.QuartoControl;
-import src.com.fatec.gerenciamentohotel.entity.Endereco;
+import src.com.fatec.gerenciamentohotel.control.TipoDeQuartoControl;
 import src.com.fatec.gerenciamentohotel.entity.Quarto;
 import src.com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
-
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class CadastroQuarto extends JInternalFrame {
 	/**
@@ -53,7 +53,7 @@ public class CadastroQuarto extends JInternalFrame {
 		getContentPane().add(lblAndar);
 
 		txtTipo = new JTextField();
-		txtTipo.setEnabled(false);
+		txtTipo.setEnabled(true);
 		txtTipo.setBounds(136, 76, 124, 25);
 		getContentPane().add(txtTipo);
 		txtTipo.setColumns(10);
@@ -71,11 +71,15 @@ public class CadastroQuarto extends JInternalFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				TipoDeQuarto tipo = new TipoDeQuartoControl()
+						.selectTipoQuarto(Long.parseLong(txtTipo.getText()));
+
 				Quarto quarto = new Quarto();
-				TipoDeQuarto tipo = new TipoDeQuarto();
-				quarto.setNumQuarto(Integer.parseInt(txtNumeroQuarto.getText()));
+				quarto.setNumQuarto(
+						Integer.parseInt(txtNumeroQuarto.getText()));
 				quarto.setAndar(Short.parseShort(txtAndar.getText()));
-				tipo.setTipo(txtTipo.getText());
+				quarto.setTipoDeQuarto(tipo);
+
 				new QuartoControl().insert(quarto);
 			}
 		});
@@ -84,8 +88,13 @@ public class CadastroQuarto extends JInternalFrame {
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(29, 231, 114, 25);
+		btnCancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		getContentPane().add(btnCancelar);
-
 	}
 
 }

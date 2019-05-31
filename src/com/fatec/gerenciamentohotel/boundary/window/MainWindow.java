@@ -33,21 +33,22 @@ import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarQuarto
 //import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarServicos;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarTipoQuarto;
 import src.com.fatec.gerenciamentohotel.boundary.window.reserva.ReservasFrame;
-import src.com.fatec.gerenciamentohotel.boundary.window.servicos.SolicitarServico;
 
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = -5038047263946063083L;
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private JPanel contentPane, StatusBar;
 	private JMenuBar menuBar;
-	private JMenu menuFuncionarios, menuHospedes, menuReservas, menuQuartos, menuServicoQuarto, menuTipoQuarto;
+	private JMenu menuFuncionarios, menuHospedes, menuReservas, menuQuartos,
+			/* menuServicoQuarto, */ menuTipoQuarto;
 	private JLabel lblData, lblHora;
 	private JDesktopPane desktopPane;
 	private JMenuItem mItemCadastroFuncionario, mItemConsultarFuncionario;
 	private JMenuItem mItemCadastroDeHospede, mItemConsultaDeHospede;
 	private JMenuItem mItemNovaReserva, mItemConsultarReserva;
-	private JMenuItem mItemCadastrarQuartos, mItemConsultarQuartos, mItemCadastrarTipo, mItemConsultarTipos;
-	private JMenuItem mntmSolicitarServico, mntmConsultarServicos;
+	private JMenuItem mItemCadastrarQuartos, mItemConsultarQuartos,
+			mItemCadastrarTipo, mItemConsultarTipos;
+//	private JMenuItem mntmSolicitarServico, mntmConsultarServicos;
 	private JSeparator separatorQuartos;
 	private CadastroFuncionario cadastroFuncionario;
 	private ConsultaFuncionarios consultaFuncionarios;
@@ -59,13 +60,14 @@ public class MainWindow extends JFrame {
 	private ConsultarTipoQuarto consultarTipoQuarto;
 //	private ConsultarServicos consultarServicos;
 	private ReservasFrame reservas;
-	private SolicitarServico servico;
+//	private SolicitarServico servico;
 	private Timer timer;
 
 	public MainWindow() {
 		setTitle("Gerenciamento de Reservas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(screenSize.width / 2 - 800, screenSize.height / 2 - 450, 1600, 900);
+		setBounds(screenSize.width / 2 - 800, screenSize.height / 2 - 450, 1600,
+				900);
 
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -74,10 +76,14 @@ public class MainWindow extends JFrame {
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-						SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-						lblHora.setText("Hora: " + timeFormat.format(new Date()));
-						lblData.setText("Data: " + dateFormat.format(new Date()));
+						SimpleDateFormat timeFormat = new SimpleDateFormat(
+								"HH:mm:ss");
+						SimpleDateFormat dateFormat = new SimpleDateFormat(
+								"dd/MM/yyyy");
+						lblHora.setText(
+								"Hora: " + timeFormat.format(new Date()));
+						lblData.setText(
+								"Data: " + dateFormat.format(new Date()));
 					}
 				});
 				timer.start();
@@ -203,30 +209,23 @@ public class MainWindow extends JFrame {
 		});
 		menuTipoQuarto.add(mItemConsultarTipos);
 
-		menuServicoQuarto = new JMenu("Serviço de Quarto");
-		menuBar.add(menuServicoQuarto);
-		mntmSolicitarServico = new JMenuItem("Solicitar Serviços");
-		mntmSolicitarServico.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (servico == null) {
-					servico = new SolicitarServico();
-				}
-				abrirJanelas(servico);
-			}
-		});
-//		menuServicoQuarto.add(mntmSolicitarServico);
-//		mntmConsultarServicos = new JMenuItem("Consultar Serviços");
-//		mntmConsultarServicos.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if (consultarServicos == null) {
-//					consultarServicos = new ConsultarServicos();
-//				}
-//				abrirJanelas(consultarServicos);
-//			}
-//		});
-//		menuServicoQuarto.add(mntmConsultarServicos);
+		/*
+		 * menuServicoQuarto = new JMenu("Serviço de Quarto");
+		 * menuBar.add(menuServicoQuarto); mntmSolicitarServico = new
+		 * JMenuItem("Solicitar Serviços");
+		 * mntmSolicitarServico.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent e) { if (servico ==
+		 * null) { servico = new SolicitarServico(); } abrirJanelas(servico); }
+		 * }); menuServicoQuarto.add(mntmSolicitarServico);
+		 * mntmConsultarServicos = new JMenuItem("Consultar Serviços");
+		 * mntmConsultarServicos.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent e) { if
+		 * (consultarServicos == null) { consultarServicos = new
+		 * ConsultarServicos(); } abrirJanelas(consultarServicos); } });
+		 * menuServicoQuarto.add(mntmConsultarServicos);
+		 */
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

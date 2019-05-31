@@ -4,6 +4,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import jdk.nashorn.internal.runtime.ParserException;
 import src.com.fatec.gerenciamentohotel.control.TipoDeQuartoControl;
 import src.com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
 
@@ -16,12 +17,10 @@ public class CadastroTipoQuarto extends JInternalFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 8935897060030865111L;
-	private JTextField txtID;
 	private JTextField txtDescricao;
 	private JTextField txtValor;
 	private JTextField txtQtdeAdultos;
 	private JTextField txtQtdeCriancas;
-	private JLabel lblId;
 	private JLabel lblDescricao;
 	private JLabel lblValorDiaria;
 	private JLabel lblQuantidadeAdultos;
@@ -35,16 +34,14 @@ public class CadastroTipoQuarto extends JInternalFrame {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 
-		lblId = new JLabel("ID");
-		lblId.setBounds(12, 12, 66, 15);
-		getContentPane().add(lblId);
-
 		lblDescricao = new JLabel("Descrição");
-		lblDescricao.setBounds(145, 12, 66, 15);
+		lblDescricao.setBounds(125, 12, 66, 15);
+		lblDescricao.setSize(150, lblDescricao.getHeight());
 		getContentPane().add(lblDescricao);
 
 		lblValorDiaria = new JLabel("Valor Diária:");
-		lblValorDiaria.setBounds(125, 49, 86, 15);
+		lblValorDiaria.setBounds(100, 49, 86, 15);
+		lblValorDiaria.setSize(150, lblValorDiaria.getHeight());
 		getContentPane().add(lblValorDiaria);
 
 		lblQuantidadeAdultos = new JLabel("Quantidade Adultos:");
@@ -54,11 +51,6 @@ public class CadastroTipoQuarto extends JInternalFrame {
 		lblQuantidadeCriancas = new JLabel("Quantidade Crianças:");
 		lblQuantidadeCriancas.setBounds(46, 123, 165, 15);
 		getContentPane().add(lblQuantidadeCriancas);
-
-		txtID = new JTextField();
-		txtID.setBounds(49, 7, 78, 25);
-		getContentPane().add(txtID);
-		txtID.setColumns(10);
 
 		txtDescricao = new JTextField();
 		txtDescricao.setColumns(10);
@@ -85,11 +77,19 @@ public class CadastroTipoQuarto extends JInternalFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TipoDeQuarto t = new TipoDeQuarto();
-				t.setId(Long.parseLong(txtID.getText()));
-				t.setQuantidadeAdultos(Short.parseShort(txtQtdeAdultos.getText()));
-				t.setQuantidadeCriancas(Short.parseShort(txtQtdeCriancas.getText()));
+				t.setQuantidadeAdultos(
+						Short.parseShort(txtQtdeAdultos.getText()));
+				t.setQuantidadeCriancas(
+						Short.parseShort(txtQtdeCriancas.getText()));
 				t.setTipo(txtDescricao.getText());
-				t.setValorDiaria(Float.parseFloat(txtValor.getText()));
+				try {
+					float val = Float
+							.parseFloat(txtValor.getText().replace(",", "."));
+					t.setValorDiaria(val);
+				} catch (ParserException ex) {
+					t.setValorDiaria(0F);
+				}
+
 				new TipoDeQuartoControl().insert(t);
 			}
 		});
@@ -98,6 +98,12 @@ public class CadastroTipoQuarto extends JInternalFrame {
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(181, 231, 114, 25);
+		btnCancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		getContentPane().add(btnCancelar);
 
 	}
