@@ -30,25 +30,26 @@ import src.com.fatec.gerenciamentohotel.boundary.window.cadastro.CadastroTipoQua
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultaFuncionarios;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarHospedes;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarQuarto;
-//import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarServicos;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarTipoQuarto;
 import src.com.fatec.gerenciamentohotel.boundary.window.reserva.ReservasFrame;
+import src.com.fatec.gerenciamentohotel.entity.Funcionario;
+import src.com.fatec.gerenciamentohotel.entity.Hospede;
+import src.com.fatec.gerenciamentohotel.entity.Pessoa;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -5038047263946063083L;
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	private JPanel contentPane, StatusBar;
 	private JMenuBar menuBar;
 	private JMenu menuFuncionarios, menuHospedes, menuReservas, menuQuartos,
-			/* menuServicoQuarto, */ menuTipoQuarto;
+			menuTipoQuarto;
 	private JLabel lblData, lblHora;
 	private JDesktopPane desktopPane;
 	private JMenuItem mItemCadastroFuncionario, mItemConsultarFuncionario;
-	private JMenuItem mItemCadastroDeHospede, mItemConsultaDeHospede;
+	private JMenuItem mItemCadastroHospede, mItemConsultaDeHospede;
 	private JMenuItem mItemNovaReserva, mItemConsultarReserva;
 	private JMenuItem mItemCadastrarQuartos, mItemConsultarQuartos,
 			mItemCadastrarTipo, mItemConsultarTipos;
-//	private JMenuItem mntmSolicitarServico, mntmConsultarServicos;
 	private JSeparator separatorQuartos;
 	private CadastroFuncionario cadastroFuncionario;
 	private ConsultaFuncionarios consultaFuncionarios;
@@ -58,17 +59,36 @@ public class MainWindow extends JFrame {
 	private ConsultarQuarto consultarQuarto;
 	private CadastroTipoQuarto cadastroTipoQuarto;
 	private ConsultarTipoQuarto consultarTipoQuarto;
-//	private ConsultarServicos consultarServicos;
 	private ReservasFrame reservas;
-//	private SolicitarServico servico;
 	private Timer timer;
-
-	public MainWindow() {
+	private static Hospede hospedeLogado = null;
+	private static Funcionario funcionarioLogado = null;
+	
+	public MainWindow(Object logado) {
+		if (logado.getClass().toString().contains("Funcionario")) {
+			MainWindow.funcionarioLogado = (Funcionario) logado;
+		} else {
+			MainWindow.hospedeLogado = (Hospede) logado;
+		}
+		this.construirJanelaPrincipal();
+		this.esconderPropriedades();
+	}
+	
+	private void esconderPropriedades() {
+		if (MainWindow.hospedeLogado != null) {
+			this.menuFuncionarios.setEnabled(false);
+			this.menuHospedes.setEnabled(false);
+			this.mItemCadastroHospede.setEnabled(false);
+			this.mItemCadastroFuncionario.setEnabled(false);
+			this.mItemCadastrarQuartos.setEnabled(false);
+			this.mItemCadastrarTipo.setEnabled(false);
+		}
+	}
+	private void construirJanelaPrincipal() {
 		setTitle("Gerenciamento de Reservas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(screenSize.width / 2 - 800, screenSize.height / 2 - 450, 1600,
 				900);
-
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
@@ -92,140 +112,73 @@ public class MainWindow extends JFrame {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		menuFuncionarios = new JMenu("Funcionários");
+		// cascade menu Funcionario
+		menuFuncionarios = new JMenu("Funcionarios");
 		menuBar.add(menuFuncionarios);
-		mItemCadastroFuncionario = new JMenuItem("Cadastro de Funcionário");
-		mItemCadastroFuncionario.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (cadastroFuncionario == null) {
-					cadastroFuncionario = new CadastroFuncionario();
-				}
-				abrirJanelas(cadastroFuncionario);
-			}
-		});
+		mItemCadastroFuncionario = new JMenuItem("Cadastro de Funcionario");
+		mItemCadastroFuncionario.setActionCommand("mitem_cad_funcionario");
+		mItemCadastroFuncionario.addActionListener(this);
 		menuFuncionarios.add(mItemCadastroFuncionario);
-		mItemConsultarFuncionario = new JMenuItem("Consultar Funcionário");
-		mItemConsultarFuncionario.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (consultaFuncionarios == null) {
-					consultaFuncionarios = new ConsultaFuncionarios();
-				}
-				abrirJanelas(consultaFuncionarios);
-			}
-		});
+		mItemConsultarFuncionario = new JMenuItem("Consultar Funcionario");
+		mItemConsultarFuncionario.setActionCommand("mitem_cons_funcionario");
+		mItemConsultarFuncionario.addActionListener(this);
 		menuFuncionarios.add(mItemConsultarFuncionario);
-		menuHospedes = new JMenu("Hóspedes");
+
+		// cascade menu Hospedes
+		menuHospedes = new JMenu("Hospedes");
 		menuBar.add(menuHospedes);
-		mItemCadastroDeHospede = new JMenuItem("Cadastro de Hóspede");
-		mItemCadastroDeHospede.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (cadadastroHospede == null) {
-					cadadastroHospede = new CadastroHospede();
-				}
-				abrirJanelas(cadadastroHospede);
-			}
-		});
-		menuHospedes.add(mItemCadastroDeHospede);
-		mItemConsultaDeHospede = new JMenuItem("Consulta de Hóspede");
-		mItemConsultaDeHospede.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (consultarHospedes == null) {
-					consultarHospedes = new ConsultarHospedes();
-				}
-				abrirJanelas(consultarHospedes);
-			}
-		});
+		mItemCadastroHospede = new JMenuItem("Cadastro de Hospede");
+		mItemCadastroHospede.setActionCommand("mitem_cad_hospede");
+		mItemCadastroHospede.addActionListener(this);
+		menuHospedes.add(mItemCadastroHospede);
+
+		mItemConsultaDeHospede = new JMenuItem("Consultar Hospede");
+		mItemConsultaDeHospede.setActionCommand("mitem_cons_hospede");
+		mItemConsultaDeHospede.addActionListener(this);
 		menuHospedes.add(mItemConsultaDeHospede);
 
+		// cascade menu Reservas
 		menuReservas = new JMenu("Reservas");
 		menuBar.add(menuReservas);
 		mItemNovaReserva = new JMenuItem("Nova Reserva");
-		mItemNovaReserva.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (reservas == null) {
-					reservas = new ReservasFrame();
-				}
-				abrirJanelas(reservas);
-			}
-		});
+		mItemNovaReserva.setActionCommand("mitem_cad_reserva");
+		mItemNovaReserva.addActionListener(this);
 		menuReservas.add(mItemNovaReserva);
+
 		mItemConsultarReserva = new JMenuItem("Consultar Reserva");
+		mItemConsultarReserva.setActionCommand("mitem_cons_reserva");
+		mItemConsultarReserva.addActionListener(this);
 		menuReservas.add(mItemConsultarReserva);
 
+		// cascade menu Quartos
 		menuQuartos = new JMenu("Quartos");
 		menuBar.add(menuQuartos);
 		mItemCadastrarQuartos = new JMenuItem("Cadastrar Quartos");
-		mItemCadastrarQuartos.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (cadastroQuarto == null) {
-					cadastroQuarto = new CadastroQuarto();
-				}
-				abrirJanelas(cadastroQuarto);
-			}
-		});
+		mItemCadastrarQuartos.setActionCommand("mitem_cad_quarto");
+		mItemCadastrarQuartos.addActionListener(this);
 		menuQuartos.add(mItemCadastrarQuartos);
+
 		mItemConsultarQuartos = new JMenuItem("Consultar Quartos");
-		mItemConsultarQuartos.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (consultarQuarto == null) {
-					consultarQuarto = new ConsultarQuarto();
-				}
-				abrirJanelas(consultarQuarto);
-			}
-		});
+		mItemConsultarQuartos.setActionCommand("mitem_cons_quarto");
+		mItemConsultarQuartos.addActionListener(this);
 		menuQuartos.add(mItemConsultarQuartos);
 		separatorQuartos = new JSeparator();
 		menuQuartos.add(separatorQuartos);
 
+		// cascade submenu Tipo de Quarto
 		menuTipoQuarto = new JMenu("Tipos de Quarto");
-		menuQuartos.add(menuTipoQuarto);
 		mItemCadastrarTipo = new JMenuItem("Cadastrar Tipo");
-		mItemCadastrarTipo.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (cadastroTipoQuarto == null) {
-					cadastroTipoQuarto = new CadastroTipoQuarto();
-				}
-				abrirJanelas(cadastroTipoQuarto);
-			}
-		});
+		mItemCadastrarTipo.setActionCommand("mitem_cad_tipo_quarto");
+		mItemCadastrarTipo.addActionListener(this);
+
 		menuTipoQuarto.add(mItemCadastrarTipo);
 		mItemConsultarTipos = new JMenuItem("Consultar Tipos");
-		mItemConsultarTipos.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (consultarTipoQuarto == null) {
-					consultarTipoQuarto = new ConsultarTipoQuarto();
-				}
-				abrirJanelas(consultarTipoQuarto);
-			}
-		});
+		mItemConsultarTipos.setActionCommand("mitem_cons_tipo_quarto");
+		mItemConsultarTipos.addActionListener(this);
 		menuTipoQuarto.add(mItemConsultarTipos);
 
-		/*
-		 * menuServicoQuarto = new JMenu("Serviço de Quarto");
-		 * menuBar.add(menuServicoQuarto); mntmSolicitarServico = new
-		 * JMenuItem("Solicitar Serviços");
-		 * mntmSolicitarServico.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) { if (servico ==
-		 * null) { servico = new SolicitarServico(); } abrirJanelas(servico); }
-		 * }); menuServicoQuarto.add(mntmSolicitarServico);
-		 * mntmConsultarServicos = new JMenuItem("Consultar Serviços");
-		 * mntmConsultarServicos.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) { if
-		 * (consultarServicos == null) { consultarServicos = new
-		 * ConsultarServicos(); } abrirJanelas(consultarServicos); } });
-		 * menuServicoQuarto.add(mntmConsultarServicos);
-		 */
+		// add menu Tipo de Quarto como submenu do menu Quartos
+		menuQuartos.add(menuTipoQuarto);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -257,6 +210,75 @@ public class MainWindow extends JFrame {
 		} else {
 			desktopPane.add(frame);
 			frame.setVisible(true);
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		final String eventCommandName = e.getActionCommand();
+		// eventos de cadastros
+		if (eventCommandName.equals("mitem_cad_funcionario")) {
+			if (cadastroFuncionario == null) {
+				cadastroFuncionario = new CadastroFuncionario();
+			}
+			abrirJanelas(cadastroFuncionario);
+		} else if (eventCommandName.equals("mitem_cad_hospede")) {
+			if (cadadastroHospede == null) {
+				cadadastroHospede = new CadastroHospede();
+			}
+			abrirJanelas(cadadastroHospede);
+		} else if (eventCommandName.equals("mitem_cad_reserva")) {
+			if (reservas == null) {
+				reservas = new ReservasFrame();
+			}
+			abrirJanelas(reservas);
+		} else if (eventCommandName.equals("mitem_cad_quarto")) {
+			if (cadastroQuarto == null) {
+				cadastroQuarto = new CadastroQuarto();
+			}
+			abrirJanelas(cadastroQuarto);
+		} else if (eventCommandName.equals("mitem_cad_tipo_quarto")) {
+			if (cadastroTipoQuarto == null) {
+				cadastroTipoQuarto = new CadastroTipoQuarto();
+			}
+			abrirJanelas(cadastroTipoQuarto);
+		}
+
+		// eventos de consultas
+		if (eventCommandName.equals("mitem_cons_funcionario")) {
+			if (consultaFuncionarios == null) {
+				consultaFuncionarios = new ConsultaFuncionarios();
+			}
+			abrirJanelas(consultaFuncionarios);
+		} else if (eventCommandName.equals("mitem_cons_hospede")) {
+			mItemConsultaDeHospede = new JMenuItem("Consultar Hospede");
+			if (consultarHospedes == null) {
+				consultarHospedes = new ConsultarHospedes();
+			}
+			abrirJanelas(consultarHospedes);
+		} else if (eventCommandName.equals("mitem_cons_reserva")) {
+			if (reservas == null) {
+				reservas = new ReservasFrame();
+			}
+			abrirJanelas(reservas);
+		} else if (eventCommandName.equals("mitem_cons_quarto")) {
+			if (consultarQuarto == null) {
+				consultarQuarto = new ConsultarQuarto();
+			}
+			abrirJanelas(consultarQuarto);
+		} else if (eventCommandName.equals("mitem_cons_tipo_quarto")) {
+			if (consultarTipoQuarto == null) {
+				consultarTipoQuarto = new ConsultarTipoQuarto();
+			}
+			abrirJanelas(consultarTipoQuarto);
+		}
+	}
+
+	public static Pessoa getPessoaLogada() {
+		if (MainWindow.hospedeLogado == null) {
+			return funcionarioLogado;
+		} else {
+			return hospedeLogado;
 		}
 	}
 }

@@ -47,7 +47,7 @@ public class Test {
 		f.setNumResidencia(1233);
 
 		FuncionarioControl fc = new FuncionarioControl();
-		// fc.novoFuncionario(f);
+		fc.novoFuncionario(f);
 
 		Hospede h = new Hospede();
 		h.setEndereco(e);
@@ -61,7 +61,7 @@ public class Test {
 		h.setNumResidencia(685);
 
 		HospedeControl hc = new HospedeControl();
-		// hc.insert(h);
+		hc.insert(h);
 
 		TipoDeQuarto t = new TipoDeQuarto();
 		t.setTipo("Sozinho No Bar");
@@ -70,18 +70,18 @@ public class Test {
 		t.setQuantidadeCriancas((short) 0);
 
 		TipoDeQuartoControl tqc = new TipoDeQuartoControl();
-		// tqc.insert(t);
+		tqc.insert(t);
 
 		Quarto q = new Quarto();
 		q.setNumQuarto(740);
 		q.setAndar((short) 1);
 		q.setTipoDeQuarto(tqc.selectTipoQuarto(1));
-		
+
 		QuartoControl qc = new QuartoControl();
-		//qc.insert(q);
+		qc.insert(q);
 
 		ReservaControl rc = new ReservaControl();
-		
+
 		Reserva r = new Reserva();
 		r.setHospede(hc.selectCPF(h.getCpf()));
 		r.setFuncionario(fc.selectCPF(f.getCpf()));
@@ -91,29 +91,32 @@ public class Test {
 		rc.insert(r);
 
 		try {
-			/*
+
 			// select funcionario
-			// System.out.println(fc.selectCPF(f.getCpf()).getNome());
+			System.out.println(fc.selectCPF(f.getCpf()).getNome());
 			System.out.println(fc.selectCPF("48556622359").getNome());
 
 			// select hospede
-			// System.out.println(hc.selectCPF(h.getCpf()).getNome());
+			System.out.println(hc.selectCPF(h.getCpf()).getNome());
 			System.out.println(hc.selectCPF("48556622359").getNome());
 
 			// select tipo quarto
-			// System.out.println(tqc.selectTipoQuarto(1));
+			System.out.println(tqc.selectTipoQuarto(1));
 			System.out.println(tqc.selectTipoQuarto(2));
 
 			// select quarto
-			// System.out.println(qc.selectNumQuarto(125));
+			System.out.println(qc.selectNumQuarto(125));
 			System.out.println(qc.selectNumQuarto(134));
 
+			Reserva r0 = new Reserva();
 			// select reserva
-			// System.out.println(rc.selectReserva(r0.getHospede().getCpf()));
+			System.out.println(rc.selectReserva(r0.getHospede().getCpf()));
 			System.out.println(rc.selectReserva("455200"));
+			Reserva r1 = new Reserva();
 			System.out.println(rc.selectReserva(r1.getHospede().getCpf()));
+			Reserva r2 = new Reserva();
 			System.out.println(rc.selectReserva(r2.getHospede().getCpf()));
-			 */
+
 			// select historico de reservas de hospede
 			System.out.println(rc.selectReserva(h.getCpf()));
 		} catch (NullPointerException except) {

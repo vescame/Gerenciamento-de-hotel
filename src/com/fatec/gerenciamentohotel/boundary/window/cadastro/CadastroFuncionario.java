@@ -27,7 +27,7 @@ import src.com.fatec.gerenciamentohotel.entity.Endereco;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
 
-public class CadastroFuncionario extends JInternalFrame {
+public class CadastroFuncionario extends JInternalFrame implements ActionListener {
 
 	private static final long serialVersionUID = 8511310886582278246L;
 	private JTextField textFieldNome;
@@ -131,16 +131,8 @@ public class CadastroFuncionario extends JInternalFrame {
 
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(213, 17, 93, 25);
-		btnBuscar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Endereco end = new EnderecoControl().selectCep(textFieldCEP.getText());
-				textFieldBairro.setText(end.getBairro());
-				textFieldCidade.setText(end.getCidade());
-				textFieldRua.setText(end.getRua());
-				textFieldUF.setText(end.getUf());
-			}
-		});
+		btnBuscar.setActionCommand("buscar_end");
+		btnBuscar.addActionListener(this);
 		panelEndereco.add(btnBuscar);
 
 		textFieldRua = new JTextField();
@@ -207,65 +199,14 @@ public class CadastroFuncionario extends JInternalFrame {
 
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setBounds(314, 431, 114, 25);
-		btnCadastrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Endereco end = new Endereco();
-
-				end.setCep(textFieldCEP.getText());
-				end.setBairro(textFieldBairro.getText());
-				end.setCidade(textFieldCidade.getText());
-				end.setRua(textFieldRua.getText());
-				end.setUf(textFieldUF.getText());
-
-				Funcionario f = new Funcionario();
-
-				f.setCpf(textFieldCPF.getText());
-				f.setEndereco(end);
-				f.setNome(textFieldNome.getText());
-				f.setTelefone(textFieldTelefone.getText());
-				f.setCelular(textFieldCelular.getText());
-				f.setEmail(textFieldEMail.getText());
-				String strDate = textFieldData.getText();
-				Date nasc = null;
-				try {
-					DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-					nasc = sdf.parse(strDate);
-				} catch (ParseException ex) {
-					ex.printStackTrace();
-				}
-				f.setDataNascimento(nasc);
-				f.setStatus('A');
-				f.setLogin(textFieldLogin.getText());
-				String senha = String.valueOf(textFieldSenha.getPassword());
-				String confSenha = String.valueOf(textFieldConfirmarSenha.getPassword());
-				if (confSenha.equals(senha)) {
-					f.setSenha(confSenha);
-				} else {
-					JOptionPane.showMessageDialog(null, "Senhas não conferem",
-							"Senha", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				
-				f.setTipoFuncionario(EFuncionario.valueOf(
-						comboBoxPermissoes.getSelectedItem().toString()));
-				try {
-					f.setNumResidencia(Integer.parseInt(textFieldNumero.getText()));
-				} catch (NumberFormatException ex) {
-					f.setNumResidencia(0);
-				}
-				
-				new FuncionarioControl().novoFuncionario(f);
-			}
-		});
+		btnCadastrar.setActionCommand("cadastrar");
+		btnCadastrar.addActionListener(this);
 		getContentPane().add(btnCadastrar);
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(188, 431, 114, 25);
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
+		btnCancelar.setActionCommand("cancelar");
+		btnCancelar.addActionListener(this);
 		getContentPane().add(btnCancelar);
 
 		textFieldNome = new JTextField();
@@ -317,5 +258,68 @@ public class CadastroFuncionario extends JInternalFrame {
 		textFieldConfirmarSenha.setBounds(314, 377, 98, 25);
 		getContentPane().add(textFieldConfirmarSenha);
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		final String eventNameCommand = e.getActionCommand();
+		if (eventNameCommand.equals("buscar_end")) {
+			Endereco end = new EnderecoControl().selectCep(textFieldCEP.getText());
+			if (end != null) {
+				textFieldBairro.setText(end.getBairro());
+				textFieldCidade.setText(end.getCidade());
+				textFieldRua.setText(end.getRua());
+				textFieldUF.setText(end.getUf());
+			}
+		} else if (eventNameCommand.equals("cadastrar")) {
+			Endereco end = new Endereco();
+
+			end.setCep(textFieldCEP.getText());
+			end.setBairro(textFieldBairro.getText());
+			end.setCidade(textFieldCidade.getText());
+			end.setRua(textFieldRua.getText());
+			end.setUf(textFieldUF.getText());
+
+			Funcionario f = new Funcionario();
+
+			f.setCpf(textFieldCPF.getText());
+			f.setEndereco(end);
+			f.setNome(textFieldNome.getText());
+			f.setTelefone(textFieldTelefone.getText());
+			f.setCelular(textFieldCelular.getText());
+			f.setEmail(textFieldEMail.getText());
+			String strDate = textFieldData.getText();
+			Date nasc = null;
+			try {
+				DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				nasc = sdf.parse(strDate);
+			} catch (ParseException ex) {
+				ex.printStackTrace();
+			}
+			f.setDataNascimento(nasc);
+			f.setStatus('A');
+			f.setLogin(textFieldLogin.getText());
+			String senha = String.valueOf(textFieldSenha.getPassword());
+			String confSenha = String.valueOf(textFieldConfirmarSenha.getPassword());
+			if (confSenha.equals(senha)) {
+				f.setSenha(confSenha);
+			} else {
+				JOptionPane.showMessageDialog(null, "Senhas não conferem",
+						"Senha", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			f.setTipoFuncionario(EFuncionario.valueOf(
+					comboBoxPermissoes.getSelectedItem().toString()));
+			try {
+				f.setNumResidencia(Integer.parseInt(textFieldNumero.getText()));
+			} catch (NumberFormatException ex) {
+				f.setNumResidencia(0);
+			}
+			
+			new FuncionarioControl().novoFuncionario(f);	
+		}	else if (eventNameCommand.equals("cancelar")) {
+			dispose();
+		}
 	}
 }

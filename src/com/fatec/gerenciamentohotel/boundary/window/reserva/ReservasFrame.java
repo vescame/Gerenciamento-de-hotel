@@ -12,16 +12,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import src.com.fatec.gerenciamentohotel.boundary.window.MainWindow;
 import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
 import src.com.fatec.gerenciamentohotel.control.HospedeControl;
 import src.com.fatec.gerenciamentohotel.control.QuartoControl;
 import src.com.fatec.gerenciamentohotel.control.ReservaControl;
-import src.com.fatec.gerenciamentohotel.entity.Endereco;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
 import src.com.fatec.gerenciamentohotel.entity.Quarto;
 import src.com.fatec.gerenciamentohotel.entity.Reserva;
-import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
 
 public class ReservasFrame extends JInternalFrame {
 	private static final long serialVersionUID = 2787460975839782982L;
@@ -38,8 +37,9 @@ public class ReservasFrame extends JInternalFrame {
 	private JButton btnInserirData;
 	private JButton btnCancelar;
 	private JButton btnGerarReserva;
-	private Hospede h;
-	private Quarto q;
+	private Hospede h = null;
+	private Quarto q = null;
+	private Funcionario f = null;
 
 	public ReservasFrame() {
 
@@ -140,27 +140,8 @@ public class ReservasFrame extends JInternalFrame {
 		btnGerarReserva.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Endereco end = new Endereco();
-				end.setCep("03070200");
-				end.setBairro("Bairro Funcionario");
-				end.setCidade("SAO PAULO");
-				end.setRua("Rua funcionario");
-				end.setUf("SP");
-
-				Funcionario f = new Funcionario();
-				f.setCpf("55666333251");
-				f.setTelefone("25556662");
-				f.setDataNascimento(new Date());
-				f.setEmail("funcmail@gmail");
-				f.setEndereco(end);
-				f.setLogin("logfunc");
-				f.setSenha("senhafunc");
-				f.setNumResidencia(485);
-				f.setNome("Nome Funcionario");
-				f.setStatus('A');
-				f.setTipoFuncionario(EFuncionario.ADMINISTRADOR);
-
-				new FuncionarioControl().novoFuncionario(f);
+				f = new FuncionarioControl()
+						.selectCPF(MainWindow.getPessoaLogada().getCpf());
 
 				Reserva r = new Reserva();
 				r.setFuncionario(f);
@@ -174,14 +155,11 @@ public class ReservasFrame extends JInternalFrame {
 							.parse(textFieldCheckIn.getText());
 				} catch (ParseException ex) {
 					ex.getMessage();
-					checkin = new Date();
 				}
 				r.setCheckIn(checkin);
-				if (!q.getTipoDeQuarto().getTipo().isEmpty()) {
-					if (!h.getEmail().isEmpty()) {
-						new ReservaControl().insert(r);
-					}
-				}
+
+				new ReservaControl().insert(r);
+
 			}
 		});
 		getContentPane().add(btnGerarReserva);

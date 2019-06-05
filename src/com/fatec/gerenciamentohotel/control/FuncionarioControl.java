@@ -78,6 +78,17 @@ public class FuncionarioControl {
 		}
 		return null;
 	}
+	
+	public Funcionario selectLogin(String login) {
+		try {
+			FuncionarioDAO fdao = new FuncionarioDAO();
+			return fdao.select(login);
+		} catch (DAOException e) {
+			msgError("Funcionario", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
+	}
 
 	private void msgError(String mensagem, String titulo, int errorType) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);

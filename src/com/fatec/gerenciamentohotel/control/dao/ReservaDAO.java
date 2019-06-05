@@ -37,9 +37,7 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 			pstmt = con.prepareStatement(" insert into reserva "
 					+ " (cpf_funcionario, cpf_hospede, num_quarto, dat_checkin, "
 					+ "dat_checkout, status) values (?, ?, ?, ?, ?, ?) ");
-			// ID Funcionario vai ser uma propriedade estatica do sistema pra
-			// pegar o funcionario logado
-			pstmt.setString(1, r.getFuncionario().getCpf()); // Login.getIDFuncionario();
+			pstmt.setString(1, r.getFuncionario().getCpf());
 			pstmt.setString(2, r.getHospede().getCpf());
 			pstmt.setInt(3, r.getQuarto().getNumQuarto());
 			DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

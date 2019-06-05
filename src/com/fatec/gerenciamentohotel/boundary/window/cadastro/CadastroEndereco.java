@@ -48,8 +48,9 @@ public class CadastroEndereco extends JDialog {
 
 		panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "Endereco", TitledBorder.LEADING,
-				TitledBorder.TOP, null, null));
+		panel.setBorder(new TitledBorder(
+				new LineBorder(new Color(0, 0, 0), 1, true), "Endereco",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(12, 12, 416, 153);
 		contentPanel.add(panel);
 
@@ -113,9 +114,9 @@ public class CadastroEndereco extends JDialog {
 				end.setRua(textFieldRua.getText());
 				end.setCidade(textFieldCidade.getText());
 				end.setUf(textFieldUf.getText());
-				
+
 				new EnderecoControl().insert(end);
-				
+
 				cancelButton.doClick();
 			}
 		});
