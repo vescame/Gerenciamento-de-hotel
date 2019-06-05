@@ -214,29 +214,29 @@ public class MainWindow extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		final String eventCommandName = e.getActionCommand();
+		final String idDoEvento = e.getActionCommand();
 		// eventos de cadastros
-		if (eventCommandName.equals("mitem_cad_funcionario")) {
+		if (idDoEvento.equals("mitem_cad_funcionario")) {
 			if (cadastroFuncionario == null) {
 				cadastroFuncionario = new CadastroFuncionario();
 			}
 			abrirJanelas(cadastroFuncionario);
-		} else if (eventCommandName.equals("mitem_cad_hospede")) {
+		} else if (idDoEvento.equals("mitem_cad_hospede")) {
 			if (cadadastroHospede == null) {
 				cadadastroHospede = new CadastroHospede();
 			}
 			abrirJanelas(cadadastroHospede);
-		} else if (eventCommandName.equals("mitem_cad_reserva")) {
+		} else if (idDoEvento.equals("mitem_cad_reserva")) {
 			if (reservas == null) {
 				reservas = new ReservasFrame();
 			}
 			abrirJanelas(reservas);
-		} else if (eventCommandName.equals("mitem_cad_quarto")) {
+		} else if (idDoEvento.equals("mitem_cad_quarto")) {
 			if (cadastroQuarto == null) {
 				cadastroQuarto = new CadastroQuarto();
 			}
 			abrirJanelas(cadastroQuarto);
-		} else if (eventCommandName.equals("mitem_cad_tipo_quarto")) {
+		} else if (idDoEvento.equals("mitem_cad_tipo_quarto")) {
 			if (cadastroTipoQuarto == null) {
 				cadastroTipoQuarto = new CadastroTipoQuarto();
 			}
@@ -244,28 +244,28 @@ public class MainWindow extends JFrame implements ActionListener {
 		}
 
 		// eventos de consultas
-		if (eventCommandName.equals("mitem_cons_funcionario")) {
+		if (idDoEvento.equals("mitem_cons_funcionario")) {
 			if (consultaFuncionarios == null) {
 				consultaFuncionarios = new ConsultaFuncionarios();
 			}
 			abrirJanelas(consultaFuncionarios);
-		} else if (eventCommandName.equals("mitem_cons_hospede")) {
+		} else if (idDoEvento.equals("mitem_cons_hospede")) {
 			mItemConsultaDeHospede = new JMenuItem("Consultar Hospede");
 			if (consultarHospedes == null) {
 				consultarHospedes = new ConsultarHospedes();
 			}
 			abrirJanelas(consultarHospedes);
-		} else if (eventCommandName.equals("mitem_cons_reserva")) {
+		} else if (idDoEvento.equals("mitem_cons_reserva")) {
 			if (reservas == null) {
 				reservas = new ReservasFrame();
 			}
 			abrirJanelas(reservas);
-		} else if (eventCommandName.equals("mitem_cons_quarto")) {
+		} else if (idDoEvento.equals("mitem_cons_quarto")) {
 			if (consultarQuarto == null) {
 				consultarQuarto = new ConsultarQuarto();
 			}
 			abrirJanelas(consultarQuarto);
-		} else if (eventCommandName.equals("mitem_cons_tipo_quarto")) {
+		} else if (idDoEvento.equals("mitem_cons_tipo_quarto")) {
 			if (consultarTipoQuarto == null) {
 				consultarTipoQuarto = new ConsultarTipoQuarto();
 			}
