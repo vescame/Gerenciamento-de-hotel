@@ -74,29 +74,29 @@ public class CadastroEndereco extends JDialog implements ActionListener {
 		panel.add(lblUf);
 
 		txtCep = new JTextField();
-		txtCep.setColumns(10);
+		txtCep.setColumns(8);
 		txtCep.setBounds(47, 17, 154, 25);
 		panel.add(txtCep);
 
 		txtRua = new JTextField();
-		txtRua.setColumns(10);
+		txtRua.setColumns(50);
 		txtRua.setBounds(47, 49, 221, 25);
 		panel.add(txtRua);
 
 		txtBairro = new JTextField();
-		txtBairro.setColumns(10);
+		txtBairro.setColumns(50);
 		txtBairro.setBounds(67, 81, 337, 25);
 		panel.add(txtBairro);
 
 		txtCidade = new JTextField();
-		txtCidade.setColumns(10);
+		txtCidade.setColumns(50);
 		txtCidade.setBounds(67, 115, 201, 25);
 		panel.add(txtCidade);
 
 		txtUf = new JTextField();
-		txtUf.setColumns(10);
 		txtUf.setBounds(338, 115, 66, 25);
 		panel.add(txtUf);
+		txtUf.setColumns(2);
 
 		btnPane = new JPanel();
 		btnPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -127,7 +127,7 @@ public class CadastroEndereco extends JDialog implements ActionListener {
 
 			new EnderecoControl().insert(end);
 		} else if (idDoEvento.equals("cancelar")) {
-			dispose();
+			this.setVisible(false);
 		}
 		
 	}
