@@ -103,12 +103,12 @@ public class CadastroEndereco extends JDialog implements ActionListener {
 		getContentPane().add(btnPane, BorderLayout.SOUTH);
 		
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setActionCommand("cancelar");
+		btnCancelar.setActionCommand("btn_cancelar");
 		btnCancelar.addActionListener(this);
 		btnPane.add(btnCancelar);
 		
 		btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.setActionCommand("cad_end");
+		btnCadastrar.setActionCommand("btn_cad_endereco");
 		btnCadastrar.addActionListener(this);
 		btnPane.add(btnCadastrar);
 		getRootPane().setDefaultButton(btnCadastrar);		
@@ -116,9 +116,10 @@ public class CadastroEndereco extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		final String idDoEvento = e.getActionCommand();
-		if (idDoEvento.equals("cad_end")) {
+		final String nomeEvento = e.getActionCommand();
+		if (nomeEvento.equals("btn_cad_endereco")) {
 			Endereco end = new Endereco();
+			
 			end.setCep(txtCep.getText());
 			end.setBairro(txtBairro.getText());
 			end.setRua(txtRua.getText());
@@ -126,7 +127,7 @@ public class CadastroEndereco extends JDialog implements ActionListener {
 			end.setUf(txtUf.getText());
 
 			new EnderecoControl().insert(end);
-		} else if (idDoEvento.equals("cancelar")) {
+		} else if (nomeEvento.equals("btn_cancelar")) {
 			this.setVisible(false);
 		}
 		

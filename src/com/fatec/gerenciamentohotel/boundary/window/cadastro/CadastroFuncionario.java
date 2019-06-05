@@ -37,12 +37,12 @@ public class CadastroFuncionario extends JInternalFrame
 	private JTextField txtTelefone;
 	private JTextField txtCPF;
 	private JTextField txtCelular;
-	private JTextField txtCEP;
+	private JTextField txtCep;
 	private JTextField txtRua;
 	private JTextField txtBairro;
 	private JTextField txtCidade;
 	private JTextField txtNumero;
-	private JTextField txtUF;
+	private JTextField txtUf;
 	private JTextField txtData;
 	private JTextField txtEMail;
 	private JTextField txtLogin;
@@ -129,10 +129,10 @@ public class CadastroFuncionario extends JInternalFrame
 		lblNumero.setBounds(290, 54, 30, 15);
 		panelEndereco.add(lblNumero);
 
-		txtCEP = new JTextField();
-		txtCEP.setBounds(47, 17, 154, 25);
-		panelEndereco.add(txtCEP);
-		txtCEP.setColumns(10);
+		txtCep = new JTextField();
+		txtCep.setBounds(47, 17, 154, 25);
+		panelEndereco.add(txtCep);
+		txtCep.setColumns(10);
 
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(213, 17, 93, 25);
@@ -160,10 +160,10 @@ public class CadastroFuncionario extends JInternalFrame
 		panelEndereco.add(txtNumero);
 		txtNumero.setColumns(10);
 
-		txtUF = new JTextField();
-		txtUF.setBounds(338, 115, 66, 25);
-		panelEndereco.add(txtUF);
-		txtUF.setColumns(10);
+		txtUf = new JTextField();
+		txtUf.setBounds(338, 115, 66, 25);
+		panelEndereco.add(txtUf);
+		txtUf.setColumns(10);
 
 		btnNovoEndereco = new JButton("Novo");
 		btnNovoEndereco.setActionCommand("btn_novo_endereco");
@@ -197,13 +197,13 @@ public class CadastroFuncionario extends JInternalFrame
 
 		btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setBounds(314, 431, 114, 25);
-		btnCadastrar.setActionCommand("cadastrar");
+		btnCadastrar.setActionCommand("btn_cadastrar");
 		btnCadastrar.addActionListener(this);
 		getContentPane().add(btnCadastrar);
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(188, 431, 114, 25);
-		btnCancelar.setActionCommand("cancelar");
+		btnCancelar.setActionCommand("btn_cancelar");
 		btnCancelar.addActionListener(this);
 		getContentPane().add(btnCancelar);
 
@@ -265,22 +265,25 @@ public class CadastroFuncionario extends JInternalFrame
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		final String eventNameCommand = e.getActionCommand();
-		if (eventNameCommand.equals("btn_busca_endereco")) {
-			end = new EnderecoControl().selectCep(txtCEP.getText());
-			if (end != null) {
-				end.setBairro(txtBairro.getText());
-				end.setCidade(txtCidade.getText());
-				end.setRua(txtRua.getText());
-				end.setUf(txtUF.getText());
+		final String nomeEvento = e.getActionCommand();
+		if (nomeEvento.equals("btn_buscar_endereco")) {
+			final String cep = txtCep.getText().trim();
+			if (cep.equals("")) {
+				this.end = new EnderecoControl().selectCep(cep);
+				if (end != null) {
+					txtRua.setText(end.getRua());
+					txtBairro.setText(end.getBairro());
+					txtCidade.setText(end.getCidade());
+					txtUf.setText(end.getUf());
+				}
 			}
-		} else if (eventNameCommand.equals("btn_novo_endereco")) {
+		} else if (nomeEvento.equals("btn_novo_endereco")) {
 			if (dialog == null) {
 				dialog = new CadastroEndereco();
 			}
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-		} else if (eventNameCommand.equals("cadastrar")) {
+		} else if (nomeEvento.equals("btn_cadastrar")) {
 			Funcionario f = new Funcionario();
 
 			f.setCpf(txtCPF.getText());
@@ -323,7 +326,7 @@ public class CadastroFuncionario extends JInternalFrame
 			}
 
 			new FuncionarioControl().novoFuncionario(f);
-		} else if (eventNameCommand.equals("cancelar")) {
+		} else if (nomeEvento.equals("btn_cancelar")) {
 			dispose();
 		}
 	}
