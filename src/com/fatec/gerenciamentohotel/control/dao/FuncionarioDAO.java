@@ -46,9 +46,8 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 			pstmt.executeQuery();
 		} catch (SQLException | ParseException except) {
 			if (except.getMessage().contains("foreign key constraint")) {
-				EnderecoDAO edao = new EnderecoDAO();
-				edao.insert(f.getEndereco());
-				this.insert(f);
+				throw new DAOException(
+						"Endereco " + f.getEndereco().getCep() + " nao existe");
 			} else if (except.getMessage().contains("Duplicate entry")) {
 				throw new DAOException(
 						"Funcionario " + f.getCpf() + " já existe");
