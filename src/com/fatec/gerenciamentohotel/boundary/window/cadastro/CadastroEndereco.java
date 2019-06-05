@@ -18,8 +18,7 @@ import javax.swing.border.TitledBorder;
 import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
 import src.com.fatec.gerenciamentohotel.entity.Endereco;
 
-public class CadastroEndereco extends JDialog {
-
+public class CadastroEndereco extends JDialog implements ActionListener {
 	private static final long serialVersionUID = -8951536181922325988L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textFieldCep;
@@ -34,7 +33,7 @@ public class CadastroEndereco extends JDialog {
 	private JLabel labelCidade;
 	private JLabel labelUf;
 	private JPanel buttonPane;
-	private JButton okButton;
+	private JButton btnCadastrar;
 	private JButton cancelButton;
 
 	public CadastroEndereco() {
@@ -102,36 +101,35 @@ public class CadastroEndereco extends JDialog {
 		buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
-
-		okButton = new JButton("Cadastrar");
-		okButton.setActionCommand("OK");
-		okButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Endereco end = new Endereco();
-				end.setCep(textFieldCep.getText());
-				end.setBairro(textFieldBairro.getText());
-				end.setRua(textFieldRua.getText());
-				end.setCidade(textFieldCidade.getText());
-				end.setUf(textFieldUf.getText());
-
-				new EnderecoControl().insert(end);
-
-				cancelButton.doClick();
-			}
-		});
-		buttonPane.add(okButton);
-		getRootPane().setDefaultButton(okButton);
-
+		
 		cancelButton = new JButton("Cancelar");
-		cancelButton.setActionCommand("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
+		cancelButton.setActionCommand("cancelar");
+		cancelButton.addActionListener(this);
 		buttonPane.add(cancelButton);
+		
+		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setActionCommand("cad_end");
+		btnCadastrar.addActionListener(this);
+		buttonPane.add(btnCadastrar);
+		getRootPane().setDefaultButton(btnCadastrar);		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		final String idDoEvento = e.getActionCommand();
+		if (idDoEvento.equals("cad_end")) {
+			Endereco end = new Endereco();
+			end.setCep(textFieldCep.getText());
+			end.setBairro(textFieldBairro.getText());
+			end.setRua(textFieldRua.getText());
+			end.setCidade(textFieldCidade.getText());
+			end.setUf(textFieldUf.getText());
+
+			new EnderecoControl().insert(end);
+		} else if (idDoEvento.equals("cancelar")) {
+			dispose();
+		}
+		
 	}
 
 }
