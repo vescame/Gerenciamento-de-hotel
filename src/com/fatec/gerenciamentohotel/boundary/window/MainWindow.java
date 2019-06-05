@@ -76,12 +76,11 @@ public class MainWindow extends JFrame implements ActionListener {
 	
 	private void esconderPropriedades() {
 		if (MainWindow.hospedeLogado != null) {
-			this.menuFuncionarios.setEnabled(false);
-			this.menuHospedes.setEnabled(false);
-			this.mItemCadastroHospede.setEnabled(false);
-			this.mItemCadastroFuncionario.setEnabled(false);
-			this.mItemCadastrarQuartos.setEnabled(false);
-			this.mItemCadastrarTipo.setEnabled(false);
+			this.menuFuncionarios.setVisible(false);
+			this.menuHospedes.setVisible(false);
+			this.mItemNovaReserva.setVisible(false);
+			this.mItemCadastrarQuartos.setVisible(false);
+			this.mItemCadastrarTipo.setVisible(false);
 		}
 	}
 	private void construirJanelaPrincipal() {
