@@ -1,5 +1,7 @@
 package src.com.fatec.gerenciamentohotel.control;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import src.com.fatec.gerenciamentohotel.control.dao.FuncionarioDAO;
@@ -83,6 +85,16 @@ public class FuncionarioControl {
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
 			return fdao.select(login);
+		} catch (DAOException e) {
+			msgError("Funcionario", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
+	}
+	
+	public List<Funcionario> selectTodos() {
+		try {
+			return new FuncionarioDAO().selectAll("");
 		} catch (DAOException e) {
 			msgError("Funcionario", e.getMessage(),
 					JOptionPane.WARNING_MESSAGE);

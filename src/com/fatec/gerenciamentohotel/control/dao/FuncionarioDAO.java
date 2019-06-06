@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -98,6 +99,40 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 	@Override
 	public List<Funcionario> selectAll(String docFuncionario)
 			throws DAOException {
-		return null;
+		Funcionario func;
+		List<Funcionario> l = new ArrayList<>();
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con.prepareStatement(
+					"select * from funcionario");
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.first()) {
+				do {
+					func = new Funcionario();
+					EnderecoDAO edao = new EnderecoDAO();
+					func.setCpf(rs.getString("cpf"));
+					func.setEndereco(edao.select(rs.getString("cep")));
+					func.setNome(rs.getString("nome"));
+					func.setTelefone(rs.getString("telefone"));
+					func.setCelular(rs.getString("celular"));
+					func.setEmail(rs.getString("email"));
+					func.setDataNascimento(rs.getDate("dat_nascimento"));
+					func.setStatus(rs.getString("status").charAt(0));
+					func.setLogin(rs.getString("login"));
+					func.setSenha(rs.getString("senha"));
+					func.setTipoFuncionario((EFuncionario
+							.valueOf(rs.getString("tipo_funcionario"))));
+					func.setNumResidencia(rs.getInt("num_residencia"));
+					l.add(func);
+				} while (rs.next());
+				return l;
+			} else {
+				throw new DAOException(
+						"Nao ha funcionarios");
+			}
+		} catch (SQLException except) {
+			except.printStackTrace();
+			throw new DAOException("Erro ao buscar funcionário");
+		}
 	}
 }

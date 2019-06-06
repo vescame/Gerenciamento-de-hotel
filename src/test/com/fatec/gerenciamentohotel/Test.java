@@ -1,4 +1,4 @@
-package src.test.com.fatec.gerenciamentohotel.dev;
+package src.test.com.fatec.gerenciamentohotel;
 
 import java.text.DateFormat;
 import java.text.ParseException;
