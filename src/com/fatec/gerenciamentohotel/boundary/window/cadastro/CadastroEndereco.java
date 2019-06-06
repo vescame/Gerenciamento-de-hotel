@@ -29,15 +29,6 @@ public class CadastroEndereco extends JDialog implements ActionListener {
 	private JTextField txtCidade;
 	private JTextField txtUf;
 
-	/*private JLabel lblCep;
-	private JLabel lblRua;
-	private JLabel lblBairro;
-	private JLabel lblCidade;
-	private JLabel lblUf;
-	private JPanel btnPane;
-	private JButton btnCadastrar;
-	private JButton btnCancelar;*/
-
 	public CadastroEndereco() {
 		setResizable(false);
 		setTitle("Cadastro de Endereço");

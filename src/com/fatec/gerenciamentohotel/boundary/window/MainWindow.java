@@ -30,8 +30,9 @@ import src.com.fatec.gerenciamentohotel.boundary.window.cadastro.CadastroTipoQua
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultaFuncionarios;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarHospedes;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarQuarto;
+import src.com.fatec.gerenciamentohotel.boundary.window.reserva.ConsultarReservas;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarTipoQuarto;
-import src.com.fatec.gerenciamentohotel.boundary.window.reserva.ReservasFrame;
+import src.com.fatec.gerenciamentohotel.boundary.window.reserva.CadastroReserva;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
 import src.com.fatec.gerenciamentohotel.entity.Pessoa;
@@ -59,7 +60,8 @@ public class MainWindow extends JFrame implements ActionListener {
 	private ConsultarQuarto consultarQuarto;
 	private CadastroTipoQuarto cadastroTipoQuarto;
 	private ConsultarTipoQuarto consultarTipoQuarto;
-	private ReservasFrame reservas;
+	private CadastroReserva cadastroReserva;
+	private ConsultarReservas consultarReservas;
 	private Timer timer;
 	private static Hospede hospedeLogado = null;
 	private static Funcionario funcionarioLogado = null;
@@ -227,10 +229,10 @@ public class MainWindow extends JFrame implements ActionListener {
 			}
 			abrirJanelas(cadadastroHospede);
 		} else if (nomeEvento.equals("mitem_cad_reserva")) {
-			if (reservas == null) {
-				reservas = new ReservasFrame();
+			if (cadastroReserva == null) {
+				cadastroReserva = new CadastroReserva();
 			}
-			abrirJanelas(reservas);
+			abrirJanelas(cadastroReserva);
 		} else if (nomeEvento.equals("mitem_cad_quarto")) {
 			if (cadastroQuarto == null) {
 				cadastroQuarto = new CadastroQuarto();
@@ -250,16 +252,15 @@ public class MainWindow extends JFrame implements ActionListener {
 			}
 			abrirJanelas(consultaFuncionarios);
 		} else if (nomeEvento.equals("mitem_cons_hospede")) {
-			mItemConsultaDeHospede = new JMenuItem("Consultar Hospede");
 			if (consultarHospedes == null) {
 				consultarHospedes = new ConsultarHospedes();
 			}
 			abrirJanelas(consultarHospedes);
 		} else if (nomeEvento.equals("mitem_cons_reserva")) {
-			if (reservas == null) {
-				reservas = new ReservasFrame();
+			if (consultarReservas == null) {
+				consultarReservas = new ConsultarReservas();
 			}
-			abrirJanelas(reservas);
+			abrirJanelas(consultarReservas);
 		} else if (nomeEvento.equals("mitem_cons_quarto")) {
 			if (consultarQuarto == null) {
 				consultarQuarto = new ConsultarQuarto();

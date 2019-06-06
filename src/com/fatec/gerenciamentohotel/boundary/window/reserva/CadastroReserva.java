@@ -22,7 +22,7 @@ import src.com.fatec.gerenciamentohotel.entity.Hospede;
 import src.com.fatec.gerenciamentohotel.entity.Quarto;
 import src.com.fatec.gerenciamentohotel.entity.Reserva;
 
-public class ReservasFrame extends JInternalFrame {
+public class CadastroReserva extends JInternalFrame {
 	private static final long serialVersionUID = 2787460975839782982L;
 	private JTextField textFieldHospede;
 	private JTextField textFieldQuarto;
@@ -41,7 +41,7 @@ public class ReservasFrame extends JInternalFrame {
 	private Quarto q = null;
 	private Funcionario f = null;
 
-	public ReservasFrame() {
+	public CadastroReserva() {
 
 		setTitle("Cadastrar Nova Reserva");
 		setClosable(true);

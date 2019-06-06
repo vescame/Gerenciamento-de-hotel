@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import src.com.fatec.gerenciamentohotel.control.TipoDeQuartoControl;
@@ -90,6 +91,31 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 
 	@Override
 	public List<Quarto> selectAll(String numQuarto) throws DAOException {
+		Quarto quar;
+		List<Quarto> l = new ArrayList<>();
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con.prepareStatement(
+					"select * from quarto");
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.first()) {
+				do {
+					quar = new Quarto();
+					TipoDeQuartoControl tqc = new TipoDeQuartoControl();
+					quar.setNumQuarto(rs.getInt("num_quarto"));
+					quar.setTipoDeQuarto(
+							tqc.selectTipoQuarto(rs.getInt("id_tipo_quarto")));
+					quar.setAndar(rs.getShort("andar"));
+					if (quartoDisponível(quar.getNumQuarto())) {
+						quar.setDisponivel(true);
+						l.add(quar);
+					}
+				} while (rs.next());
+				return l;
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Erro ao buscar Quarto");
+		}
 		return null;
 	}
 }

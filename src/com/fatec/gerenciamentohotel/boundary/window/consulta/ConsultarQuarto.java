@@ -1,69 +1,99 @@
 package src.com.fatec.gerenciamentohotel.boundary.window.consulta;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
-public class ConsultarQuarto extends JInternalFrame {
+import src.com.fatec.gerenciamentohotel.control.QuartoControl;
+import src.com.fatec.gerenciamentohotel.entity.Quarto;
 
-	private static final long serialVersionUID = -5279211457994228009L;
-	private JTextField textNumQuarto;
-	private JTextField textAndar;
-	private JTextField textTipoQuarto;
-	private JTable table;
+public class ConsultarQuarto extends JInternalFrame implements ActionListener {
+	private static final long serialVersionUID = 1L;
+	private JTable tblQuartos;
+
+	private List<Quarto> quartos = new ArrayList<>();
 
 	public ConsultarQuarto() {
 		setTitle("Consulta Quartos");
 		setClosable(true);
-		setBounds(100, 100, 401, 347);
+		setBounds(100, 100, 600, 350);
 		getContentPane().setLayout(null);
 
-		JLabel lblNmeroDoQuarto = new JLabel("N\u00FAmero do Quarto:");
-		lblNmeroDoQuarto.setBounds(10, 20, 97, 13);
-		getContentPane().add(lblNmeroDoQuarto);
+		tblQuartos = new JTable(dataModelTipoDeQuarto());
+		JScrollPane scrollPane = new JScrollPane(tblQuartos);
+		scrollPane.setVisible(true);
+		scrollPane.setBounds(0, 0, this.getWidth(), this.getHeight() - 100);
+		tblQuartos.setFillsViewportHeight(true);
+		getContentPane().add(scrollPane);
 
-		JLabel lblAndar = new JLabel("Andar:");
-		lblAndar.setBounds(10, 51, 46, 13);
-		getContentPane().add(lblAndar);
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setActionCommand("btn_cancelar");
+		btnCancelar.addActionListener(this);
+		btnCancelar.setBounds(10, 278, 114, 25);
+		getContentPane().add(btnCancelar);
 
-		JLabel lblTipoDeQuarto = new JLabel("Tipo de Quarto:");
-		lblTipoDeQuarto.setBounds(10, 80, 78, 13);
-		getContentPane().add(lblTipoDeQuarto);
+		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar.setActionCommand("btn_alterar");
+		btnAlterar.addActionListener(this);
+		btnAlterar.setBounds(300, 278, 114, 25);
+		getContentPane().add(btnAlterar, BorderLayout.EAST);
 
-		textNumQuarto = new JTextField();
-		textNumQuarto.setBounds(167, 17, 96, 19);
-		getContentPane().add(textNumQuarto);
-		textNumQuarto.setColumns(10);
-
-		textAndar = new JTextField();
-		textAndar.setBounds(167, 48, 96, 19);
-		getContentPane().add(textAndar);
-		textAndar.setColumns(10);
-
-		textTipoQuarto = new JTextField();
-		textTipoQuarto.setEditable(false);
-		textTipoQuarto.setBounds(167, 77, 96, 19);
-		getContentPane().add(textTipoQuarto);
-		textTipoQuarto.setColumns(10);
-
-		table = new JTable();
-		table.setBounds(10, 108, 366, 139);
-		getContentPane().add(table);
-
-		JButton button = new JButton("Cancelar");
-		button.setBounds(10, 278, 114, 25);
-		getContentPane().add(button);
-
-		JButton button_1 = new JButton("Alterar");
-		button_1.setBounds(136, 278, 114, 25);
-		getContentPane().add(button_1);
-
-		JButton button_2 = new JButton("Inativar");
-		button_2.setBounds(262, 278, 114, 25);
-		getContentPane().add(button_2);
+		JButton btnInativar = new JButton("Inativar");
+		btnInativar.setActionCommand("btn_inativar");
+		btnInativar.addActionListener(this);
+		btnInativar.setBounds(450, 278, 114, 25);
+		getContentPane().add(btnInativar, BorderLayout.EAST);
 
 	}
 
+	private DefaultTableModel dataModelTipoDeQuarto() {
+		DefaultTableModel dataModel = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+			String[] columnNames = { "id_quarto", "andar", "cod. tipo_quarto",
+					"desc. tipo_quarto", "valor_quarto" };
+
+			@Override
+			public int getColumnCount() {
+				return columnNames.length;
+			}
+
+			@Override
+			public String getColumnName(int index) {
+				return columnNames[index];
+			}
+
+		};
+		atualizarDadosTabela(dataModel);
+		return dataModel;
+	}
+
+	private void atualizarDadosTabela(DefaultTableModel m) {
+		this.quartos = new QuartoControl().selectTodos();
+		for (Quarto t : this.quartos) {
+			m.addRow(new Object[] { t.getNumQuarto(), t.getAndar(),
+					t.getTipoDeQuarto().getId(), t.getTipoDeQuarto().getTipo(),
+					t.getTipoDeQuarto().getValorDiaria() });
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		final String nomeEvento = e.getActionCommand();
+		if (nomeEvento.equals("btn_alterar")) {
+
+		} else if (nomeEvento.equals("btn_cancelar")) {
+			this.dispose();
+		} else if (nomeEvento.equals("btn_inativar")) {
+
+		}
+
+	}
 }

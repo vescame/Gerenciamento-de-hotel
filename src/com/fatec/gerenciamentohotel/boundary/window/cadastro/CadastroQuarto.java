@@ -8,23 +8,19 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarTipoQuarto;
 import src.com.fatec.gerenciamentohotel.control.QuartoControl;
 import src.com.fatec.gerenciamentohotel.control.TipoDeQuartoControl;
 import src.com.fatec.gerenciamentohotel.entity.Quarto;
-import src.com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
 
-public class CadastroQuarto extends JInternalFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2084077809581858219L;
+public class CadastroQuarto extends JInternalFrame implements ActionListener {
+	private static final long serialVersionUID = 1L;
 	private JTextField txtNumeroQuarto;
 	private JTextField txtTipo;
 	private JTextField txtAndar;
 	private JLabel lblNmeroDoQuarto;
 	private JLabel lblTipoDeQuarto;
 	private JLabel lblAndar;
-	private JButton btnBuscar;
 	private JButton btnCadastrar;
 	private JButton btnCancelar;
 
@@ -39,10 +35,6 @@ public class CadastroQuarto extends JInternalFrame {
 		lblNmeroDoQuarto.setBounds(12, 12, 131, 15);
 		getContentPane().add(lblNmeroDoQuarto);
 
-		lblTipoDeQuarto = new JLabel("Tipo de Quarto:");
-		lblTipoDeQuarto.setBounds(12, 81, 106, 15);
-		getContentPane().add(lblTipoDeQuarto);
-
 		txtNumeroQuarto = new JTextField();
 		txtNumeroQuarto.setBounds(197, 7, 63, 25);
 		getContentPane().add(txtNumeroQuarto);
@@ -52,49 +44,60 @@ public class CadastroQuarto extends JInternalFrame {
 		lblAndar.setBounds(12, 49, 51, 15);
 		getContentPane().add(lblAndar);
 
-		txtTipo = new JTextField();
-		txtTipo.setEnabled(true);
-		txtTipo.setBounds(136, 76, 124, 25);
-		getContentPane().add(txtTipo);
-		txtTipo.setColumns(10);
-
-		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(146, 113, 114, 25);
-		getContentPane().add(btnBuscar);
-
 		txtAndar = new JTextField();
 		txtAndar.setColumns(10);
 		txtAndar.setBounds(197, 44, 63, 25);
 		getContentPane().add(txtAndar);
 
+		lblTipoDeQuarto = new JLabel("Cod. Tipo Quarto:");
+		lblTipoDeQuarto.setBounds(12, 81, 106, 15);
+		getContentPane().add(lblTipoDeQuarto);
+
+		txtTipo = new JTextField();
+		txtTipo.setEnabled(true);
+		txtTipo.setBounds(130, 75, 130, 25);
+		getContentPane().add(txtTipo);
+		txtTipo.setColumns(10);
+
+		JButton btnBuscarTipoquarto = new JButton("Procurar Tipo");
+		btnBuscarTipoquarto.setActionCommand("btn_procurar");
+		btnBuscarTipoquarto.addActionListener(this);
+		btnBuscarTipoquarto.setBounds(130, 120, 120, 25);
+		getContentPane().add(btnBuscarTipoquarto);
+
 		btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				TipoDeQuarto tipo = new TipoDeQuartoControl()
-						.selectTipoQuarto(Long.parseLong(txtTipo.getText()));
-
-				Quarto quarto = new Quarto();
-				quarto.setNumQuarto(
-						Integer.parseInt(txtNumeroQuarto.getText()));
-				quarto.setAndar(Short.parseShort(txtAndar.getText()));
-				quarto.setTipoDeQuarto(tipo);
-
-				new QuartoControl().insert(quarto);
-			}
-		});
+		btnCadastrar.addActionListener(this);
+		btnCadastrar.setActionCommand("btn_cadastrar");
 		btnCadastrar.setBounds(146, 231, 114, 25);
 		getContentPane().add(btnCadastrar);
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(29, 231, 114, 25);
-		btnCancelar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
+		btnCancelar.addActionListener(this);
+		btnCancelar.setActionCommand("btn_cancelar");
 		getContentPane().add(btnCancelar);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		final String nomeEvento = e.getActionCommand();
+		if (nomeEvento.equals("btn_cadastrar")) {
+			Quarto quarto = new Quarto();
+			quarto.setNumQuarto(Integer.parseInt(txtNumeroQuarto.getText()));
+			quarto.setAndar(Short.parseShort(txtAndar.getText()));
+			quarto.setTipoDeQuarto(new TipoDeQuartoControl()
+					.selectTipoQuarto(Long.parseLong(txtTipo.getText())));
+
+			new QuartoControl().insert(quarto);
+		} else if (nomeEvento.equals("btn_cancelar")) {
+			dispose();
+		} else if (nomeEvento.equals("btn_procurar")) {
+			JInternalFrame tq = new ConsultarTipoQuarto();
+			getParent().add(tq);
+			tq.setVisible(true);
+			tq.show();
+		}
+
 	}
 
 }

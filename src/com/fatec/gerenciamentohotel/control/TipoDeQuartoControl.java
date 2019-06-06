@@ -1,5 +1,7 @@
 package src.com.fatec.gerenciamentohotel.control;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import src.com.fatec.gerenciamentohotel.control.dao.TipoDeQuartoDAO;
@@ -44,6 +46,16 @@ public class TipoDeQuartoControl {
 		return null;
 	}
 
+	public List<TipoDeQuarto> selectDisponiveis() {
+		try {
+			return new TipoDeQuartoDAO().selectAll("");
+		} catch (DAOException e) {
+			userMessage("Tipo de Quarto", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
+	}
+	
 	private void userMessage(String titulo, String mensagem, int errorType) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}

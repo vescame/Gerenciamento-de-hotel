@@ -92,9 +92,14 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 		List<Reserva> listReserva;
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
-			PreparedStatement pstmt = con.prepareStatement(
-					"select * from reserva where cpf_hospede = ? and status = 'I'");
-			pstmt.setString(1, cpfHospede);
+			String query = "select * from reserva where cpf_hospede = ? and status = 'I'";
+			PreparedStatement pstmt = con.prepareStatement(query);
+			if (cpfHospede.trim().isEmpty()) {
+				query = "select * from reserva";
+				pstmt = con.prepareStatement(query);
+			} else {
+				pstmt.setString(1, cpfHospede);
+			}
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.first()) {
 				listReserva = new ArrayList<>();

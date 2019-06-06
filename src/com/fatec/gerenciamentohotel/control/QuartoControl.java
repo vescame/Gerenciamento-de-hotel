@@ -1,5 +1,7 @@
 package src.com.fatec.gerenciamentohotel.control;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import src.com.fatec.gerenciamentohotel.control.dao.QuartoDAO;
@@ -44,5 +46,15 @@ public class QuartoControl {
 
 	private void userMessage(String titulo, String mensagem, int errorType) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
+	}
+
+	public List<Quarto> selectTodos() {
+		try {
+			return new QuartoDAO().selectAll("");
+		} catch (DAOException e) {
+			userMessage("Quarto", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
 	}
 }

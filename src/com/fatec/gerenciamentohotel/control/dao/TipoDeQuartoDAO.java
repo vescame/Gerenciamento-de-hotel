@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import src.com.fatec.gerenciamentohotel.control.connection.ConnectionDB;
@@ -67,6 +68,30 @@ public class TipoDeQuartoDAO implements IObjectDAO<TipoDeQuarto, String> {
 
 	@Override
 	public List<TipoDeQuarto> selectAll(String numQuarto) throws DAOException {
-		return null;
+		TipoDeQuarto tQuarto;
+		List<TipoDeQuarto> l = new ArrayList<>();
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con
+					.prepareStatement("Select * from tipo_quarto");
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.first()) {
+				do {
+					tQuarto = new TipoDeQuarto();
+					tQuarto.setId(rs.getInt("id"));
+					tQuarto.setTipo(rs.getString("tipo_quarto"));
+					tQuarto.setValorDiaria(rs.getFloat("preco"));
+					tQuarto.setQuantidadeAdultos(rs.getShort("qtd_adultos"));
+					tQuarto.setQuantidadeCriancas(rs.getShort("qtd_criancas"));
+					l.add(tQuarto);
+				} while (rs.next());
+				return l;
+			} else {
+				throw new DAOException("Quarto de número: " + numQuarto
+						+ " não existe.\nCadastre-o antes.");
+			}
+		} catch (SQLException except) {
+			throw new DAOException("Erro ao buscar Tipo de Quarto");
+		}
 	}
 }

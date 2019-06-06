@@ -37,7 +37,7 @@ public class ConsultaFuncionarios extends JInternalFrame
 	private JTextField txtBairro;
 	private JTextField txtCidade;
 	private JTextField txtUF;
-	
+
 	private List<Funcionario> funcionarios;
 
 	public ConsultaFuncionarios() {
@@ -102,7 +102,7 @@ public class ConsultaFuncionarios extends JInternalFrame
 		txtDataNasc.setBounds(315, 42, 80, 19);
 		getContentPane().add(txtDataNasc);
 		txtDataNasc.setColumns(10);
-		
+
 		tblFuncionarios = new JTable(dataModelFuncionarios());
 		JScrollPane scrollPane = new JScrollPane(tblFuncionarios);
 		scrollPane.setVisible(true);
@@ -190,13 +190,13 @@ public class ConsultaFuncionarios extends JInternalFrame
 		getContentPane().add(btnCancelar);
 
 	}
-	
+
 	private DefaultTableModel dataModelFuncionarios() {
 		DefaultTableModel dataModel = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
 			String[] columnNames = { "cpf", "nome", "email", "tipo_funcionario",
-			"status" };
-			
+					"status" };
+
 			@Override
 			public int getColumnCount() {
 				return columnNames.length;
@@ -206,24 +206,20 @@ public class ConsultaFuncionarios extends JInternalFrame
 			public String getColumnName(int index) {
 				return columnNames[index];
 			}
-			
+
 		};
 		atualizarDadosTabela(dataModel);
 		return dataModel;
 	}
 
-	private void atualizarDadosTabela (DefaultTableModel m) {
+	private void atualizarDadosTabela(DefaultTableModel m) {
 		this.funcionarios = new FuncionarioControl().selectTodos();
-		for (Funcionario t: this.funcionarios) {
-			m.addRow(new Object[] {
-					t.getCpf(),
-					t.getNome(),
-					t.getEmail(),
-					t.getTipoFuncionario().role,
-					t.getStatus()});
+		for (Funcionario t : this.funcionarios) {
+			m.addRow(new Object[] { t.getCpf(), t.getNome(), t.getEmail(),
+					t.getTipoFuncionario().role, t.getStatus() });
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		final String nomeEvento = e.getActionCommand();

@@ -64,7 +64,8 @@ public class FuncionarioControl {
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
 			fdao.insert(f);
-			userMessage("Funcionario", "Funcionario cadastrado!", JOptionPane.NO_OPTION);
+			userMessage("Funcionario", "Funcionario cadastrado!",
+					JOptionPane.NO_OPTION);
 		} catch (DAOException e) {
 			userMessage("Erro Funcionario", e.getMessage(),
 					JOptionPane.WARNING_MESSAGE);
@@ -81,7 +82,7 @@ public class FuncionarioControl {
 		}
 		return null;
 	}
-	
+
 	public Funcionario selectLogin(String login) {
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
@@ -92,7 +93,7 @@ public class FuncionarioControl {
 		}
 		return null;
 	}
-	
+
 	public List<Funcionario> selectTodos() {
 		try {
 			return new FuncionarioDAO().selectAll("");
