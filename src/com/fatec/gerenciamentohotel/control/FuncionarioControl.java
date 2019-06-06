@@ -103,7 +103,7 @@ public class FuncionarioControl {
 		return null;
 	}
 
-	private void userMessage(String mensagem, String titulo, int errorType) {
+	private void userMessage(String titulo, String mensagem, int errorType) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 }

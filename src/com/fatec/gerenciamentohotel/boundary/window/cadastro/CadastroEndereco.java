@@ -21,20 +21,22 @@ import src.com.fatec.gerenciamentohotel.entity.Endereco;
 public class CadastroEndereco extends JDialog implements ActionListener {
 	private static final long serialVersionUID = -8951536181922325988L;
 	private final JPanel contentPanel = new JPanel();
+	private JPanel panel;
+	
 	private JTextField txtCep;
 	private JTextField txtRua;
 	private JTextField txtBairro;
 	private JTextField txtCidade;
 	private JTextField txtUf;
-	private JPanel panel;
-	private JLabel lblCep;
+
+	/*private JLabel lblCep;
 	private JLabel lblRua;
 	private JLabel lblBairro;
 	private JLabel lblCidade;
 	private JLabel lblUf;
 	private JPanel btnPane;
 	private JButton btnCadastrar;
-	private JButton btnCancelar;
+	private JButton btnCancelar;*/
 
 	public CadastroEndereco() {
 		setResizable(false);
@@ -53,61 +55,61 @@ public class CadastroEndereco extends JDialog implements ActionListener {
 		panel.setBounds(12, 12, 416, 153);
 		contentPanel.add(panel);
 
-		lblCep = new JLabel("CEP:");
+		JLabel lblCep = new JLabel("CEP:");
 		lblCep.setBounds(12, 22, 66, 15);
 		panel.add(lblCep);
 
-		lblRua = new JLabel("Rua:");
+		JLabel lblRua = new JLabel("Rua:");
 		lblRua.setBounds(12, 54, 66, 15);
 		panel.add(lblRua);
 
-		lblBairro = new JLabel("Bairro:");
+		JLabel lblBairro = new JLabel("Bairro:");
 		lblBairro.setBounds(12, 86, 66, 15);
 		panel.add(lblBairro);
 
-		lblCidade = new JLabel("Cidade:");
+		JLabel lblCidade = new JLabel("Cidade:");
 		lblCidade.setBounds(12, 120, 66, 15);
 		panel.add(lblCidade);
 
-		lblUf = new JLabel("UF:");
+		JLabel lblUf = new JLabel("UF:");
 		lblUf.setBounds(290, 120, 66, 15);
 		panel.add(lblUf);
 
-		txtCep = new JTextField();
+		JTextField txtCep = new JTextField();
 		txtCep.setColumns(8);
 		txtCep.setBounds(47, 17, 154, 25);
 		panel.add(txtCep);
 
-		txtRua = new JTextField();
+		JTextField txtRua = new JTextField();
 		txtRua.setColumns(50);
 		txtRua.setBounds(47, 49, 221, 25);
 		panel.add(txtRua);
 
-		txtBairro = new JTextField();
+		JTextField txtBairro = new JTextField();
 		txtBairro.setColumns(50);
 		txtBairro.setBounds(67, 81, 337, 25);
 		panel.add(txtBairro);
 
-		txtCidade = new JTextField();
+		JTextField txtCidade = new JTextField();
 		txtCidade.setColumns(50);
 		txtCidade.setBounds(67, 115, 201, 25);
 		panel.add(txtCidade);
 
-		txtUf = new JTextField();
+		JTextField txtUf = new JTextField();
 		txtUf.setBounds(338, 115, 66, 25);
 		panel.add(txtUf);
 		txtUf.setColumns(2);
 
-		btnPane = new JPanel();
+		JPanel btnPane = new JPanel();
 		btnPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(btnPane, BorderLayout.SOUTH);
 		
-		btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setActionCommand("btn_cancelar");
 		btnCancelar.addActionListener(this);
 		btnPane.add(btnCancelar);
 		
-		btnCadastrar = new JButton("Cadastrar");
+		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.setActionCommand("btn_cad_endereco");
 		btnCadastrar.addActionListener(this);
 		btnPane.add(btnCadastrar);

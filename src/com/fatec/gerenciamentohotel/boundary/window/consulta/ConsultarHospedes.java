@@ -80,7 +80,7 @@ public class ConsultarHospedes extends JInternalFrame
 		getContentPane().add(btnBuscar);
 
 		lblNome = new JLabel("Nome:");
-		lblNome.setBounds(10, 50, 31, 13);
+		lblNome.setBounds(10, 50, 50, 13);
 		getContentPane().add(lblNome);
 
 		txtNome = new JTextField();
@@ -89,7 +89,7 @@ public class ConsultarHospedes extends JInternalFrame
 		txtNome.setColumns(10);
 
 		lblTelefone = new JLabel("Telefone:");
-		lblTelefone.setBounds(10, 80, 46, 13);
+		lblTelefone.setBounds(8, 80, 60, 13);
 		getContentPane().add(lblTelefone);
 
 		txtTelefone = new JTextField();
@@ -98,7 +98,7 @@ public class ConsultarHospedes extends JInternalFrame
 		txtTelefone.setColumns(10);
 
 		lblCelular = new JLabel("Celular:");
-		lblCelular.setBounds(232, 80, 36, 13);
+		lblCelular.setBounds(232, 80, 50, 13);
 		getContentPane().add(lblCelular);
 
 		txtCelular = new JTextField();
@@ -116,7 +116,7 @@ public class ConsultarHospedes extends JInternalFrame
 		txtEmail.setColumns(10);
 
 		lblDataNasc = new JLabel("Dat. Nasc.:");
-		lblDataNasc.setBounds(220, 107, 50, 19);
+		lblDataNasc.setBounds(220, 107, 80, 19);
 		getContentPane().add(lblDataNasc);
 
 		try {
@@ -125,7 +125,7 @@ public class ConsultarHospedes extends JInternalFrame
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		txtDataNasc.setBounds(300, 107, 50, 19);
+		txtDataNasc.setBounds(300, 107, 80, 19);
 		getContentPane().add(txtDataNasc);
 
 		JPanel panel = new JPanel();

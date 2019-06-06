@@ -116,26 +116,3 @@ CREATE TABLE IF NOT EXISTS `admin_hotel`.`reserva` (
     FOREIGN KEY (`num_quarto`)
     REFERENCES `admin_hotel`.`quarto` (`num_quarto`))
 COMMENT = 'Tabela gerenciadora de reservas';
-
-insert into `endereco` values (
-"03030300",
-"Rua Mock",
-"Mockadinho",
-"Mock City",
-"MK"
-);
-
-insert into `funcionario` values (
-"41131121111",
-"03030300",
-"Funcionario Administrador",
-"45450363",
-null,
-"admin@debian",
-"1996-01-11",
-"A",
-"admin",
-"admin",
-"ADMINISTRADOR",
-92
-);

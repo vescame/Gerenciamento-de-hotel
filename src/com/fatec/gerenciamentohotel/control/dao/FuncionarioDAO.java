@@ -42,14 +42,15 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 			pstmt.setString(8, String.valueOf(f.getStatus()));
 			pstmt.setString(9, f.getLogin());
 			pstmt.setString(10, f.getSenha());
-			pstmt.setString(11, EFuncionario.ADMINISTRADOR.role);
+			pstmt.setString(11, f.getTipoFuncionario().role);
 			pstmt.setInt(12, f.getNumResidencia());
 			pstmt.executeQuery();
 		} catch (SQLException | ParseException except) {
-			if (except.getMessage().contains("foreign key constraint")) {
+			final String errParser = except.getMessage();
+			if (errParser.contains("foreign key constraint")) {
 				throw new DAOException(
 						"Endereco " + f.getEndereco().getCep() + " nao existe");
-			} else if (except.getMessage().contains("Duplicate entry")) {
+			} else if (errParser.contains("Duplicate entry")) {
 				throw new DAOException(
 						"Funcionario " + f.getCpf() + " já existe");
 			} else {

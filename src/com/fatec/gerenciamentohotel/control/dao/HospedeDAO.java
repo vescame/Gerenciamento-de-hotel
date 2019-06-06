@@ -47,10 +47,9 @@ public class HospedeDAO implements IObjectDAO<Hospede, String> {
 		} catch (SQLException | ParseException except) {
 			String errParser = except.getMessage();
 			if (errParser.contains("foreign key constraint")) {
-				EnderecoDAO edao = new EnderecoDAO();
-				edao.insert(h.getEndereco());
-				this.insert(h);
-			} else if (except.getMessage().contains("Duplicate entry")) {
+				throw new DAOException(
+						"Endereco " + h.getEndereco().getCep() + " nao existe");
+			} else if (errParser.contains("Duplicate entry")) {
 				throw new DAOException("Hospede " + h.getCpf() + " já existe...");
 			} else {
 				throw new DAOException("Erro ao inserir Hospede");

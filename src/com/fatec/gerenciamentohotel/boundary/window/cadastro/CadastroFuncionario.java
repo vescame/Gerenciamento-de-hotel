@@ -268,7 +268,7 @@ public class CadastroFuncionario extends JInternalFrame
 		final String nomeEvento = e.getActionCommand();
 		if (nomeEvento.equals("btn_buscar_endereco")) {
 			final String cep = txtCep.getText().trim();
-			if (cep.equals("")) {
+			if (!cep.equals("")) {
 				this.end = new EnderecoControl().selectCep(cep);
 				if (end != null) {
 					txtRua.setText(end.getRua());

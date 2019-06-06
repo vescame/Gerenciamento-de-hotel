@@ -12,38 +12,38 @@ public class HospedeControl {
 
 	public void insert(Hospede h) {
 		if (h.getEndereco() == null) {
-			msgError("Erro", "Insira um Endereço válido",
+			userMessage("Erro", "Insira um Endereço válido",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (h.getCpf().trim().isEmpty()) {
-			msgError("Erro", "CPF de hóspede vazio", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "CPF de hóspede vazio", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (h.getNome().trim().isEmpty()) {
-			msgError("Erro", "Preencha o Nome", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Preencha o Nome", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (h.getTelefone().trim().isEmpty()) {
-			msgError("Erro", "Preencha ao menos o Telefone",
+			userMessage("Erro", "Preencha ao menos o Telefone",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (h.getEmail().trim().isEmpty()) {
-			msgError("Erro", "Preenche o E-Mail.", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Preenche o E-Mail.", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (h.getDataNascimento() == null) {
-			msgError("Erro", "Data de Nascimento vazia",
+			userMessage("Erro", "Data de Nascimento vazia",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (h.getStatus() == Character.MIN_VALUE) {
-			msgError("Erro", "Status vazio", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Status vazio", JOptionPane.ERROR_MESSAGE);
 			return;
 		} else if (h.getStatus() != 'A') {
 			if (h.getStatus() != 'I') {
-				msgError("Status Incorreto",
+				userMessage("Status Incorreto",
 						"Status deve ser A (Ativo) ou I (Inativo)",
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -52,8 +52,9 @@ public class HospedeControl {
 		try {
 			HospedeDAO hdao = new HospedeDAO();
 			hdao.insert(h);
+			userMessage("Hospede", "Hospede Cadastrado!", JOptionPane.WARNING_MESSAGE);
 		} catch (DAOException e) {
-			msgError("Hospede", e.getMessage(), JOptionPane.WARNING_MESSAGE);
+			userMessage("Hospede", e.getMessage(), JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -62,12 +63,12 @@ public class HospedeControl {
 			HospedeDAO hdao = new HospedeDAO();
 			return hdao.select(cpf);
 		} catch (DAOException e) {
-			msgError("Hospede", e.getMessage(), JOptionPane.WARNING_MESSAGE);
+			userMessage("Hospede", e.getMessage(), JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
 	}
 
-	private void msgError(String titulo, String mensagem, int errorType) {
+	private void userMessage(String titulo, String mensagem, int errorType) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 
@@ -75,7 +76,7 @@ public class HospedeControl {
 		try {
 			return new HospedeDAO().selectAll("");
 		} catch (DAOException e) {
-			msgError("Hospede", e.getMessage(),
+			userMessage("Hospede", e.getMessage(),
 					JOptionPane.WARNING_MESSAGE);
 		}
 		return null;

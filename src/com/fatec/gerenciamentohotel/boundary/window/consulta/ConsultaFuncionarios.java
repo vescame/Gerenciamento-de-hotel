@@ -99,7 +99,7 @@ public class ConsultaFuncionarios extends JInternalFrame
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		txtDataNasc.setBounds(315, 42, 96, 19);
+		txtDataNasc.setBounds(315, 42, 80, 19);
 		getContentPane().add(txtDataNasc);
 		txtDataNasc.setColumns(10);
 		
