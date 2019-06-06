@@ -12,60 +12,61 @@ public class FuncionarioControl {
 
 	public void novoFuncionario(Funcionario f) {
 		if (f.getEndereco() == null) {
-			msgError("Endereco vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Endereco vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getCpf().trim().isEmpty()) {
-			msgError("Cpf vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Cpf vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getNome().trim().isEmpty()) {
-			msgError("Nome vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Nome vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getTelefone().trim().isEmpty()) {
-			msgError("Telefone vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Telefone vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getDataNascimento() == null) {
-			msgError("Data de Nascimento vazia", "Erro",
+			userMessage("Data de Nascimento vazia", "Erro",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getLogin().trim().isEmpty()) {
-			msgError("Login vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Login vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getSenha().trim().isEmpty()) {
-			msgError("Senha vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Senha vazia", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getStatus() == Character.MIN_VALUE) {
-			msgError("Status vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Status vazio", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		} else if (f.getStatus() != 'A') {
 			if (f.getStatus() != 'I') {
-				msgError("Status Incorreto",
+				userMessage("Status Incorreto",
 						"Status deve ser A (Ativo) ou I (Inativo)",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 		}
 		if (f.getTipoFuncionario() == null) {
-			msgError("Tipo funcionario vazio", "Erro",
+			userMessage("Tipo funcionario vazio", "Erro",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getNumResidencia() == 0) {
-			msgError("Numero da casa vazio", "Erro",
+			userMessage("Numero da casa vazio", "Erro",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
 			fdao.insert(f);
+			userMessage("Funcionario", "Funcionario cadastrado!", JOptionPane.NO_OPTION);
 		} catch (DAOException e) {
-			msgError("Erro Funcionario", e.getMessage(),
+			userMessage("Erro Funcionario", e.getMessage(),
 					JOptionPane.WARNING_MESSAGE);
 		}
 	}
@@ -75,7 +76,7 @@ public class FuncionarioControl {
 			FuncionarioDAO fdao = new FuncionarioDAO();
 			return fdao.select(cpf);
 		} catch (DAOException e) {
-			msgError("Funcionario", e.getMessage(),
+			userMessage("Funcionario", e.getMessage(),
 					JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
@@ -86,7 +87,7 @@ public class FuncionarioControl {
 			FuncionarioDAO fdao = new FuncionarioDAO();
 			return fdao.select(login);
 		} catch (DAOException e) {
-			msgError("Funcionario", e.getMessage(),
+			userMessage("Funcionario", e.getMessage(),
 					JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
@@ -96,13 +97,13 @@ public class FuncionarioControl {
 		try {
 			return new FuncionarioDAO().selectAll("");
 		} catch (DAOException e) {
-			msgError("Funcionario", e.getMessage(),
+			userMessage("Funcionario", e.getMessage(),
 					JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
 	}
 
-	private void msgError(String mensagem, String titulo, int errorType) {
+	private void userMessage(String mensagem, String titulo, int errorType) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 }

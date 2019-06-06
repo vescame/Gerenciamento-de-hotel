@@ -2,16 +2,21 @@ package src.com.fatec.gerenciamentohotel.boundary.window.consulta;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
@@ -25,13 +30,15 @@ public class ConsultaFuncionarios extends JInternalFrame
 	private JTextField txtTelefone;
 	private JTextField txtCelular;
 	private JTextField txtDataNasc;
-	// private JTable tblFuncionarios;
+	private JTable tblFuncionarios;
 	private JTextField txtCEP;
 	private JTextField txtRua;
 	private JTextField txtNum;
 	private JTextField txtBairro;
 	private JTextField txtCidade;
 	private JTextField txtUF;
+	
+	private List<Funcionario> funcionarios;
 
 	public ConsultaFuncionarios() {
 		setIconifiable(true);
@@ -86,42 +93,22 @@ public class ConsultaFuncionarios extends JInternalFrame
 		lblDataDeNascimento.setBounds(242, 45, 103, 13);
 		getContentPane().add(lblDataDeNascimento);
 
-		txtDataNasc = new JTextField();
+		try {
+			txtDataNasc = new JFormattedTextField(
+					new MaskFormatter("##/##/####"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		txtDataNasc.setBounds(315, 42, 96, 19);
 		getContentPane().add(txtDataNasc);
 		txtDataNasc.setColumns(10);
-
-		List<Funcionario> funcionarios = new FuncionarioControl().selectTodos();
-
-		DefaultTableModel dataModel = new DefaultTableModel() {
-			private static final long serialVersionUID = 1L;
-			String[] columnNames = { "cpf", "nome", "email", "tipo_funcionario",
-			"status" };
-			@Override
-			public int getColumnCount() {
-				return columnNames.length;
-			}
-
-			@Override
-			public String getColumnName(int index) {
-				return columnNames[index];
-			}
-			
-		};
 		
-		for (Funcionario fun : funcionarios) {
-			dataModel.addRow(new Object[] {
-					fun.getCpf(),
-					fun.getNome(),
-					fun.getEmail(),
-					fun.getTipoFuncionario().role,
-					fun.getStatus()});
-		}
-		
-
-		JTable tblFuncionarios = new JTable(dataModel);
-		tblFuncionarios.setBounds(10, 255, 435, 147);
-		getContentPane().add(tblFuncionarios);
+		tblFuncionarios = new JTable(dataModelFuncionarios());
+		JScrollPane scrollPane = new JScrollPane(tblFuncionarios);
+		scrollPane.setVisible(true);
+		scrollPane.setBounds(10, 255, 435, 147);
+		tblFuncionarios.setFillsViewportHeight(true);
+		getContentPane().add(scrollPane);
 
 		JPanel panelEndereco = new JPanel();
 		panelEndereco.setToolTipText("");
@@ -203,7 +190,40 @@ public class ConsultaFuncionarios extends JInternalFrame
 		getContentPane().add(btnCancelar);
 
 	}
+	
+	private DefaultTableModel dataModelFuncionarios() {
+		DefaultTableModel dataModel = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+			String[] columnNames = { "cpf", "nome", "email", "tipo_funcionario",
+			"status" };
+			
+			@Override
+			public int getColumnCount() {
+				return columnNames.length;
+			}
 
+			@Override
+			public String getColumnName(int index) {
+				return columnNames[index];
+			}
+			
+		};
+		atualizarDadosTabela(dataModel);
+		return dataModel;
+	}
+
+	private void atualizarDadosTabela (DefaultTableModel m) {
+		this.funcionarios = new FuncionarioControl().selectTodos();
+		for (Funcionario t: this.funcionarios) {
+			m.addRow(new Object[] {
+					t.getCpf(),
+					t.getNome(),
+					t.getEmail(),
+					t.getTipoFuncionario().role,
+					t.getStatus()});
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		final String nomeEvento = e.getActionCommand();
@@ -213,7 +233,8 @@ public class ConsultaFuncionarios extends JInternalFrame
 						.selectCPF(txtCpf.getText());
 				if (f != null) {
 					txtNome.setText(f.getNome());
-					txtDataNasc.setText(String.valueOf(f.getDataNascimento()));
+					txtDataNasc.setText(new SimpleDateFormat("dd/MM/yyyy")
+							.format(f.getDataNascimento()));
 					txtCelular.setText(f.getCelular());
 					txtTelefone.setText(f.getTelefone());
 					txtCEP.setText(f.getEndereco().getCep());

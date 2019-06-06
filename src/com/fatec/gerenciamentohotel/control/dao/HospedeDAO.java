@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -91,6 +92,34 @@ public class HospedeDAO implements IObjectDAO<Hospede, String> {
 
 	@Override
 	public List<Hospede> selectAll(String docFuncionario) throws DAOException {
-		return null;
+		Hospede hosp;
+		List<Hospede> l = new ArrayList<>();
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con
+					.prepareStatement("select * from hospede");
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.first()) {
+				do {
+					hosp = new Hospede();
+					EnderecoControl ec = new EnderecoControl();
+					hosp.setCpf(rs.getString("cpf"));
+					hosp.setEndereco(ec.selectCep(rs.getString("cep")));
+					hosp.setNome(rs.getString("nome"));
+					hosp.setTelefone(rs.getString("telefone"));
+					hosp.setCelular(rs.getString("celular"));
+					hosp.setEmail(rs.getString("email"));
+					hosp.setDataNascimento(rs.getDate("dat_nascimento"));
+					hosp.setNumResidencia(rs.getInt("num_residencia"));
+					hosp.setStatus(rs.getString("status").charAt(0));
+					l.add(hosp);
+				} while (rs.next());
+				return l;
+			} else {
+				throw new DAOException("Nao ha Hospedes");
+			}
+		} catch (SQLException except) {
+			throw new DAOException("Erro ao buscar Hospede");
+		}
 	}
 }

@@ -21,6 +21,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
 import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
+import src.com.fatec.gerenciamentohotel.control.HospedeControl;
 import src.com.fatec.gerenciamentohotel.entity.Endereco;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
 
@@ -216,13 +217,7 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		final String nomeEvento = e.getActionCommand();
-		if (nomeEvento.equals("btn_novo_endereco")) {
-			if (dialog == null) {
-				dialog = new CadastroEndereco();
-			}
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} else if (nomeEvento.equals("btn_cadastrar")) {
+		if (nomeEvento.equals("btn_cadastrar")) {
 			Hospede h = new Hospede();
 			h.setCpf(txtCPF.getText());
 			h.setCelular(txtCelular.getText());
@@ -242,9 +237,17 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 			h.setEmail(txtEmail.getText());
 			h.setNome(txtNome.getText());
 			h.setTelefone(txtTelefone.getText());
+			h.setStatus('A');
+			new HospedeControl().insert(h);
+		} else if (nomeEvento.equals("btn_novo_endereco")) {
+			if (dialog == null) {
+				dialog = new CadastroEndereco();
+			}
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
 		} else if (nomeEvento.equals("btn_buscar_endereco")) {
 			final String cep = txtCep.getText().trim();
-			if (cep.equals("")) {
+			if (!cep.equals("")) {
 				this.end = new EnderecoControl().selectCep(cep);
 				if (end != null) {
 					txtRua.setText(end.getRua());

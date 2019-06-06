@@ -1,5 +1,7 @@
 package src.com.fatec.gerenciamentohotel.control;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import src.com.fatec.gerenciamentohotel.control.dao.HospedeDAO;
@@ -67,5 +69,15 @@ public class HospedeControl {
 
 	private void msgError(String titulo, String mensagem, int errorType) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
+	}
+
+	public List<Hospede> selectTodos() {
+		try {
+			return new HospedeDAO().selectAll("");
+		} catch (DAOException e) {
+			msgError("Hospede", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
 	}
 }

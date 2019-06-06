@@ -99,6 +99,8 @@ public class LoginWindow extends JFrame implements ActionListener {
 		}
 		txtCPF.setBounds(12, 51, 225, 25);
 		panelClientes.add(txtCPF);
+		
+		dummyCredentials();
 	}
 
 	@Override
@@ -121,6 +123,12 @@ public class LoginWindow extends JFrame implements ActionListener {
 			this.dispose();
 			main.setVisible(true);
 		}
-
+	}
+	
+	private void dummyCredentials() {
+		txtLogin.setText("admin");
+		txtSenha.setText("admin");
+		btnAcessarFuncionario.doClick();
+		this.setVisible(false);
 	}
 }
