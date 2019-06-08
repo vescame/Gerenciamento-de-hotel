@@ -123,8 +123,7 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 				return listReserva;
 			} else {
 				throw new DAOException(
-						"Nao ha historico de Reservas para o CPF: " + cpfHospede
-								+ ".");
+						"Nao ha historico de Reservas");
 			}
 		} catch (SQLException except) {
 			throw new DAOException("Erro ao buscar historico de Reservas");

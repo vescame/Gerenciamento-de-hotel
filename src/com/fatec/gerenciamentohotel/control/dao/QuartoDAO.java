@@ -64,7 +64,7 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 				return quar;
 			} else {
 				throw new DAOException(
-						"Quarto " + numQuarto + " não cadastrado.");
+						"Quarto nao encontrado.");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Erro ao buscar Quarto");

@@ -88,7 +88,7 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 				} while (rs.next());
 				return func;
 			} else {
-				throw new DAOException("Nao ha Funcionario com o CPF: " + cpf);
+				throw new DAOException("Funcionario nao encontrado.");
 			}
 		} catch (SQLException except) {
 			except.printStackTrace();

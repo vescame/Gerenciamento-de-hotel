@@ -81,7 +81,7 @@ public class HospedeDAO implements IObjectDAO<Hospede, String> {
 				return hosp;
 			} else {
 				throw new DAOException(
-						"Nao ha nenhum Hospede com o CPF: " + cpf);
+						"Hospede nao encontrado.");
 			}
 		} catch (SQLException except) {
 			throw new DAOException("Erro ao buscar Hospede");
