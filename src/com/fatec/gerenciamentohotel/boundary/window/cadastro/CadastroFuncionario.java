@@ -23,6 +23,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
+import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
 import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
 import src.com.fatec.gerenciamentohotel.entity.Endereco;
@@ -31,7 +32,6 @@ import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
 
 public class CadastroFuncionario extends JInternalFrame
 		implements ActionListener {
-
 	private static final long serialVersionUID = 8511310886582278246L;
 	private JTextField txtNome;
 	private JTextField txtTelefone;
@@ -48,6 +48,7 @@ public class CadastroFuncionario extends JInternalFrame
 	private JTextField txtLogin;
 	private JPasswordField txtPsswdSenha;
 	private JPasswordField txtPsswdConfirmarSenha;
+
 	private JPanel panelEndereco;
 	private JLabel lblNome;
 	private JLabel lblCpf;
@@ -65,17 +66,19 @@ public class CadastroFuncionario extends JInternalFrame
 	private JLabel lblLogin;
 	private JLabel lblSenha;
 	private JLabel lblConfirmarSenha;
+
 	private JButton btnBuscar;
 	private JButton btnNovoEndereco;
 	private JButton btnCadastrar;
 	private JButton btnCancelar;
+
 	private JComboBox<EFuncionario> cmbPermissoes;
-	private CadastroEndereco dialog;
+	private CadastroEndereco enderecoDialog;
 
 	private Endereco end = null;
 
 	public CadastroFuncionario() {
-		setTitle("Cadastro de Funcionários");
+		setTitle("Cadastro de Funcionarios");
 		setIconifiable(true);
 		setClosable(true);
 		setBounds(100, 100, 450, 500);
@@ -132,7 +135,7 @@ public class CadastroFuncionario extends JInternalFrame
 		txtCep = new JTextField();
 		txtCep.setBounds(47, 17, 154, 25);
 		panelEndereco.add(txtCep);
-		txtCep.setColumns(10);
+		txtCep.setDocument(new JTextFieldLimit(8));
 
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(213, 17, 93, 25);
@@ -143,27 +146,27 @@ public class CadastroFuncionario extends JInternalFrame
 		txtRua = new JTextField();
 		txtRua.setBounds(47, 49, 221, 25);
 		panelEndereco.add(txtRua);
-		txtRua.setColumns(10);
+		txtRua.setDocument(new JTextFieldLimit(50));
 
 		txtBairro = new JTextField();
 		txtBairro.setBounds(67, 81, 337, 25);
 		panelEndereco.add(txtBairro);
-		txtBairro.setColumns(10);
+		txtBairro.setDocument(new JTextFieldLimit(50));
 
 		txtCidade = new JTextField();
 		txtCidade.setBounds(67, 115, 201, 25);
 		panelEndereco.add(txtCidade);
-		txtCidade.setColumns(10);
+		txtCidade.setDocument(new JTextFieldLimit(50));
 
 		txtNumero = new JTextField();
 		txtNumero.setBounds(338, 49, 66, 25);
 		panelEndereco.add(txtNumero);
-		txtNumero.setColumns(10);
+		txtNumero.setDocument(new JTextFieldLimit(5));
 
 		txtUf = new JTextField();
 		txtUf.setBounds(338, 115, 66, 25);
 		panelEndereco.add(txtUf);
-		txtUf.setColumns(10);
+		txtUf.setDocument(new JTextFieldLimit(2));
 
 		btnNovoEndereco = new JButton("Novo");
 		btnNovoEndereco.setActionCommand("btn_novo_endereco");
@@ -210,22 +213,22 @@ public class CadastroFuncionario extends JInternalFrame
 		txtNome = new JTextField();
 		txtNome.setBounds(61, 10, 157, 25);
 		getContentPane().add(txtNome);
-		txtNome.setColumns(10);
+		txtNome.setDocument(new JTextFieldLimit(35));
 
 		txtTelefone = new JTextField();
 		txtTelefone.setBounds(81, 47, 137, 25);
 		getContentPane().add(txtTelefone);
-		txtTelefone.setColumns(10);
+		txtTelefone.setDocument(new JTextFieldLimit(15));
 
 		txtCPF = new JTextField();
 		txtCPF.setBounds(281, 10, 147, 25);
 		getContentPane().add(txtCPF);
-		txtCPF.setColumns(10);
+		txtCPF.setDocument(new JTextFieldLimit(11));
 
 		txtCelular = new JTextField();
 		txtCelular.setBounds(304, 47, 124, 25);
 		getContentPane().add(txtCelular);
-		txtCelular.setColumns(10);
+		txtCelular.setDocument(new JTextFieldLimit(15));
 
 		// txtData = new JTextField();
 		try {
@@ -235,12 +238,11 @@ public class CadastroFuncionario extends JInternalFrame
 		}
 		txtData.setBounds(178, 239, 124, 25);
 		getContentPane().add(txtData);
-		txtData.setColumns(10);
 
 		txtEMail = new JTextField();
 		txtEMail.setBounds(81, 271, 221, 25);
 		getContentPane().add(txtEMail);
-		txtEMail.setColumns(10);
+		txtEMail.setDocument(new JTextFieldLimit(35));
 
 		cmbPermissoes = new JComboBox<>();
 		cmbPermissoes
@@ -251,14 +253,16 @@ public class CadastroFuncionario extends JInternalFrame
 		txtLogin = new JTextField();
 		txtLogin.setBounds(81, 340, 221, 25);
 		getContentPane().add(txtLogin);
-		txtLogin.setColumns(10);
+		txtLogin.setDocument(new JTextFieldLimit(15));
 
 		txtPsswdSenha = new JPasswordField();
 		txtPsswdSenha.setBounds(81, 377, 98, 25);
+		txtPsswdSenha.setDocument(new JTextFieldLimit(15));
 		getContentPane().add(txtPsswdSenha);
 
 		txtPsswdConfirmarSenha = new JPasswordField();
 		txtPsswdConfirmarSenha.setBounds(314, 377, 98, 25);
+		txtPsswdConfirmarSenha.setDocument(new JTextFieldLimit(15));
 		getContentPane().add(txtPsswdConfirmarSenha);
 
 	}
@@ -278,11 +282,11 @@ public class CadastroFuncionario extends JInternalFrame
 				}
 			}
 		} else if (nomeEvento.equals("btn_novo_endereco")) {
-			if (dialog == null) {
-				dialog = new CadastroEndereco();
+			if (enderecoDialog == null) {
+				enderecoDialog = new CadastroEndereco();
 			}
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
+			enderecoDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			enderecoDialog.setVisible(true);
 		} else if (nomeEvento.equals("btn_cadastrar")) {
 			Funcionario f = new Funcionario();
 

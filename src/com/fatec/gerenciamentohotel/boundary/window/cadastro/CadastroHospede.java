@@ -20,6 +20,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
+import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
 import src.com.fatec.gerenciamentohotel.control.HospedeControl;
 import src.com.fatec.gerenciamentohotel.entity.Endereco;
@@ -39,7 +40,7 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 	private JTextField txtUf;
 	private JTextField txtDataNascimento;
 	private JTextField txtEmail;
-	private JPanel panelEndereco;
+
 	private JLabel lblNome;
 	private JLabel lblCPF;
 	private JLabel lblCelular;
@@ -90,12 +91,12 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 		getContentPane().add(lblCelular);
 
 		txtCelular = new JTextField();
-		txtCelular.setColumns(10);
+		txtCelular.setDocument(new JTextFieldLimit(15));
 		txtCelular.setBounds(304, 49, 124, 25);
 		getContentPane().add(txtCelular);
 
 		txtTelefone = new JTextField();
-		txtTelefone.setColumns(10);
+		txtTelefone.setDocument(new JTextFieldLimit(15));
 		txtTelefone.setBounds(81, 49, 137, 25);
 		getContentPane().add(txtTelefone);
 
@@ -103,7 +104,7 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 		lblTelefone.setBounds(12, 54, 66, 15);
 		getContentPane().add(lblTelefone);
 
-		panelEndereco = new JPanel();
+		JPanel panelEndereco = new JPanel();
 		panelEndereco.setLayout(null);
 		panelEndereco.setBorder(new TitledBorder(
 				new LineBorder(new Color(0, 0, 0), 1, true), "Endereco",
@@ -136,7 +137,7 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 		panelEndereco.add(lblNumero);
 
 		txtCep = new JTextField();
-		txtCep.setColumns(10);
+		txtCep.setDocument(new JTextFieldLimit(8));
 		txtCep.setBounds(47, 17, 154, 25);
 		panelEndereco.add(txtCep);
 
@@ -147,27 +148,27 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 		panelEndereco.add(btnBuscar);
 
 		txtRua = new JTextField();
-		txtRua.setColumns(10);
+		txtRua.setDocument(new JTextFieldLimit(50));
 		txtRua.setBounds(47, 49, 221, 25);
 		panelEndereco.add(txtRua);
 
 		txtBairro = new JTextField();
-		txtBairro.setColumns(10);
+		txtBairro.setDocument(new JTextFieldLimit(50));
 		txtBairro.setBounds(67, 81, 337, 25);
 		panelEndereco.add(txtBairro);
 
 		txtCidade = new JTextField();
-		txtCidade.setColumns(10);
+		txtCidade.setDocument(new JTextFieldLimit(50));
 		txtCidade.setBounds(67, 115, 201, 25);
 		panelEndereco.add(txtCidade);
 
 		txtNumero = new JTextField();
-		txtNumero.setColumns(10);
+		txtNumero.setDocument(new JTextFieldLimit(5));
 		txtNumero.setBounds(338, 49, 66, 25);
 		panelEndereco.add(txtNumero);
 
 		txtUf = new JTextField();
-		txtUf.setColumns(10);
+		txtUf.setDocument(new JTextFieldLimit(2));
 		txtUf.setBounds(338, 115, 66, 25);
 		panelEndereco.add(txtUf);
 
@@ -188,12 +189,11 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		txtDataNascimento.setColumns(10);
 		txtDataNascimento.setBounds(178, 251, 124, 25);
 		getContentPane().add(txtDataNascimento);
 
 		txtEmail = new JTextField();
-		txtEmail.setColumns(10);
+		txtEmail.setDocument(new JTextFieldLimit(35));
 		txtEmail.setBounds(81, 283, 221, 25);
 		getContentPane().add(txtEmail);
 

@@ -8,6 +8,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarTipoQuarto;
 import src.com.fatec.gerenciamentohotel.control.QuartoControl;
 import src.com.fatec.gerenciamentohotel.control.TipoDeQuartoControl;
@@ -18,11 +19,14 @@ public class CadastroQuarto extends JInternalFrame implements ActionListener {
 	private JTextField txtNumeroQuarto;
 	private JTextField txtTipo;
 	private JTextField txtAndar;
+	
 	private JLabel lblNmeroDoQuarto;
 	private JLabel lblTipoDeQuarto;
 	private JLabel lblAndar;
+	
 	private JButton btnCadastrar;
 	private JButton btnCancelar;
+	private JButton btnBuscarTipoquarto;
 
 	public CadastroQuarto() {
 		setTitle("Cadastrar Quartos");
@@ -38,14 +42,14 @@ public class CadastroQuarto extends JInternalFrame implements ActionListener {
 		txtNumeroQuarto = new JTextField();
 		txtNumeroQuarto.setBounds(197, 7, 63, 25);
 		getContentPane().add(txtNumeroQuarto);
-		txtNumeroQuarto.setColumns(10);
+		txtNumeroQuarto.setDocument(new JTextFieldLimit(5));
 
 		lblAndar = new JLabel("Andar:");
 		lblAndar.setBounds(12, 49, 51, 15);
 		getContentPane().add(lblAndar);
 
 		txtAndar = new JTextField();
-		txtAndar.setColumns(10);
+		txtAndar.setDocument(new JTextFieldLimit(2));
 		txtAndar.setBounds(197, 44, 63, 25);
 		getContentPane().add(txtAndar);
 
@@ -54,12 +58,11 @@ public class CadastroQuarto extends JInternalFrame implements ActionListener {
 		getContentPane().add(lblTipoDeQuarto);
 
 		txtTipo = new JTextField();
-		txtTipo.setEnabled(true);
 		txtTipo.setBounds(130, 75, 130, 25);
 		getContentPane().add(txtTipo);
-		txtTipo.setColumns(10);
+		txtTipo.setDocument(new JTextFieldLimit(2));
 
-		JButton btnBuscarTipoquarto = new JButton("Procurar Tipo");
+		btnBuscarTipoquarto = new JButton("Procurar Tipo");
 		btnBuscarTipoquarto.setActionCommand("btn_procurar");
 		btnBuscarTipoquarto.addActionListener(this);
 		btnBuscarTipoquarto.setBounds(130, 120, 120, 25);

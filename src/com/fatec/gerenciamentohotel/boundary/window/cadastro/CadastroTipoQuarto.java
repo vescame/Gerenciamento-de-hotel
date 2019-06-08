@@ -33,6 +33,7 @@ public class CadastroTipoQuarto extends JInternalFrame
 
 	public CadastroTipoQuarto() {
 		final int x = 100, y = 100, width = 450, height = 300;
+		setTitle("Cadastrar Tipo de Quartos");
 		setClosable(true);
 		setIconifiable(true);
 		setBounds(x, y, width, height);
@@ -57,7 +58,6 @@ public class CadastroTipoQuarto extends JInternalFrame
 		getContentPane().add(lblQuantidadeCriancas);
 
 		txtDescricao = new JTextField();
-		txtDescricao.setColumns(10);
 		txtDescricao.setBounds(150, 7, 211, 25);
 		txtDescricao.setDocument(new JTextFieldLimit(25));
 		getContentPane().add(txtDescricao);
@@ -68,13 +68,11 @@ public class CadastroTipoQuarto extends JInternalFrame
 		getContentPane().add(txtValor);
 
 		txtQtdDeAdultos = new JTextField();
-		txtQtdDeAdultos.setColumns(10);
 		txtQtdDeAdultos.setBounds(150, 81, 78, 25);
 		txtQtdDeAdultos.setDocument(new JTextFieldLimit(2));
 		getContentPane().add(txtQtdDeAdultos);
 
 		txtQtdDeCriancas = new JTextField();
-		txtQtdDeCriancas.setColumns(10);
 		txtQtdDeCriancas.setBounds(150, 118, 78, 25);
 		txtQtdDeCriancas.setDocument(new JTextFieldLimit(2));
 		getContentPane().add(txtQtdDeCriancas);

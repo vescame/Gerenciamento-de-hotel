@@ -18,9 +18,14 @@ import src.com.fatec.gerenciamentohotel.control.QuartoControl;
 import src.com.fatec.gerenciamentohotel.entity.Quarto;
 
 public class ConsultarQuarto extends JInternalFrame implements ActionListener {
-	private static final long serialVersionUID = 1L;
-	private DefaultTableModel dataModel;
+	private static final long serialVersionUID = 1L;	
+	private JButton btnCancelar;
+	private JButton btnAlterar;
+	private JButton btnInativar;
+	
 	private JScrollPane scrollPane;
+	
+	private DefaultTableModel dataModel;
 	private JTable tblQuartos;
 
 	private List<Quarto> quartos = new ArrayList<>();
@@ -40,7 +45,7 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 			public void focusLost(FocusEvent e) {
 				atualizarModel();
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				atualizarModel();
@@ -53,19 +58,19 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 		tblQuartos.setFillsViewportHeight(true);
 		getContentPane().add(scrollPane);
 
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setActionCommand("btn_cancelar");
 		btnCancelar.addActionListener(this);
 		btnCancelar.setBounds(10, 278, 114, 25);
 		getContentPane().add(btnCancelar);
 
-		JButton btnAlterar = new JButton("Alterar");
+		btnAlterar = new JButton("Alterar");
 		btnAlterar.setActionCommand("btn_alterar");
 		btnAlterar.addActionListener(this);
 		btnAlterar.setBounds(300, 278, 114, 25);
 		getContentPane().add(btnAlterar, BorderLayout.EAST);
 
-		JButton btnInativar = new JButton("Inativar");
+		btnInativar = new JButton("Inativar");
 		btnInativar.setActionCommand("btn_inativar");
 		btnInativar.addActionListener(this);
 		btnInativar.setBounds(450, 278, 114, 25);
@@ -118,10 +123,10 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 		final String nomeEvento = e.getActionCommand();
 		if (nomeEvento.equals("btn_alterar")) {
 
-		} else if (nomeEvento.equals("btn_cancelar")) {
-			dispose();
 		} else if (nomeEvento.equals("btn_inativar")) {
 
+		} else if (nomeEvento.equals("btn_cancelar")) {
+			dispose();
 		}
 	}
 }

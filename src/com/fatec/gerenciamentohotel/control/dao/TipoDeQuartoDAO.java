@@ -58,8 +58,7 @@ public class TipoDeQuartoDAO implements IObjectDAO<TipoDeQuarto, String> {
 				}
 				return tQuarto;
 			} else {
-				throw new DAOException("Quarto de numero: " + numQuarto
-						+ " nao existe.\nCadastre-o antes.");
+				throw new DAOException("Tipo de quarto não encontrado.");
 			}
 		} catch (SQLException except) {
 			throw new DAOException("Erro ao buscar Tipo de Quarto");
@@ -87,8 +86,7 @@ public class TipoDeQuartoDAO implements IObjectDAO<TipoDeQuarto, String> {
 				} while (rs.next());
 				return l;
 			} else {
-				throw new DAOException("Quarto de número: " + numQuarto
-						+ " não existe.\nCadastre-o antes.");
+				throw new DAOException("Nao ha Tipos de Quarto.");
 			}
 		} catch (SQLException except) {
 			throw new DAOException("Erro ao buscar Tipo de Quarto");

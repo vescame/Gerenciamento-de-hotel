@@ -2,6 +2,8 @@ package src.com.fatec.gerenciamentohotel.boundary.window.consulta;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -14,10 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.control.HospedeControl;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
 
@@ -55,26 +57,28 @@ public class ConsultarHospedes extends JInternalFrame
 	private JButton btnInativar;
 	private JButton btnCancelar;
 
+	private DefaultTableModel dataModel;
 	private JTable tblHospedes;
 	private List<Hospede> hospedes;
 
 	public ConsultarHospedes() {
-		setClosable(true);
 		setTitle("Consulta Hospedes");
-		setBounds(100, 100, 468, 541);
-		getContentPane().setLayout(null);
+		setClosable(true);
+		setIconifiable(true);
+		setLayout(null);
+		setBounds(100, 100, 470, 540);
 
 		lblCpf = new JLabel("CPF:");
 		lblCpf.setBounds(10, 20, 31, 13);
 		getContentPane().add(lblCpf);
 
 		txtCpf = new JTextField();
-		txtCpf.setBounds(61, 20, 130, 19);
+		txtCpf.setBounds(70, 20, 130, 19);
+		txtCpf.setDocument(new JTextFieldLimit(11));
 		getContentPane().add(txtCpf);
-		txtCpf.setColumns(10);
 
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(225, 17, 114, 25);
+		btnBuscar.setBounds(225, 15, 114, 25);
 		btnBuscar.setActionCommand("btn_buscar");
 		btnBuscar.addActionListener(this);
 		getContentPane().add(btnBuscar);
@@ -84,39 +88,39 @@ public class ConsultarHospedes extends JInternalFrame
 		getContentPane().add(lblNome);
 
 		txtNome = new JTextField();
-		txtNome.setBounds(61, 46, 365, 19);
+		txtNome.setBounds(70, 46, 365, 19);
 		getContentPane().add(txtNome);
-		txtNome.setColumns(10);
+		txtNome.setDocument(new JTextFieldLimit(35));
 
 		lblTelefone = new JLabel("Telefone:");
 		lblTelefone.setBounds(8, 80, 60, 13);
 		getContentPane().add(lblTelefone);
 
 		txtTelefone = new JTextField();
-		txtTelefone.setBounds(61, 75, 148, 19);
+		txtTelefone.setBounds(70, 75, 148, 19);
 		getContentPane().add(txtTelefone);
-		txtTelefone.setColumns(10);
+		txtTelefone.setDocument(new JTextFieldLimit(15));
 
 		lblCelular = new JLabel("Celular:");
 		lblCelular.setBounds(232, 80, 50, 13);
 		getContentPane().add(lblCelular);
 
 		txtCelular = new JTextField();
-		txtCelular.setBounds(278, 75, 148, 19);
+		txtCelular.setBounds(285, 75, 148, 19);
 		getContentPane().add(txtCelular);
-		txtCelular.setColumns(10);
+		txtCelular.setDocument(new JTextFieldLimit(15));
 
 		lblEmail = new JLabel("E-mail:");
 		lblEmail.setBounds(10, 110, 50, 13);
 		getContentPane().add(lblEmail);
 
 		txtEmail = new JTextField();
-		txtEmail.setBounds(61, 107, 150, 19);
+		txtEmail.setBounds(70, 107, 150, 19);
 		getContentPane().add(txtEmail);
-		txtEmail.setColumns(10);
+		txtEmail.setDocument(new JTextFieldLimit(35));
 
 		lblDataNasc = new JLabel("Dat. Nasc.:");
-		lblDataNasc.setBounds(220, 107, 80, 19);
+		lblDataNasc.setBounds(232, 107, 80, 19);
 		getContentPane().add(lblDataNasc);
 
 		try {
@@ -135,53 +139,52 @@ public class ConsultarHospedes extends JInternalFrame
 		getContentPane().add(panel);
 
 		lblCep = new JLabel("CEP:");
-		lblCep.setVerticalAlignment(SwingConstants.TOP);
-		lblCep.setBounds(10, 19, 46, 13);
+		lblCep.setBounds(5, 19, 46, 13);
 		panel.add(lblCep);
 
 		txtCep = new JTextField();
 		txtCep.setColumns(10);
-		txtCep.setBounds(50, 16, 130, 19);
+		txtCep.setBounds(60, 16, 130, 19);
 		panel.add(txtCep);
 
 		lblRua = new JLabel("Rua:");
-		lblRua.setBounds(10, 45, 30, 13);
+		lblRua.setBounds(5, 45, 30, 13);
 		panel.add(lblRua);
 
 		txtRua = new JTextField();
 		txtRua.setColumns(10);
-		txtRua.setBounds(50, 42, 215, 19);
+		txtRua.setBounds(60, 42, 215, 19);
 		panel.add(txtRua);
 
 		lblNumero = new JLabel("N:");
-		lblNumero.setBounds(310, 42, 30, 13);
+		lblNumero.setBounds(310, 45, 30, 13);
 		panel.add(lblNumero);
 
 		txtNumero = new JTextField();
 		txtNumero.setColumns(10);
-		txtNumero.setBounds(329, 39, 96, 19);
+		txtNumero.setBounds(329, 42, 96, 19);
 		panel.add(txtNumero);
 
 		lblBairro = new JLabel("Bairro:");
-		lblBairro.setBounds(10, 74, 40, 13);
+		lblBairro.setBounds(5, 74, 40, 13);
 		panel.add(lblBairro);
 
 		txtBairro = new JTextField();
 		txtBairro.setColumns(10);
-		txtBairro.setBounds(50, 71, 215, 19);
+		txtBairro.setBounds(60, 71, 215, 19);
 		panel.add(txtBairro);
 
 		lblCidade = new JLabel("Cidade:");
-		lblCidade.setBounds(10, 104, 46, 13);
+		lblCidade.setBounds(5, 107, 46, 13);
 		panel.add(lblCidade);
 
 		txtCidade = new JTextField();
 		txtCidade.setColumns(10);
-		txtCidade.setBounds(50, 104, 215, 19);
+		txtCidade.setBounds(60, 104, 215, 19);
 		panel.add(txtCidade);
 
 		lblUf = new JLabel("UF:");
-		lblUf.setBounds(289, 104, 30, 13);
+		lblUf.setBounds(303, 107, 30, 13);
 		panel.add(lblUf);
 
 		txtUf = new JTextField();
@@ -189,15 +192,27 @@ public class ConsultarHospedes extends JInternalFrame
 		txtUf.setBounds(329, 104, 96, 19);
 		panel.add(txtUf);
 
-		tblHospedes = new JTable(dataModelFuncionarios());
+		configurarDataModel();
+		tblHospedes = new JTable(dataModel);
+		tblHospedes.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				atualizarModel();
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				atualizarModel();
+			}
+		});
 		JScrollPane scrollPane = new JScrollPane(tblHospedes);
 		scrollPane.setVisible(true);
-		scrollPane.setBounds(10, 300, 435, 147);
+		scrollPane.setBounds(0, 300, getWidth(), 150);
 		tblHospedes.setFillsViewportHeight(true);
 		getContentPane().add(scrollPane);
 
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(80, 472, 114, 25);
+		btnCancelar.setBounds(10, 472, 114, 25);
 		btnCancelar.setActionCommand("btn_cancelar");
 		btnCancelar.addActionListener(this);
 		getContentPane().add(btnCancelar);
@@ -213,11 +228,10 @@ public class ConsultarHospedes extends JInternalFrame
 		btnInativar.setActionCommand("btn_inativar");
 		btnInativar.addActionListener(this);
 		getContentPane().add(btnInativar);
-
 	}
 
-	private DefaultTableModel dataModelFuncionarios() {
-		DefaultTableModel dataModel = new DefaultTableModel() {
+	private void configurarDataModel() {
+		dataModel = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
 			String[] columnNames = { "cpf", "nome", "email", "status" };
 
@@ -232,15 +246,25 @@ public class ConsultarHospedes extends JInternalFrame
 			}
 
 		};
-		atualizarDadosTabela(dataModel);
-		return dataModel;
+		atualizarModel();
 	}
 
-	private void atualizarDadosTabela(DefaultTableModel m) {
+	private void atualizarModel() {
+		limparLinhasModel();
+		inserirLinhasModel();
+	}
+
+	private void limparLinhasModel() {
+		while (dataModel.getRowCount() > 0) {
+			dataModel.removeRow(0);
+		}
+	}
+
+	private void inserirLinhasModel() {
 		this.hospedes = new HospedeControl().selectTodos();
 		for (Hospede t : this.hospedes) {
-			m.addRow(new Object[] { t.getCpf(), t.getNome(), t.getEmail(),
-					t.getStatus() });
+			dataModel.addRow(new Object[] { t.getCpf(), t.getNome(),
+					t.getEmail(), t.getStatus() });
 		}
 	}
 
@@ -268,9 +292,9 @@ public class ConsultarHospedes extends JInternalFrame
 		} else if (nomeEvento.equals("btn_cancelar")) {
 			dispose();
 		} else if (nomeEvento.equals("btn_alterar")) {
-
+			atualizarModel();
 		} else if (nomeEvento.equals("btn_inativar")) {
-
+			atualizarModel();
 		}
 	}
 

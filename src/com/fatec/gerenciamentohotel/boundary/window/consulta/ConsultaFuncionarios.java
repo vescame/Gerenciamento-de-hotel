@@ -2,6 +2,8 @@ package src.com.fatec.gerenciamentohotel.boundary.window.consulta;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -14,84 +16,112 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 
 public class ConsultaFuncionarios extends JInternalFrame
 		implements ActionListener {
-
-	private static final long serialVersionUID = 8887992485161706734L;
+	private static final long serialVersionUID = 1L;
 	private JTextField txtCpf;
 	private JTextField txtNome;
 	private JTextField txtTelefone;
 	private JTextField txtCelular;
+	private JTextField txtEmail;
 	private JTextField txtDataNasc;
-	private JTable tblFuncionarios;
-	private JTextField txtCEP;
+	private JTextField txtCep;
 	private JTextField txtRua;
-	private JTextField txtNum;
+	private JTextField txtNumero;
 	private JTextField txtBairro;
 	private JTextField txtCidade;
-	private JTextField txtUF;
+	private JTextField txtUf;
 
+	private JLabel lblCpf;
+	private JLabel lblNome;
+	private JLabel lblTelefone;
+	private JLabel lblCelular;
+	private JLabel lblEmail;
+	private JLabel lblDataNasc;
+	private JLabel lblCep;
+	private JLabel lblRua;
+	private JLabel lblNumero;
+	private JLabel lblBairro;
+	private JLabel lblCidade;
+	private JLabel lblUf;
+
+	private JButton btnBuscar;
+	private JButton btnAlterar;
+	private JButton btnInativar;
+	private JButton btnCancelar;
+
+	private DefaultTableModel dataModel;
+	private JTable tblFuncionarios;
 	private List<Funcionario> funcionarios;
 
 	public ConsultaFuncionarios() {
-		setIconifiable(true);
-		setClosable(true);
 		setTitle("Consulta Funcionarios");
-		setBounds(100, 100, 467, 494);
-		getContentPane().setLayout(null);
+		setClosable(true);
+		setIconifiable(true);
+		setLayout(null);
+		setBounds(100, 100, 470, 540);
 
-		JLabel lblCPF = new JLabel("CPF:");
-		lblCPF.setBounds(10, 13, 63, 13);
-		getContentPane().add(lblCPF);
+		lblCpf = new JLabel("CPF:");
+		lblCpf.setBounds(10, 20, 31, 13);
+		getContentPane().add(lblCpf);
 
 		txtCpf = new JTextField();
-		txtCpf.setBounds(56, 10, 163, 20);
+		txtCpf.setBounds(70, 20, 130, 19);
+		txtCpf.setDocument(new JTextFieldLimit(11));
 		getContentPane().add(txtCpf);
-		txtCpf.setColumns(10);
 
-		JButton btnBuscar = new JButton("Busca");
-		btnBuscar.setBounds(229, 9, 85, 21);
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.setBounds(225, 15, 114, 25);
 		btnBuscar.setActionCommand("btn_buscar");
 		btnBuscar.addActionListener(this);
 		getContentPane().add(btnBuscar);
 
-		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(10, 45, 46, 13);
+		lblNome = new JLabel("Nome:");
+		lblNome.setBounds(10, 50, 50, 13);
 		getContentPane().add(lblNome);
 
 		txtNome = new JTextField();
-		txtNome.setBounds(56, 42, 165, 19);
+		txtNome.setBounds(70, 46, 365, 19);
+		txtNome.setDocument(new JTextFieldLimit(35));
 		getContentPane().add(txtNome);
-		txtNome.setColumns(10);
 
-		JLabel lblTelefone = new JLabel("Telefone:");
-		lblTelefone.setBounds(10, 79, 56, 19);
+		lblTelefone = new JLabel("Telefone:");
+		lblTelefone.setBounds(8, 80, 60, 13);
 		getContentPane().add(lblTelefone);
 
 		txtTelefone = new JTextField();
-		txtTelefone.setBounds(66, 79, 118, 19);
+		txtTelefone.setBounds(70, 75, 148, 19);
+		txtTelefone.setDocument(new JTextFieldLimit(15));
 		getContentPane().add(txtTelefone);
-		txtTelefone.setColumns(10);
 
-		JLabel lblCelular = new JLabel("Celular:");
-		lblCelular.setBounds(242, 82, 46, 13);
+		lblCelular = new JLabel("Celular:");
+		lblCelular.setBounds(232, 80, 50, 13);
 		getContentPane().add(lblCelular);
 
 		txtCelular = new JTextField();
-		txtCelular.setBounds(299, 79, 146, 19);
+		txtCelular.setBounds(285, 75, 148, 19);
+		txtCelular.setDocument(new JTextFieldLimit(15));
 		getContentPane().add(txtCelular);
-		txtCelular.setColumns(10);
 
-		JLabel lblDataDeNascimento = new JLabel("Dat. Nasc.:");
-		lblDataDeNascimento.setBounds(242, 45, 103, 13);
-		getContentPane().add(lblDataDeNascimento);
+		lblEmail = new JLabel("E-mail:");
+		lblEmail.setBounds(10, 110, 50, 13);
+		getContentPane().add(lblEmail);
+
+		txtEmail = new JTextField();
+		txtEmail.setBounds(70, 107, 150, 19);
+		txtEmail.setDocument(new JTextFieldLimit(35));
+		getContentPane().add(txtEmail);
+
+		lblDataNasc = new JLabel("Dat. Nasc.:");
+		lblDataNasc.setBounds(232, 107, 80, 19);
+		getContentPane().add(lblDataNasc);
 
 		try {
 			txtDataNasc = new JFormattedTextField(
@@ -99,100 +129,111 @@ public class ConsultaFuncionarios extends JInternalFrame
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		txtDataNasc.setBounds(315, 42, 80, 19);
+		txtDataNasc.setBounds(300, 107, 80, 19);
 		getContentPane().add(txtDataNasc);
-		txtDataNasc.setColumns(10);
 
-		tblFuncionarios = new JTable(dataModelFuncionarios());
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setToolTipText("");
+		panel.setBounds(10, 145, 435, 140);
+		getContentPane().add(panel);
+
+		lblCep = new JLabel("CEP:");
+		lblCep.setBounds(5, 19, 46, 13);
+		panel.add(lblCep);
+
+		txtCep = new JTextField();
+		txtCep.setBounds(60, 16, 130, 19);
+		txtCep.setDocument(new JTextFieldLimit(8));
+		panel.add(txtCep);
+
+		lblRua = new JLabel("Rua:");
+		lblRua.setBounds(5, 45, 30, 13);
+		panel.add(lblRua);
+
+		txtRua = new JTextField();
+		txtRua.setBounds(60, 42, 215, 19);
+		txtRua.setDocument(new JTextFieldLimit(50));
+		panel.add(txtRua);
+
+		lblNumero = new JLabel("N:");
+		lblNumero.setBounds(310, 45, 30, 13);
+		panel.add(lblNumero);
+
+		txtNumero = new JTextField();
+		txtNumero.setBounds(329, 42, 96, 19);
+		txtNumero.setDocument(new JTextFieldLimit(5));
+		panel.add(txtNumero);
+
+		lblBairro = new JLabel("Bairro:");
+		lblBairro.setBounds(5, 74, 40, 13);
+		panel.add(lblBairro);
+
+		txtBairro = new JTextField();
+		txtBairro.setBounds(60, 71, 215, 19);
+		txtBairro.setDocument(new JTextFieldLimit(50));
+		panel.add(txtBairro);
+
+		lblCidade = new JLabel("Cidade:");
+		lblCidade.setBounds(5, 107, 46, 13);
+		panel.add(lblCidade);
+
+		txtCidade = new JTextField();
+		txtCidade.setBounds(60, 104, 215, 19);
+		txtCidade.setDocument(new JTextFieldLimit(50));
+		panel.add(txtCidade);
+
+		lblUf = new JLabel("UF:");
+		lblUf.setBounds(303, 107, 30, 13);
+		panel.add(lblUf);
+
+		txtUf = new JTextField();
+		txtUf.setBounds(329, 104, 96, 19);
+		txtUf.setDocument(new JTextFieldLimit(2));
+		panel.add(txtUf);
+
+		configurarDataModel();
+		tblFuncionarios = new JTable(dataModel);
+		tblFuncionarios.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				atualizarModel();
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				atualizarModel();
+			}
+		});
 		JScrollPane scrollPane = new JScrollPane(tblFuncionarios);
 		scrollPane.setVisible(true);
-		scrollPane.setBounds(10, 255, 435, 147);
+		scrollPane.setBounds(0, 300, getWidth(), 150);
 		tblFuncionarios.setFillsViewportHeight(true);
 		getContentPane().add(scrollPane);
 
-		JPanel panelEndereco = new JPanel();
-		panelEndereco.setToolTipText("");
-		panelEndereco.setBounds(10, 105, 435, 140);
-		getContentPane().add(panelEndereco);
-		panelEndereco.setLayout(null);
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(10, 472, 114, 25);
+		btnCancelar.setActionCommand("btn_cancelar");
+		btnCancelar.addActionListener(this);
+		getContentPane().add(btnCancelar);
 
-		JLabel lblCEP = new JLabel("CEP:");
-		lblCEP.setBounds(10, 18, 46, 13);
-		lblCEP.setVerticalAlignment(SwingConstants.TOP);
-		panelEndereco.add(lblCEP);
-
-		txtCEP = new JTextField();
-		txtCEP.setBounds(55, 18, 130, 19);
-		panelEndereco.add(txtCEP);
-		txtCEP.setColumns(10);
-
-		JLabel lblRua = new JLabel("Rua:");
-		lblRua.setBounds(10, 45, 30, 19);
-		panelEndereco.add(lblRua);
-
-		txtRua = new JTextField();
-		txtRua.setBounds(55, 45, 215, 19);
-		panelEndereco.add(txtRua);
-		txtRua.setColumns(10);
-
-		JLabel lblNum = new JLabel("N:");
-		lblNum.setBounds(300, 45, 30, 19);
-		panelEndereco.add(lblNum);
-
-		txtNum = new JTextField();
-		txtNum.setBounds(329, 45, 56, 19);
-		panelEndereco.add(txtNum);
-		txtNum.setColumns(10);
-
-		JLabel lblBairro = new JLabel("Bairro:");
-		lblBairro.setBounds(10, 75, 40, 19);
-		panelEndereco.add(lblBairro);
-
-		txtBairro = new JTextField();
-		txtBairro.setBounds(55, 75, 215, 19);
-		panelEndereco.add(txtBairro);
-		txtBairro.setColumns(10);
-
-		JLabel lblCidade = new JLabel("Cidade:");
-		lblCidade.setBounds(10, 105, 46, 19);
-		panelEndereco.add(lblCidade);
-
-		txtCidade = new JTextField();
-		txtCidade.setBounds(55, 105, 215, 19);
-		panelEndereco.add(txtCidade);
-		txtCidade.setColumns(10);
-
-		JLabel lblUf = new JLabel("UF:");
-		lblUf.setBounds(300, 105, 30, 19);
-		panelEndereco.add(lblUf);
-
-		txtUF = new JTextField();
-		txtUF.setBounds(329, 105, 46, 19);
-		panelEndereco.add(txtUF);
-		txtUF.setColumns(10);
-
-		JButton btnInativar = new JButton("Inativar");
-		btnInativar.setBounds(331, 425, 114, 25);
-		btnInativar.setActionCommand("btn_inativar");
-		btnInativar.addActionListener(this);
-		getContentPane().add(btnInativar);
-
-		JButton btnAlterar = new JButton("Alterar");
-		btnAlterar.setBounds(205, 425, 114, 25);
+		btnAlterar = new JButton("Alterar");
+		btnAlterar.setBounds(206, 472, 114, 25);
 		btnAlterar.setActionCommand("btn_alterar");
 		btnAlterar.addActionListener(this);
 		getContentPane().add(btnAlterar);
 
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setActionCommand("cancelar");
-		btnCancelar.addActionListener(this);
-		btnCancelar.setBounds(79, 425, 114, 25);
-		getContentPane().add(btnCancelar);
+		btnInativar = new JButton("Inativar");
+		btnInativar.setBounds(332, 472, 114, 25);
+		btnInativar.setActionCommand("btn_inativar");
+		btnInativar.addActionListener(this);
+		getContentPane().add(btnInativar);
 
 	}
 
-	private DefaultTableModel dataModelFuncionarios() {
-		DefaultTableModel dataModel = new DefaultTableModel() {
+	private void configurarDataModel() {
+		dataModel = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
 			String[] columnNames = { "cpf", "nome", "email", "tipo_funcionario",
 					"status" };
@@ -208,15 +249,25 @@ public class ConsultaFuncionarios extends JInternalFrame
 			}
 
 		};
-		atualizarDadosTabela(dataModel);
-		return dataModel;
+		atualizarModel();
 	}
 
-	private void atualizarDadosTabela(DefaultTableModel m) {
+	private void atualizarModel() {
+		limparLinhasModel();
+		inserirLinhasModel();
+	}
+
+	private void limparLinhasModel() {
+		while (dataModel.getRowCount() > 0) {
+			dataModel.removeRow(0);
+		}
+	}
+
+	private void inserirLinhasModel() {
 		this.funcionarios = new FuncionarioControl().selectTodos();
 		for (Funcionario t : this.funcionarios) {
-			m.addRow(new Object[] { t.getCpf(), t.getNome(), t.getEmail(),
-					t.getTipoFuncionario().role, t.getStatus() });
+			dataModel.addRow(new Object[] { t.getCpf(), t.getNome(),
+					t.getEmail(), t.getTipoFuncionario().role, t.getStatus() });
 		}
 	}
 
@@ -233,19 +284,20 @@ public class ConsultaFuncionarios extends JInternalFrame
 							.format(f.getDataNascimento()));
 					txtCelular.setText(f.getCelular());
 					txtTelefone.setText(f.getTelefone());
-					txtCEP.setText(f.getEndereco().getCep());
+					txtEmail.setText(f.getEmail());
+					txtNumero.setText(String.valueOf(f.getNumResidencia()));
+					txtCep.setText(f.getEndereco().getCep());
 					txtRua.setText(f.getEndereco().getRua());
 					txtCidade.setText(f.getEndereco().getCidade());
 					txtBairro.setText(f.getEndereco().getBairro());
-					txtUF.setText(f.getEndereco().getUf());
-					txtNum.setText(String.valueOf(f.getNumResidencia()));
+					txtUf.setText(f.getEndereco().getUf());
 				}
 			}
 		} else if (nomeEvento.equals("btn_inativar")) {
 
 		} else if (nomeEvento.equals("btn_alterar")) {
-
-		} else if (nomeEvento.equals("cancelar")) {
+			atualizarModel();
+		} else if (nomeEvento.equals("btn_cancelar")) {
 			dispose();
 		}
 

@@ -28,15 +28,16 @@ public class ConsultarReservas extends JInternalFrame
 	private JTextField txtQuarto;
 	private JTextField txtValor;
 	private JTextField txtDias;
-	private JTable tblReservas;
 	private JTextField txtCheckin;
 	private JTextField txtCheckout;
 
+	private JTable tblReservas;
 	private List<Reserva> reservas = new ArrayList<>();
 
 	public ConsultarReservas() {
 		setTitle("Consulta Reservas");
 		setClosable(true);
+		setIconifiable(true);
 		setBounds(100, 100, 600, 400);
 		setLayout(new BorderLayout(15, 15));
 		getContentPane().setLayout(null);

@@ -94,11 +94,13 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 					}
 				} while (rs.next());
 				return l;
+			} else {
+				throw new DAOException(
+						"Nao ha quartos cadastrados.");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Erro ao buscar Quarto");
 		}
-		return null;
 	}
 
 	private boolean quartoDisponível(long numQuarto) {

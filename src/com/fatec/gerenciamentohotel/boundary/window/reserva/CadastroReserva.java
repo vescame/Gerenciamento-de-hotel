@@ -22,36 +22,36 @@ import src.com.fatec.gerenciamentohotel.entity.Hospede;
 import src.com.fatec.gerenciamentohotel.entity.Quarto;
 import src.com.fatec.gerenciamentohotel.entity.Reserva;
 
-public class CadastroReserva extends JInternalFrame {
-	private static final long serialVersionUID = 2787460975839782982L;
+public class CadastroReserva extends JInternalFrame implements ActionListener {
+	private static final long serialVersionUID = 1L;
+	private JLabel lblHospede;
+	private JLabel lblQuarto;
+	private JLabel lblCheckin;
+
 	private JTextField textFieldHospede;
 	private JTextField textFieldQuarto;
 	private JTextField textFieldCheckIn;
-	private JLabel lblHspede;
+
 	private JButton btnBuscarHospede;
-	private JButton btnNovoHospede;
 	private JButton btnBuscarQuarto;
-	private JButton btnNovoQuarto;
-	private JLabel lblQuarto;
-	private JLabel lblCheckin;
 	private JButton btnInserirData;
 	private JButton btnCancelar;
 	private JButton btnGerarReserva;
+
 	private Hospede h = null;
 	private Quarto q = null;
 	private Funcionario f = null;
 
 	public CadastroReserva() {
-
 		setTitle("Cadastrar Nova Reserva");
 		setClosable(true);
 		setIconifiable(true);
 		setBounds(100, 100, 600, 300);
 		getContentPane().setLayout(null);
 
-		lblHspede = new JLabel("Hóspede: ");
-		lblHspede.setBounds(12, 15, 68, 15);
-		getContentPane().add(lblHspede);
+		lblHospede = new JLabel("Hóspede: ");
+		lblHospede.setBounds(12, 15, 68, 15);
+		getContentPane().add(lblHospede);
 
 		textFieldHospede = new JTextField();
 		textFieldHospede.setBounds(98, 10, 215, 25);
@@ -60,21 +60,9 @@ public class CadastroReserva extends JInternalFrame {
 
 		btnBuscarHospede = new JButton("Buscar");
 		btnBuscarHospede.setBounds(325, 10, 114, 25);
-		btnBuscarHospede.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				h = new HospedeControl().selectCPF(textFieldHospede.getText());
-				if (h != null) {
-					JOptionPane.showMessageDialog(null, "Hospede OK",
-							"Informativo", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
+		btnBuscarHospede.setActionCommand("btn_buscar_hospede");
+		btnBuscarHospede.addActionListener(this);
 		getContentPane().add(btnBuscarHospede);
-
-		btnNovoHospede = new JButton("Novo");
-		btnNovoHospede.setBounds(451, 10, 114, 25);
-		getContentPane().add(btnNovoHospede);
 
 		textFieldQuarto = new JTextField();
 		textFieldQuarto.setColumns(10);
@@ -83,22 +71,9 @@ public class CadastroReserva extends JInternalFrame {
 
 		btnBuscarQuarto = new JButton("Buscar");
 		btnBuscarQuarto.setBounds(325, 47, 114, 25);
-		btnBuscarQuarto.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				q = new QuartoControl().selectNumQuarto(
-						Long.parseLong(textFieldQuarto.getText()));
-				if (q != null) {
-					JOptionPane.showMessageDialog(null, "Quarto OK",
-							"Informativo", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
+		btnBuscarQuarto.setActionCommand("btn_buscar_quarto");
+		btnBuscarQuarto.addActionListener(this);
 		getContentPane().add(btnBuscarQuarto);
-
-		btnNovoQuarto = new JButton("Novo");
-		btnNovoQuarto.setBounds(451, 47, 114, 25);
-		getContentPane().add(btnNovoQuarto);
 
 		lblQuarto = new JLabel("Quarto: ");
 		lblQuarto.setBounds(12, 52, 68, 15);
@@ -116,53 +91,66 @@ public class CadastroReserva extends JInternalFrame {
 
 		btnInserirData = new JButton("Inserir Data");
 		btnInserirData.setBounds(325, 84, 240, 25);
-		btnInserirData.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				textFieldCheckIn.setText(String.valueOf(
-						new SimpleDateFormat("dd/MM/yyyy").format(new Date())));
-			}
-		});
+		btnInserirData.setActionCommand("btn_dat_checkin");
+		btnInserirData.addActionListener(this);
 		getContentPane().add(btnInserirData);
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(309, 231, 114, 25);
-		btnCancelar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
+		btnCancelar.setActionCommand("btn_cancelar");
+		btnCancelar.addActionListener(this);
 		getContentPane().add(btnCancelar);
 
 		btnGerarReserva = new JButton("Gerar Reserva");
 		btnGerarReserva.setBounds(435, 231, 130, 25);
-		btnGerarReserva.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				f = new FuncionarioControl()
-						.selectCPF(MainWindow.getPessoaLogada().getCpf());
-
-				Reserva r = new Reserva();
-				r.setFuncionario(f);
-				r.setHospede(h);
-				r.setQuarto(q);
-				r.setStatus('A');
-
-				Date checkin = null;
-				try {
-					checkin = new SimpleDateFormat("dd/MM/yyyy")
-							.parse(textFieldCheckIn.getText());
-				} catch (ParseException ex) {
-					ex.getMessage();
-				}
-				r.setCheckIn(checkin);
-
-				new ReservaControl().insert(r);
-
-			}
-		});
+		btnGerarReserva.setActionCommand("btn_gerar_reserva");
+		btnGerarReserva.addActionListener(this);
 		getContentPane().add(btnGerarReserva);
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		final String nomeEvento = e.getActionCommand();
+		if (nomeEvento.equals("btn_buscar_hospede")) {
+			h = new HospedeControl().selectCPF(textFieldHospede.getText());
+			if (h != null) {
+				JOptionPane.showMessageDialog(null, "Hospede OK", "Informativo",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} else if (nomeEvento.equals("btn_buscar_quarto")) {
+			q = new QuartoControl()
+					.selectNumQuarto(Long.parseLong(textFieldQuarto.getText()));
+			if (q != null) {
+				JOptionPane.showMessageDialog(null, "Quarto OK", "Informativo",
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		} else if (nomeEvento.equals("btn_dat_checkin")) {
+			textFieldCheckIn.setText(String.valueOf(
+					new SimpleDateFormat("dd/MM/yyyy").format(new Date())));
+		} else if (nomeEvento.equals("btn_gerar_reserva")) {
+			f = new FuncionarioControl()
+					.selectCPF(MainWindow.getPessoaLogada().getCpf());
+
+			Reserva r = new Reserva();
+			r.setFuncionario(f);
+			r.setHospede(h);
+			r.setQuarto(q);
+			r.setStatus('A');
+
+			Date checkin = null;
+			try {
+				checkin = new SimpleDateFormat("dd/MM/yyyy")
+						.parse(textFieldCheckIn.getText());
+			} catch (ParseException ex) {
+				ex.getMessage();
+			}
+			r.setCheckIn(checkin);
+
+			new ReservaControl().insert(r);
+		} else if (nomeEvento.equals("btn_cancelar")) {
+			dispose();
+		}
 
 	}
 }
