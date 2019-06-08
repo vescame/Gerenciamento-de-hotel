@@ -109,10 +109,12 @@ public class ConsultarTipoQuarto extends JInternalFrame
 
 	private void inserirLinhasModel() {
 		this.tipo_quartos = new TipoDeQuartoControl().selectDisponiveis();
-		for (TipoDeQuarto t : this.tipo_quartos) {
-			dataModel.addRow(new Object[] { t.getId(), t.getDescricao(),
-					t.getValorDiaria(), t.getQuantidadeAdultos(),
-					t.getQuantidadeCriancas() });
+		if (this.tipo_quartos != null) {
+			for (TipoDeQuarto t : this.tipo_quartos) {
+				dataModel.addRow(new Object[] { t.getId(), t.getDescricao(),
+						t.getValorDiaria(), t.getQuantidadeAdultos(),
+						t.getQuantidadeCriancas() });
+			}
 		}
 	}
 

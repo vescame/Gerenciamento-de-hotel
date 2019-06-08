@@ -15,14 +15,14 @@ public class Reserva {
 	private Funcionario funcionario;
 	private Quarto quarto;
 	private char status;
-	private boolean ativo;
-
-	public boolean isAtivo() {
-		return ativo;
+	private float total;
+	
+	public float getTotal() {
+		return total;
 	}
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public void setTotal(float total) {
+		this.total = total;
 	}
 
 	public long getId() {

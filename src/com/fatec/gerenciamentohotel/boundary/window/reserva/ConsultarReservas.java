@@ -1,8 +1,10 @@
 package src.com.fatec.gerenciamentohotel.boundary.window.reserva;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +26,13 @@ import src.com.fatec.gerenciamentohotel.entity.Reserva;
 public class ConsultarReservas extends JInternalFrame
 		implements ActionListener {
 	private static final long serialVersionUID = 1L;
+	private JLabel lblHospede;
+	private JLabel lblQuarto;
+	private JLabel lblDias;
+	private JLabel lblValor;
+	private JLabel lblCheckin;
+	private JLabel lblCheckout;
+
 	private JTextField txtHospede;
 	private JTextField txtQuarto;
 	private JTextField txtValor;
@@ -31,7 +40,13 @@ public class ConsultarReservas extends JInternalFrame
 	private JTextField txtCheckin;
 	private JTextField txtCheckout;
 
+	private JButton btnCancelar;
+	private JButton btnLimpar;
+	private JButton btnCheckout;
+	private JButton btnBuscar;
+
 	private JTable tblReservas;
+	private DefaultTableModel dataModel;
 	private List<Reserva> reservas = new ArrayList<>();
 
 	public ConsultarReservas() {
@@ -39,10 +54,9 @@ public class ConsultarReservas extends JInternalFrame
 		setClosable(true);
 		setIconifiable(true);
 		setBounds(100, 100, 600, 400);
-		setLayout(new BorderLayout(15, 15));
 		getContentPane().setLayout(null);
 
-		JLabel lblHospede = new JLabel("Hospede:");
+		lblHospede = new JLabel("Hospede:");
 		lblHospede.setBounds(10, 20, 60, 13);
 		getContentPane().add(lblHospede);
 
@@ -51,13 +65,13 @@ public class ConsultarReservas extends JInternalFrame
 		getContentPane().add(txtHospede);
 		txtHospede.setColumns(10);
 
-		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar = new JButton("Buscar Ativa");
 		btnBuscar.setBounds(330, 15, 90, 21);
 		btnBuscar.setActionCommand("btn_buscar");
 		btnBuscar.addActionListener(this);
 		getContentPane().add(btnBuscar);
 
-		JLabel lblQuarto = new JLabel("Quarto:");
+		lblQuarto = new JLabel("Quarto:");
 		lblQuarto.setBounds(10, 50, 46, 13);
 		getContentPane().add(lblQuarto);
 
@@ -67,7 +81,7 @@ public class ConsultarReservas extends JInternalFrame
 		getContentPane().add(txtQuarto);
 		txtQuarto.setColumns(10);
 
-		JLabel lblDias = new JLabel("Dias:");
+		lblDias = new JLabel("Dias:");
 		lblDias.setBounds(210, 50, 50, 13);
 		getContentPane().add(lblDias);
 
@@ -76,7 +90,7 @@ public class ConsultarReservas extends JInternalFrame
 		txtDias.setBounds(280, 46, 95, 19);
 		getContentPane().add(txtDias);
 
-		JLabel lblValor = new JLabel("Total:");
+		lblValor = new JLabel("Total:");
 		lblValor.setBounds(400, 50, 50, 13);
 		getContentPane().add(lblValor);
 
@@ -85,7 +99,7 @@ public class ConsultarReservas extends JInternalFrame
 		txtValor.setBounds(450, 46, 95, 19);
 		getContentPane().add(txtValor);
 
-		JLabel lblCheckin = new JLabel("Check-in:");
+		lblCheckin = new JLabel("Check-in:");
 		lblCheckin.setBounds(10, 80, 60, 13);
 		getContentPane().add(lblCheckin);
 
@@ -95,7 +109,7 @@ public class ConsultarReservas extends JInternalFrame
 		getContentPane().add(txtCheckin);
 		txtCheckin.setColumns(10);
 
-		JLabel lblCheckout = new JLabel("Check-out:");
+		lblCheckout = new JLabel("Check-out:");
 		lblCheckout.setBounds(210, 80, 70, 13);
 		getContentPane().add(lblCheckout);
 
@@ -105,25 +119,114 @@ public class ConsultarReservas extends JInternalFrame
 		getContentPane().add(txtCheckout);
 		txtCheckout.setColumns(10);
 
-		tblReservas = new JTable(dataModelTipoDeQuarto());
+		configurarDataModel();
+		tblReservas = new JTable(dataModel);
+		tblReservas.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				/* */
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				atualizarModel();
+			}
+		});
 		JScrollPane scrollPane = new JScrollPane(tblReservas);
 		scrollPane.setVisible(true);
 		scrollPane.setBounds(0, 130, this.getWidth(), 138);
 		tblReservas.setFillsViewportHeight(true);
 		getContentPane().add(scrollPane);
 
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(10, 330, 115, 25);
-		btnCancelar.setActionCommand("btn_cancelar");
-		btnCancelar.addActionListener(this);
-		getContentPane().add(btnCancelar);
-
-		JButton btnCheckout = new JButton("Check-Out");
+		btnCheckout = new JButton("Check-Out");
 		btnCheckout.setBounds(400, 74, 100, 21);
 		btnCheckout.setActionCommand("btn_checkout");
 		btnCheckout.addActionListener(this);
 		getContentPane().add(btnCheckout);
 
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(10, 330, 115, 25);
+		btnCancelar.setActionCommand("btn_cancelar");
+		btnCancelar.addActionListener(this);
+		getContentPane().add(btnCancelar);
+
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.setBounds(450, 330, 115, 25);
+		btnLimpar.setActionCommand("btn_limpar");
+		btnLimpar.addActionListener(this);
+		btnLimpar.setEnabled(false);
+		getContentPane().add(btnLimpar);
+	}
+
+	private void configurarDataModel() {
+		dataModel = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
+			String[] columnNames = { "codigo", "cpf cliente", "check-in",
+					"check-out", "diaria", "status" };
+
+			@Override
+			public int getColumnCount() {
+				return columnNames.length;
+			}
+
+			@Override
+			public String getColumnName(int index) {
+				return columnNames[index];
+			}
+		};
+		atualizarModel();
+	}
+
+	private void atualizarModel() {
+		limparLinhasModel();
+		inserirLinhasModel();
+	}
+
+	private void limparLinhasModel() {
+		while (dataModel.getRowCount() > 0) {
+			dataModel.removeRow(0);
+		}
+	}
+
+	private void inserirLinhasModel() {
+		String cpfHospede = "";
+		if (!cpfVazio()) {
+			cpfHospede = txtHospede.getText();
+		}
+		this.reservas = new ReservaControl()
+				.selectHistoricoReservas(cpfHospede);
+		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		for (Reserva t : this.reservas) {
+			dataModel.addRow(new Object[] { t.getId(), t.getHospede().getCpf(),
+					sdf.format(t.getCheckIn()),
+					t.getCheckOut() != null ? sdf.format(t.getCheckOut())
+							: "NULL", t.getQuarto().getTipoDeQuarto().getValorDiaria(),
+							t.getStatus() == 'A' ? "Ativo" : "Inativo" });
+		}
+	}
+
+	private boolean cpfVazio() {
+		final String cpfHospede = txtHospede.getText();
+		if (cpfHospede.trim().isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+
+	private float diasDeReserva(Date ini) {
+		Date hoje = new Date();
+		long diff = hoje.getTime() - ini.getTime();
+		int dias = (int) (diff / (1000 * 60 * 60 * 24));
+		return dias;
+	}
+
+	private void limparCampos() {
+		txtHospede.setText("");
+		txtDias.setText("");
+		txtQuarto.setText("");
+		txtValor.setText("");
+		txtCheckin.setText("");
+		txtCheckout.setText("");
 	}
 
 	@Override
@@ -149,59 +252,28 @@ public class ConsultarReservas extends JInternalFrame
 						r.getQuarto().getTipoDeQuarto().getValorDiaria()
 								* dias));
 				txtValor.setText(valor);
+				txtHospede.setEditable(false);
+				btnLimpar.setEnabled(true);
 			}
 		} else if (nomeEvento.equals("btn_checkout")) {
-
+			if (!txtHospede.isEditable()) {
+				ReservaControl rc = new ReservaControl();
+				Reserva r = rc.selectReserva(txtHospede.getText());
+				if (r != null) {
+					r.setTotal(Float.valueOf(txtValor.getText()));
+					rc.update(r);
+					btnLimpar.setEnabled(false);
+					limparCampos();
+					txtHospede.setEditable(true);
+					tblReservas.grabFocus();
+				}
+			}
+		} else if (nomeEvento.equals("btn_limpar")) {
+			txtHospede.setEditable(true);
+			btnLimpar.setEnabled(false);
+			limparCampos();
 		} else if (nomeEvento.equals("btn_cancelar")) {
 			dispose();
 		}
-	}
-
-	private DefaultTableModel dataModelTipoDeQuarto() {
-		DefaultTableModel dataModel = new DefaultTableModel() {
-			private static final long serialVersionUID = 1L;
-			String[] columnNames = { "codigo", "cpf cliente", "check-in" };
-
-			@Override
-			public int getColumnCount() {
-				return columnNames.length;
-			}
-
-			@Override
-			public String getColumnName(int index) {
-				return columnNames[index];
-			}
-
-		};
-		atualizarDadosTabela(dataModel);
-		return dataModel;
-	}
-
-	private void atualizarDadosTabela(DefaultTableModel m) {
-		String cpfHospede = "";
-		if (!cpfVazio()) {
-			cpfHospede = txtHospede.getText();
-		}
-		this.reservas = new ReservaControl()
-				.selectHistoricoReservas(cpfHospede);
-		for (Reserva t : this.reservas) {
-			m.addRow(new Object[] { t.getId(), t.getHospede().getCpf(),
-					new SimpleDateFormat("dd/MM/yyyy").format(t.getCheckIn()) });
-		}
-	}
-
-	private boolean cpfVazio() {
-		final String cpfHospede = txtHospede.getText();
-		if (cpfHospede.trim().isEmpty()) {
-			return true;
-		}
-		return false;
-	}
-
-	private float diasDeReserva(Date ini) {
-		Date hoje = new Date();
-		long diff = hoje.getTime() - ini.getTime();
-		int dias = (int) (diff / (1000 * 60 * 60 * 24));
-		return dias;
 	}
 }

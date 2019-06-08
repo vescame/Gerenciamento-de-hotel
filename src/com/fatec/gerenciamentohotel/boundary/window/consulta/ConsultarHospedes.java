@@ -262,9 +262,11 @@ public class ConsultarHospedes extends JInternalFrame
 
 	private void inserirLinhasModel() {
 		this.hospedes = new HospedeControl().selectTodos();
-		for (Hospede t : this.hospedes) {
-			dataModel.addRow(new Object[] { t.getCpf(), t.getNome(),
-					t.getEmail(), t.getStatus() });
+		if (this.hospedes != null) {
+			for (Hospede t : this.hospedes) {
+				dataModel.addRow(new Object[] { t.getCpf(), t.getNome(),
+						t.getEmail(), t.getStatus() });
+			}
 		}
 	}
 

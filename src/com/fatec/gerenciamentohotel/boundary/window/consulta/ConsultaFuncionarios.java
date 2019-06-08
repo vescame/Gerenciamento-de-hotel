@@ -265,9 +265,12 @@ public class ConsultaFuncionarios extends JInternalFrame
 
 	private void inserirLinhasModel() {
 		this.funcionarios = new FuncionarioControl().selectTodos();
-		for (Funcionario t : this.funcionarios) {
-			dataModel.addRow(new Object[] { t.getCpf(), t.getNome(),
-					t.getEmail(), t.getTipoFuncionario().role, t.getStatus() });
+		if (this.funcionarios != null) {
+			for (Funcionario t : this.funcionarios) {
+				dataModel.addRow(new Object[] { t.getCpf(), t.getNome(),
+						t.getEmail(), t.getTipoFuncionario().role,
+						t.getStatus() == 'I' ? "Inativo" : "Ativo" });
+			}
 		}
 	}
 

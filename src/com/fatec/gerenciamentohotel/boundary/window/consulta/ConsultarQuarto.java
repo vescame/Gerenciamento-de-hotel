@@ -18,13 +18,13 @@ import src.com.fatec.gerenciamentohotel.control.QuartoControl;
 import src.com.fatec.gerenciamentohotel.entity.Quarto;
 
 public class ConsultarQuarto extends JInternalFrame implements ActionListener {
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
 	private JButton btnCancelar;
 	private JButton btnAlterar;
 	private JButton btnInativar;
-	
+
 	private JScrollPane scrollPane;
-	
+
 	private DefaultTableModel dataModel;
 	private JTable tblQuartos;
 
@@ -51,7 +51,7 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 				atualizarModel();
 			}
 		});
-		
+
 		scrollPane = new JScrollPane(tblQuartos);
 		scrollPane.setVisible(true);
 		scrollPane.setBounds(0, 0, getWidth(), getHeight() - 100);
@@ -110,11 +110,13 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 
 	private void inserirLinhasModel() {
 		this.quartos = new QuartoControl().selectTodos();
-		for (Quarto t : this.quartos) {
-			dataModel.addRow(new Object[] { t.getNumQuarto(), t.getAndar(),
-					t.getTipoDeQuarto().getId(),
-					t.getTipoDeQuarto().getDescricao(),
-					t.getTipoDeQuarto().getValorDiaria() });
+		if (this.quartos != null) {
+			for (Quarto t : this.quartos) {
+				dataModel.addRow(new Object[] { t.getNumQuarto(), t.getAndar(),
+						t.getTipoDeQuarto().getId(),
+						t.getTipoDeQuarto().getDescricao(),
+						t.getTipoDeQuarto().getValorDiaria() });
+			}
 		}
 	}
 

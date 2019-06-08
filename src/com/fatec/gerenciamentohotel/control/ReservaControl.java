@@ -10,44 +10,26 @@ import src.com.fatec.gerenciamentohotel.entity.Reserva;
 
 public class ReservaControl {
 	public void insert(Reserva r) {
-		if (r.getCheckIn() == null) {
-			userMessage("Erro", "CheckIn Vazio", JOptionPane.ERROR_MESSAGE);
+		if (!validarCampos(r)) {
 			return;
-		}
-		// checkout pode ser null, assim validamos se esta ou não ativo o
-		if (r.getFuncionario() == null) {
-			// funcionario nao pode ser vazio, vai ser atribuido por propriedade
-			// estatica do sistema, validando o login e procurando suas
-			// informacoes no banco
-			userMessage("Erro", "Funcionario Vazio, contate um administrador",
-					JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		if (r.getHospede() == null) {
-			userMessage("Erro", "A reserva deve conter um hóspede válido",
-					JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		if (r.getQuarto() == null) {
-			userMessage("Erro", "A reserva deve conter um quarto válido",
-					JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		if (r.getStatus() == Character.MIN_VALUE) {
-			userMessage("Erro", "Status Vazio", JOptionPane.ERROR_MESSAGE);
-			return;
-		} else if (r.getStatus() != 'A') {
-			if (r.getStatus() != 'I') {
-				userMessage("Status Incorreto",
-						"Status deve ser A (Ativo) ou I (Inativo)",
-						JOptionPane.ERROR_MESSAGE);
-				return;
-			}
 		}
 		try {
 			ReservaDAO rdao = new ReservaDAO();
 			rdao.insert(r);
 			userMessage("Reserva", "Reserva cadastrada com sucesso!", JOptionPane.WARNING_MESSAGE);
+		} catch (DAOException e) {
+			userMessage("Reserva", e.getMessage(), JOptionPane.WARNING_MESSAGE);
+		}
+	}
+	
+	public void update(Reserva r) {
+		if (!validarCampos(r)) {
+			return;
+		}
+		try {
+			ReservaDAO rdao = new ReservaDAO();
+			rdao.checkOutReserva(r);
+			userMessage("Reserva", "Reserva atualizada", JOptionPane.WARNING_MESSAGE);
 		} catch (DAOException e) {
 			userMessage("Reserva", e.getMessage(), JOptionPane.WARNING_MESSAGE);
 		}
@@ -75,5 +57,45 @@ public class ReservaControl {
 
 	private void userMessage(String titulo, String mensagem, int errorType) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
+	}
+	
+	private boolean validarCampos(Reserva r) {
+		boolean validados = false;
+		if (r.getCheckIn() == null) {
+			userMessage("Erro", "CheckIn Vazio", JOptionPane.ERROR_MESSAGE);
+			return validados;
+		}
+		// checkout pode ser null, assim validamos se esta ou não ativo o
+		if (r.getFuncionario() == null) {
+			// funcionario nao pode ser vazio, vai ser atribuido por propriedade
+			// estatica do sistema, validando o login e procurando suas
+			// informacoes no banco
+			userMessage("Erro", "Funcionario Vazio, contate um administrador",
+					JOptionPane.ERROR_MESSAGE);
+			return validados;
+		}
+		if (r.getHospede() == null) {
+			userMessage("Erro", "A reserva deve conter um hóspede valido",
+					JOptionPane.ERROR_MESSAGE);
+			return validados;
+		}
+		if (r.getQuarto() == null) {
+			userMessage("Erro", "A reserva deve conter um quarto valido",
+					JOptionPane.ERROR_MESSAGE);
+			return validados;
+		}
+		if (r.getStatus() == Character.MIN_VALUE) {
+			userMessage("Erro", "Status Vazio", JOptionPane.ERROR_MESSAGE);
+			return validados;
+		} else if (r.getStatus() != 'A') {
+			if (r.getStatus() != 'I') {
+				userMessage("Status Incorreto",
+						"Status deve ser A (Ativo) ou I (Inativo)",
+						JOptionPane.ERROR_MESSAGE);
+				return validados;
+			}
+		}
+		validados = true;
+		return validados;
 	}
 }

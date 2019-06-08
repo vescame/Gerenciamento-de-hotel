@@ -29,7 +29,7 @@ import src.com.fatec.gerenciamentohotel.entity.Hospede;
 public class CadastroHospede extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtNome;
-	private JTextField txtCPF;
+	private JTextField txtCpf;
 	private JTextField txtCelular;
 	private JTextField txtTelefone;
 	private JTextField txtCep;
@@ -73,14 +73,14 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 		getContentPane().add(lblNome);
 
 		txtNome = new JTextField();
-		txtNome.setColumns(10);
+		txtNome.setDocument(new JTextFieldLimit(35));
 		txtNome.setBounds(61, 12, 157, 25);
 		getContentPane().add(txtNome);
 
-		txtCPF = new JTextField();
-		txtCPF.setColumns(10);
-		txtCPF.setBounds(281, 12, 147, 25);
-		getContentPane().add(txtCPF);
+		txtCpf = new JTextField();
+		txtCpf.setDocument(new JTextFieldLimit(11));
+		txtCpf.setBounds(281, 12, 147, 25);
+		getContentPane().add(txtCpf);
 
 		lblCPF = new JLabel("CPF:");
 		lblCPF.setBounds(236, 14, 66, 15);
@@ -219,7 +219,7 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 		final String nomeEvento = e.getActionCommand();
 		if (nomeEvento.equals("btn_cadastrar")) {
 			Hospede h = new Hospede();
-			h.setCpf(txtCPF.getText());
+			h.setCpf(txtCpf.getText());
 			h.setCelular(txtCelular.getText());
 			h.setEndereco(end);
 			String strDate = txtDataNascimento.getText();

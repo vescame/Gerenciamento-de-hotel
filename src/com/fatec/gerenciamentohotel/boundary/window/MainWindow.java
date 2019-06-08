@@ -36,6 +36,7 @@ import src.com.fatec.gerenciamentohotel.boundary.window.reserva.CadastroReserva;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
 import src.com.fatec.gerenciamentohotel.entity.Pessoa;
+import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
 
 public class MainWindow extends JFrame implements ActionListener {
 	private static final long serialVersionUID = -5038047263946063083L;
@@ -48,9 +49,9 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JDesktopPane desktopPane;
 	private JMenuItem mItemCadastroFuncionario, mItemConsultarFuncionario;
 	private JMenuItem mItemCadastroHospede, mItemConsultaDeHospede;
-	private JMenuItem mItemNovaReserva, mItemConsultarReserva;
+	private JMenuItem mItemCadastroReserva, mItemConsultarReserva;
 	private JMenuItem mItemCadastrarQuartos, mItemConsultarQuartos,
-			mItemCadastrarTipo, mItemConsultarTipos;
+			mItemCadastrarTipoQuarto, mItemConsultarTipos;
 	private JSeparator separatorQuartos;
 	private CadastroFuncionario cadastroFuncionario;
 	private ConsultaFuncionarios consultaFuncionarios;
@@ -65,7 +66,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	private Timer timer;
 	private static Hospede hospedeLogado = null;
 	private static Funcionario funcionarioLogado = null;
-	
+
 	public MainWindow(Object logado) {
 		if (logado.getClass().toString().contains("Funcionario")) {
 			MainWindow.funcionarioLogado = (Funcionario) logado;
@@ -75,16 +76,24 @@ public class MainWindow extends JFrame implements ActionListener {
 		this.construirJanelaPrincipal();
 		this.esconderPropriedades();
 	}
-	
+
 	private void esconderPropriedades() {
 		if (MainWindow.hospedeLogado != null) {
 			this.menuFuncionarios.setVisible(false);
 			this.menuHospedes.setVisible(false);
-			this.mItemNovaReserva.setVisible(false);
+			this.mItemCadastroReserva.setVisible(false);
 			this.mItemCadastrarQuartos.setVisible(false);
-			this.mItemCadastrarTipo.setVisible(false);
+			this.mItemCadastrarTipoQuarto.setVisible(false);
+		} else if (MainWindow.funcionarioLogado != null) {
+			if (funcionarioLogado
+					.getTipoFuncionario() == EFuncionario.RECEPCIONISTA) {
+				this.menuFuncionarios.setVisible(false);
+				this.mItemCadastrarQuartos.setVisible(false);
+				this.mItemCadastrarTipoQuarto.setVisible(false);
+			}
 		}
 	}
+
 	private void construirJanelaPrincipal() {
 		setTitle("Gerenciamento de Reservas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,10 +150,10 @@ public class MainWindow extends JFrame implements ActionListener {
 		// cascade menu Reservas
 		menuReservas = new JMenu("Reservas");
 		menuBar.add(menuReservas);
-		mItemNovaReserva = new JMenuItem("Nova Reserva");
-		mItemNovaReserva.setActionCommand("mitem_cad_reserva");
-		mItemNovaReserva.addActionListener(this);
-		menuReservas.add(mItemNovaReserva);
+		mItemCadastroReserva = new JMenuItem("Nova Reserva");
+		mItemCadastroReserva.setActionCommand("mitem_cad_reserva");
+		mItemCadastroReserva.addActionListener(this);
+		menuReservas.add(mItemCadastroReserva);
 
 		mItemConsultarReserva = new JMenuItem("Consultar Reserva");
 		mItemConsultarReserva.setActionCommand("mitem_cons_reserva");
@@ -168,11 +177,11 @@ public class MainWindow extends JFrame implements ActionListener {
 
 		// cascade submenu Tipo de Quarto
 		menuTipoQuarto = new JMenu("Tipos de Quarto");
-		mItemCadastrarTipo = new JMenuItem("Cadastrar Tipo");
-		mItemCadastrarTipo.setActionCommand("mitem_cad_tipo_quarto");
-		mItemCadastrarTipo.addActionListener(this);
+		mItemCadastrarTipoQuarto = new JMenuItem("Cadastrar Tipo");
+		mItemCadastrarTipoQuarto.setActionCommand("mitem_cad_tipo_quarto");
+		mItemCadastrarTipoQuarto.addActionListener(this);
 
-		menuTipoQuarto.add(mItemCadastrarTipo);
+		menuTipoQuarto.add(mItemCadastrarTipoQuarto);
 		mItemConsultarTipos = new JMenuItem("Consultar Tipos");
 		mItemConsultarTipos.setActionCommand("mitem_cons_tipo_quarto");
 		mItemConsultarTipos.addActionListener(this);
