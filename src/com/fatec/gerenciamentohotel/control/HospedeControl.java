@@ -12,12 +12,12 @@ public class HospedeControl {
 
 	public void insert(Hospede h) {
 		if (h.getEndereco() == null) {
-			userMessage("Erro", "Insira um Endereço válido",
+			userMessage("Erro", "Insira um Endereço valido",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (h.getCpf().trim().isEmpty()) {
-			userMessage("Erro", "CPF de hóspede vazio", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "CPF de hospede vazio", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (h.getNome().trim().isEmpty()) {
@@ -30,7 +30,7 @@ public class HospedeControl {
 			return;
 		}
 		if (h.getEmail().trim().isEmpty()) {
-			userMessage("Erro", "Preenche o E-Mail.", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Preencha o E-Mail.", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (h.getDataNascimento() == null) {
@@ -68,10 +68,6 @@ public class HospedeControl {
 		return null;
 	}
 
-	private void userMessage(String titulo, String mensagem, int errorType) {
-		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
-	}
-
 	public List<Hospede> selectTodos() {
 		try {
 			return new HospedeDAO().selectAll("");
@@ -80,5 +76,9 @@ public class HospedeControl {
 					JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
+	}
+	
+	private void userMessage(String titulo, String mensagem, int errorType) {
+		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 }

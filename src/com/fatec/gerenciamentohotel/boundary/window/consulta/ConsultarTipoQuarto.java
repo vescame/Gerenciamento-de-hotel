@@ -17,11 +17,11 @@ public class ConsultarTipoQuarto extends JInternalFrame {
 	private List<TipoDeQuarto> tipo_quartos;
 
 	public ConsultarTipoQuarto() {
-		final int height = 300, width = 500;
+		final int x = 100, y = 100, height = 300, width = 500;
 		setTitle("Consulta Tipo de Quarto");
 		setClosable(true);
-		setBounds(100, 100, width, height);
-		getContentPane().setLayout(null);
+		setIconifiable(true);
+		setBounds(x, y, width, height);
 		setLayout(new BorderLayout(15, 15));
 
 		tblTipoQuartos = new JTable(dataModelTipoDeQuarto());
@@ -57,7 +57,7 @@ public class ConsultarTipoQuarto extends JInternalFrame {
 	private void atualizarDadosTabela(DefaultTableModel m) {
 		this.tipo_quartos = new TipoDeQuartoControl().selectDisponiveis();
 		for (TipoDeQuarto t : this.tipo_quartos) {
-			m.addRow(new Object[] { t.getId(), t.getTipo(), t.getValorDiaria(),
+			m.addRow(new Object[] { t.getId(), t.getDescricao(), t.getValorDiaria(),
 					t.getQuantidadeAdultos(), t.getQuantidadeCriancas() });
 		}
 	}

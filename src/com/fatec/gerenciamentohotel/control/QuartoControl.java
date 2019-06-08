@@ -44,10 +44,6 @@ public class QuartoControl {
 		return null;
 	}
 
-	private void userMessage(String titulo, String mensagem, int errorType) {
-		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
-	}
-
 	public List<Quarto> selectTodos() {
 		try {
 			return new QuartoDAO().selectAll("");
@@ -56,5 +52,9 @@ public class QuartoControl {
 					JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
+	}
+	
+	private void userMessage(String titulo, String mensagem, int errorType) {
+		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 }

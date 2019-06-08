@@ -2,7 +2,7 @@ package src.com.fatec.gerenciamentohotel.entity;
 
 public class TipoDeQuarto {
 	private long id;
-	private String tipo;
+	private String descricao;
 	private float valorDiaria;
 	private short quantidadeAdultos;
 	private short quantidateCriancas;
@@ -15,12 +15,12 @@ public class TipoDeQuarto {
 		this.id = id;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setDescricao(String tipo) {
+		this.descricao = tipo;
 	}
 
 	public float getValorDiaria() {
@@ -49,7 +49,7 @@ public class TipoDeQuarto {
 
 	@Override
 	public String toString() {
-		return "TipoDeQuarto [id=" + id + "\ntipo=" + tipo + "\nvalorDiaria="
+		return "TipoDeQuarto [id=" + id + "\ntipo=" + descricao + "\nvalorDiaria="
 				+ valorDiaria + "\nquantidadeAdultos=" + quantidadeAdultos
 				+ "\nquantidateCriancas=" + quantidateCriancas + "]";
 	}

@@ -51,7 +51,8 @@ public class LoginDAO implements IObjectDAO<Pessoa, String> {
 				return func;
 			} else {
 				throw new DAOException(
-						"Nao foi possivel logar com estas credenciais. Tente novamente.");
+						"Nao foi possivel logar com estas credenciais.\n"
+						+ "Tente novamente.");
 			}
 		} catch (SQLException except) {
 			except.printStackTrace();

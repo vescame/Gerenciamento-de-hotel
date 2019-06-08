@@ -12,36 +12,36 @@ public class FuncionarioControl {
 
 	public void novoFuncionario(Funcionario f) {
 		if (f.getEndereco() == null) {
-			userMessage("Endereco vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Endereco vazio", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getCpf().trim().isEmpty()) {
-			userMessage("Cpf vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Cpf vazio", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getNome().trim().isEmpty()) {
-			userMessage("Nome vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Nome vazio", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getTelefone().trim().isEmpty()) {
-			userMessage("Telefone vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Telefone vazio", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getDataNascimento() == null) {
-			userMessage("Data de Nascimento vazia", "Erro",
+			userMessage("Erro", "Data de Nascimento vazia",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getLogin().trim().isEmpty()) {
-			userMessage("Login vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Login vazio", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getSenha().trim().isEmpty()) {
-			userMessage("Senha vazia", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Senha vazia", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getStatus() == Character.MIN_VALUE) {
-			userMessage("Status vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Status vazio", JOptionPane.ERROR_MESSAGE);
 			return;
 		} else if (f.getStatus() != 'A') {
 			if (f.getStatus() != 'I') {
@@ -52,12 +52,12 @@ public class FuncionarioControl {
 			}
 		}
 		if (f.getTipoFuncionario() == null) {
-			userMessage("Tipo funcionario vazio", "Erro",
+			userMessage("Erro", "Tipo funcionario vazio",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		if (f.getNumResidencia() == 0) {
-			userMessage("Numero da casa vazio", "Erro",
+			userMessage("Erro", "Numero da casa vazio",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}

@@ -18,7 +18,7 @@ public class ReservaControl {
 		if (r.getFuncionario() == null) {
 			// funcionario nao pode ser vazio, vai ser atribuido por propriedade
 			// estatica do sistema, validando o login e procurando suas
-			// informações no banco
+			// informacoes no banco
 			userMessage("Erro", "Funcionario Vazio, contate um administrador",
 					JOptionPane.ERROR_MESSAGE);
 			return;

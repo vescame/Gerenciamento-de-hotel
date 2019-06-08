@@ -11,8 +11,8 @@ import src.com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
 public class TipoDeQuartoControl {
 
 	public void insert(TipoDeQuarto t) {
-		if (t.getTipo().trim().isEmpty()) {
-			userMessage("Erro", "Escolha um tipo de Quarto válido",
+		if (t.getDescricao().trim().isEmpty()) {
+			userMessage("Erro", "Escolha um tipo de Quarto valido",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
@@ -21,7 +21,7 @@ public class TipoDeQuartoControl {
 			return;
 		}
 		if (t.getQuantidadeAdultos() == 0) {
-			userMessage("Erro", "Quantidade Adultos não pode ser \"0\"",
+			userMessage("Erro", "Quantidade Adultos nao pode ser \"0\"",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}

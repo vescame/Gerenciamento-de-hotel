@@ -24,11 +24,8 @@ public class HospedeDAO implements IObjectDAO<Hospede, String> {
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
-			// omitir o ID já que no banco ele é AUTO_INCREMENT
-			pstmt = con.prepareStatement(" insert into hospede "
-					// + " (cep, cpf, nome, telefone, celular, email,
-					// dat_nascimento, status, num_residencia) "
-					+ " values " + " (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+			pstmt = con.prepareStatement(
+					"insert into hospede values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setString(1, h.getCpf());
 			pstmt.setString(2, h.getEndereco().getCep());
 			pstmt.setString(3, h.getNome());
@@ -50,7 +47,8 @@ public class HospedeDAO implements IObjectDAO<Hospede, String> {
 				throw new DAOException(
 						"Endereco " + h.getEndereco().getCep() + " nao existe");
 			} else if (errParser.contains("Duplicate entry")) {
-				throw new DAOException("Hospede " + h.getCpf() + " já existe...");
+				throw new DAOException(
+						"Hospede " + h.getCpf() + " já existe...");
 			} else {
 				throw new DAOException("Erro ao inserir Hospede");
 			}
@@ -82,7 +80,8 @@ public class HospedeDAO implements IObjectDAO<Hospede, String> {
 				} while (rs.next());
 				return hosp;
 			} else {
-				throw new DAOException("Hóspede com CPF: " + cpf + " não existe");
+				throw new DAOException(
+						"Nao ha nenhum Hospede com o CPF: " + cpf);
 			}
 		} catch (SQLException except) {
 			throw new DAOException("Erro ao buscar Hospede");

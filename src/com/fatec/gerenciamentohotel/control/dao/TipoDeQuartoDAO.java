@@ -22,7 +22,7 @@ public class TipoDeQuartoDAO implements IObjectDAO<TipoDeQuarto, String> {
 			// omitir o ID já que no banco ele é AUTO_INCREMENT
 			pstmt = con.prepareStatement(" Insert into tipo_quarto "
 					+ " (tipo_quarto, preco, qtd_adultos, qtd_criancas) values  (?, ?, ?, ?) ");
-			pstmt.setString(1, t.getTipo());
+			pstmt.setString(1, t.getDescricao());
 			pstmt.setFloat(2, t.getValorDiaria());
 			pstmt.setInt(3, t.getQuantidadeAdultos());
 			pstmt.setInt(4, t.getQuantidadeCriancas());
@@ -30,8 +30,8 @@ public class TipoDeQuartoDAO implements IObjectDAO<TipoDeQuarto, String> {
 		} catch (SQLException except) {
 			if (except.getMessage().contains("Duplicate entry")) {
 				throw new DAOException(
-						"Código " + t.getId() + " do Tipo de Quarto \""
-								+ t.getTipo() + "\" já existe...");
+						"Codigo " + t.getId() + " do Tipo de Quarto \""
+								+ t.getDescricao() + "\" ja existe...");
 			} else {
 				throw new DAOException("Erro ao inserir Tipo de Quarto");
 			}
@@ -51,15 +51,15 @@ public class TipoDeQuartoDAO implements IObjectDAO<TipoDeQuarto, String> {
 				tQuarto = new TipoDeQuarto();
 				while (rs.next()) {
 					tQuarto.setId(rs.getInt("id"));
-					tQuarto.setTipo(rs.getString("tipo_quarto"));
+					tQuarto.setDescricao(rs.getString("tipo_quarto"));
 					tQuarto.setValorDiaria(rs.getFloat("preco"));
 					tQuarto.setQuantidadeAdultos(rs.getShort("qtd_adultos"));
 					tQuarto.setQuantidadeCriancas(rs.getShort("qtd_criancas"));
 				}
 				return tQuarto;
 			} else {
-				throw new DAOException("Quarto de número: " + numQuarto
-						+ " não existe.\nCadastre-o antes.");
+				throw new DAOException("Quarto de numero: " + numQuarto
+						+ " nao existe.\nCadastre-o antes.");
 			}
 		} catch (SQLException except) {
 			throw new DAOException("Erro ao buscar Tipo de Quarto");
@@ -79,7 +79,7 @@ public class TipoDeQuartoDAO implements IObjectDAO<TipoDeQuarto, String> {
 				do {
 					tQuarto = new TipoDeQuarto();
 					tQuarto.setId(rs.getInt("id"));
-					tQuarto.setTipo(rs.getString("tipo_quarto"));
+					tQuarto.setDescricao(rs.getString("tipo_quarto"));
 					tQuarto.setValorDiaria(rs.getFloat("preco"));
 					tQuarto.setQuantidadeAdultos(rs.getShort("qtd_adultos"));
 					tQuarto.setQuantidadeCriancas(rs.getShort("qtd_criancas"));

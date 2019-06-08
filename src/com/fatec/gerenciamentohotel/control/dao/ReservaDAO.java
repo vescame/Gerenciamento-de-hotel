@@ -29,11 +29,13 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 			boolean podeCadastrar = this.select(r.getHospede().getCpf()) == null
 					&& r.getQuarto().isDisponivel();
 			if (!podeCadastrar) {
-				return;
+				throw new DAOException(
+						"Já existe uma reserva ativa para o CPF:\n"
+								+ r.getHospede().getCpf());
 			}
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
-			// omitir o ID já que no banco ele é AUTO_INCREMENT
+			// omitir o ID pois no banco ele é AUTO_INCREMENT
 			pstmt = con.prepareStatement(" insert into reserva "
 					+ " (cpf_funcionario, cpf_hospede, num_quarto, dat_checkin, "
 					+ "dat_checkout, status) values (?, ?, ?, ?, ?, ?) ");
@@ -49,7 +51,7 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 			pstmt.setString(6, String.valueOf(r.getStatus()));
 			pstmt.executeQuery();
 		} catch (SQLException | ParseException except) {
-			throw new DAOException("Reserva não pode ser inserida...");
+			throw new DAOException("Reserva nao pode ser inserida...");
 		}
 
 	}
@@ -121,11 +123,11 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 				return listReserva;
 			} else {
 				throw new DAOException(
-						"Não há histórico de Reservas para o CPF: " + cpfHospede
+						"Nao ha historico de Reservas para o CPF: " + cpfHospede
 								+ ".");
 			}
 		} catch (SQLException except) {
-			throw new DAOException("Erro ao buscar histórico de Reservas");
+			throw new DAOException("Erro ao buscar historico de Reservas");
 		}
 	}
 

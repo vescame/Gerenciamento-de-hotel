@@ -13,21 +13,22 @@ public class LoginControl {
 		try {
 			return new LoginDAO().funcionario(login, senha);
 		} catch (DAOException e) {
-			msgError(e.getMessage(), "Login", JOptionPane.WARNING_MESSAGE);
+			msgError("Login", e.getMessage(), JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
 	}
 
 	public Hospede select(String cpf) {
 		try {
-			return new LoginDAO().hospede(cpf);
+			return new LoginDAO()
+					.hospede(cpf.replaceAll("\\.", "").replace("-", ""));
 		} catch (DAOException e) {
-			msgError(e.getMessage(), "Login", JOptionPane.WARNING_MESSAGE);
+			msgError("Login", e.getMessage(), JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
 	}
 
-	private void msgError(String mensagem, String titulo, int errorType) {
+	private void msgError(String titulo, String mensagem, int errorType) {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 }

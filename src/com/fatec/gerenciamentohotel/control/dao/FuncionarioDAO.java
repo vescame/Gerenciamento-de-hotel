@@ -52,7 +52,7 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 						"Endereco " + f.getEndereco().getCep() + " nao existe");
 			} else if (errParser.contains("Duplicate entry")) {
 				throw new DAOException(
-						"Funcionario " + f.getCpf() + " já existe");
+						"Funcionario " + f.getCpf() + " ja existe");
 			} else {
 				throw new DAOException("Erro ao inserir funcionario");
 			}
@@ -88,12 +88,11 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 				} while (rs.next());
 				return func;
 			} else {
-				throw new DAOException(
-						"Funcionário com CPF: " + cpf + " não existe.");
+				throw new DAOException("Nao ha Funcionario com o CPF: " + cpf);
 			}
 		} catch (SQLException except) {
 			except.printStackTrace();
-			throw new DAOException("Erro ao buscar funcionário");
+			throw new DAOException("Erro ao buscar funcionario");
 		}
 	}
 
@@ -104,8 +103,8 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 		List<Funcionario> l = new ArrayList<>();
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
-			PreparedStatement pstmt = con.prepareStatement(
-					"select * from funcionario");
+			PreparedStatement pstmt = con
+					.prepareStatement("select * from funcionario");
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.first()) {
 				do {
@@ -128,12 +127,11 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 				} while (rs.next());
 				return l;
 			} else {
-				throw new DAOException(
-						"Nao ha funcionarios");
+				throw new DAOException("Nao ha funcionarios");
 			}
 		} catch (SQLException except) {
 			except.printStackTrace();
-			throw new DAOException("Erro ao buscar funcionário");
+			throw new DAOException("Erro ao buscar funcionario");
 		}
 	}
 }

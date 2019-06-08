@@ -29,7 +29,7 @@ public class EnderecoDAO implements IObjectDAO<Endereco, String> {
 			pstmt.execute();
 		} catch (SQLException ex) {
 			if (ex.getMessage().contains("Duplicate entry")) {
-				throw new DAOException("Endereco do cep " + e.getCep() + " já existe...");
+				throw new DAOException("Endereco do cep " + e.getCep() + " ja existe...");
 			} else {
 				throw new DAOException("Erro ao inserir Endereco");
 			}
@@ -57,7 +57,7 @@ public class EnderecoDAO implements IObjectDAO<Endereco, String> {
 				} while (rs.next());
 				return e;
 			} else {
-				throw new DAOException("Endereco não existe");
+				throw new DAOException("Endereco nao existe");
 			}
 		} catch (SQLException | ParseException except) {
 			throw new DAOException("Erro ao buscar Endereco");

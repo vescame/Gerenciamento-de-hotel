@@ -30,10 +30,10 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 		} catch (SQLException e) {
 			if (e.getMessage().contains("Duplicate entry")) {
 				throw new DAOException(
-						"Quarto " + q.getNumQuarto() + " já existe...");
+						"Quarto " + q.getNumQuarto() + " ja existe...");
 			} else if (e.getMessage()
 					.contains("foreign key constraint fails")) {
-				throw new DAOException("Tipo de Quarto não cadastrado");
+				throw new DAOException("Tipo de Quarto nao cadastrado");
 			} else {
 				e.printStackTrace();
 				throw new DAOException("Erro ao inserir Quarto");
@@ -71,32 +71,14 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 		}
 	}
 
-	private boolean quartoDisponível(long numQuarto) {
-		try {
-			Connection con = ConnectionDB.getInstance().getConnection();
-			PreparedStatement pstmt = con.prepareStatement(
-					"select num_quarto from reserva where dat_checkout is null and num_quarto = ?");
-			pstmt.setLong(1, numQuarto);
-			ResultSet rs = pstmt.executeQuery();
-			if (rs.first()) {
-				return false;
-			} else {
-				return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
 	@Override
 	public List<Quarto> selectAll(String numQuarto) throws DAOException {
 		Quarto quar;
 		List<Quarto> l = new ArrayList<>();
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
-			PreparedStatement pstmt = con.prepareStatement(
-					"select * from quarto");
+			PreparedStatement pstmt = con
+					.prepareStatement("select * from quarto");
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.first()) {
 				do {
@@ -117,5 +99,23 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 			throw new DAOException("Erro ao buscar Quarto");
 		}
 		return null;
+	}
+
+	private boolean quartoDisponível(long numQuarto) {
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con.prepareStatement(
+					"select num_quarto from reserva where dat_checkout is null and num_quarto = ?");
+			pstmt.setLong(1, numQuarto);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.first()) {
+				return false;
+			} else {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

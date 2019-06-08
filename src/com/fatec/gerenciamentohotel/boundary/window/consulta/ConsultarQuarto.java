@@ -3,6 +3,8 @@ package src.com.fatec.gerenciamentohotel.boundary.window.consulta;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,20 +19,37 @@ import src.com.fatec.gerenciamentohotel.entity.Quarto;
 
 public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
+	private DefaultTableModel dataModel;
+	private JScrollPane scrollPane;
 	private JTable tblQuartos;
 
 	private List<Quarto> quartos = new ArrayList<>();
 
 	public ConsultarQuarto() {
+		final int x = 100, y = 100, width = 600, height = 350;
 		setTitle("Consulta Quartos");
 		setClosable(true);
-		setBounds(100, 100, 600, 350);
-		getContentPane().setLayout(null);
+		setIconifiable(true);
+		setBounds(x, y, width, height);
+		setLayout(null);
 
-		tblQuartos = new JTable(dataModelTipoDeQuarto());
-		JScrollPane scrollPane = new JScrollPane(tblQuartos);
+		configurarDataModel();
+		tblQuartos = new JTable(dataModel);
+		tblQuartos.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				atualizarModel();
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				atualizarModel();
+			}
+		});
+		
+		scrollPane = new JScrollPane(tblQuartos);
 		scrollPane.setVisible(true);
-		scrollPane.setBounds(0, 0, this.getWidth(), this.getHeight() - 100);
+		scrollPane.setBounds(0, 0, getWidth(), getHeight() - 100);
 		tblQuartos.setFillsViewportHeight(true);
 		getContentPane().add(scrollPane);
 
@@ -54,8 +73,8 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 
 	}
 
-	private DefaultTableModel dataModelTipoDeQuarto() {
-		DefaultTableModel dataModel = new DefaultTableModel() {
+	private void configurarDataModel() {
+		dataModel = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
 			String[] columnNames = { "id_quarto", "andar", "cod. tipo_quarto",
 					"desc. tipo_quarto", "valor_quarto" };
@@ -69,17 +88,27 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 			public String getColumnName(int index) {
 				return columnNames[index];
 			}
-
 		};
-		atualizarDadosTabela(dataModel);
-		return dataModel;
+		atualizarModel();
 	}
 
-	private void atualizarDadosTabela(DefaultTableModel m) {
+	private void atualizarModel() {
+		limparLinhasModel();
+		inserirLinhasModel();
+	}
+
+	private void limparLinhasModel() {
+		while (dataModel.getRowCount() > 0) {
+			dataModel.removeRow(0);
+		}
+	}
+
+	private void inserirLinhasModel() {
 		this.quartos = new QuartoControl().selectTodos();
 		for (Quarto t : this.quartos) {
-			m.addRow(new Object[] { t.getNumQuarto(), t.getAndar(),
-					t.getTipoDeQuarto().getId(), t.getTipoDeQuarto().getTipo(),
+			dataModel.addRow(new Object[] { t.getNumQuarto(), t.getAndar(),
+					t.getTipoDeQuarto().getId(),
+					t.getTipoDeQuarto().getDescricao(),
 					t.getTipoDeQuarto().getValorDiaria() });
 		}
 	}
@@ -90,10 +119,9 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 		if (nomeEvento.equals("btn_alterar")) {
 
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			this.dispose();
+			dispose();
 		} else if (nomeEvento.equals("btn_inativar")) {
 
 		}
-
 	}
 }

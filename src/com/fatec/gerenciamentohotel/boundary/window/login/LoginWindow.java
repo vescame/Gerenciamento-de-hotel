@@ -111,9 +111,7 @@ public class LoginWindow extends JFrame implements ActionListener {
 			login = new LoginControl().select(txtLogin.getText(),
 					String.valueOf(txtSenha.getPassword()));
 		} else if (eventNameCommand.equals("login_hospede")) {
-			String cpf = txtCPF.getText().replaceAll("\\.", "")
-					.replaceAll("\\-", "");
-			login = new LoginControl().select(cpf);
+			login = new LoginControl().select(txtCPF.getText());
 		}
 		if (login != null) {
 			MainWindow main = new MainWindow(
@@ -125,10 +123,10 @@ public class LoginWindow extends JFrame implements ActionListener {
 		}
 	}
 	
-	private void dummyCredentials() {
+	/*private void dummyCredentials() {
 		txtLogin.setText("admin");
 		txtSenha.setText("admin");
 		btnAcessarFuncionario.doClick();
 		this.setVisible(false);
-	}
+	}*/
 }

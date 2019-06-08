@@ -64,7 +64,7 @@ public class Test {
 		hc.insert(h);
 
 		TipoDeQuarto t = new TipoDeQuarto();
-		t.setTipo("Sozinho No Bar");
+		t.setDescricao("Sozinho No Bar");
 		t.setValorDiaria(35.50f);
 		t.setQuantidadeAdultos((short) 1);
 		t.setQuantidadeCriancas((short) 0);
