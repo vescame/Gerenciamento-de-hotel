@@ -119,6 +119,7 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 					res.setQuarto(qc.selectNumQuarto(rs.getLong("num_quarto")));
 					res.setCheckIn(rs.getDate("dat_checkin"));
 					res.setCheckOut(rs.getDate("dat_checkout"));
+					res.setTotal(rs.getFloat("total"));
 					res.setStatus(rs.getString("status").charAt(0));
 					listReserva.add(res);
 				} while (rs.next());

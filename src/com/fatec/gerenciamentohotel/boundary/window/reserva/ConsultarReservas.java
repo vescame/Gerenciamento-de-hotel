@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.control.ReservaControl;
 import src.com.fatec.gerenciamentohotel.entity.Reserva;
 
@@ -56,17 +57,17 @@ public class ConsultarReservas extends JInternalFrame
 		setBounds(100, 100, 600, 400);
 		getContentPane().setLayout(null);
 
-		lblHospede = new JLabel("Hospede:");
-		lblHospede.setBounds(10, 20, 60, 13);
+		lblHospede = new JLabel("CPF:");
+		lblHospede.setBounds(10, 20, 100, 13);
 		getContentPane().add(lblHospede);
 
 		txtHospede = new JTextField();
 		txtHospede.setBounds(90, 17, 219, 19);
 		getContentPane().add(txtHospede);
-		txtHospede.setColumns(10);
+		txtHospede.setDocument(new JTextFieldLimit(11));
 
-		btnBuscar = new JButton("Buscar Ativa");
-		btnBuscar.setBounds(330, 15, 90, 21);
+		btnBuscar = new JButton("Buscar Reserva Ativa");
+		btnBuscar.setBounds(330, 15, 200, 21);
 		btnBuscar.setActionCommand("btn_buscar");
 		btnBuscar.addActionListener(this);
 		getContentPane().add(btnBuscar);
@@ -162,7 +163,7 @@ public class ConsultarReservas extends JInternalFrame
 		dataModel = new DefaultTableModel() {
 			private static final long serialVersionUID = 1L;
 			String[] columnNames = { "codigo", "cpf cliente", "check-in",
-					"check-out", "diaria", "status" };
+					"check-out", "diaria", "total", "status" };
 
 			@Override
 			public int getColumnCount() {
@@ -200,8 +201,9 @@ public class ConsultarReservas extends JInternalFrame
 			dataModel.addRow(new Object[] { t.getId(), t.getHospede().getCpf(),
 					sdf.format(t.getCheckIn()),
 					t.getCheckOut() != null ? sdf.format(t.getCheckOut())
-							: "NULL", t.getQuarto().getTipoDeQuarto().getValorDiaria(),
-							t.getStatus() == 'A' ? "Ativo" : "Inativo" });
+							: "NULL",
+					t.getQuarto().getTipoDeQuarto().getValorDiaria(),
+					t.getTotal(), t.getStatus() == 'A' ? "Ativo" : "Inativo" });
 		}
 	}
 
@@ -254,6 +256,9 @@ public class ConsultarReservas extends JInternalFrame
 				txtValor.setText(valor);
 				txtHospede.setEditable(false);
 				btnLimpar.setEnabled(true);
+			} else {
+				JOptionPane.showMessageDialog(this, "Nao ha reserva ativa",
+						"Reserva", JOptionPane.WARNING_MESSAGE);
 			}
 		} else if (nomeEvento.equals("btn_checkout")) {
 			if (!txtHospede.isEditable()) {
