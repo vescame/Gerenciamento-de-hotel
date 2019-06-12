@@ -20,8 +20,11 @@ import javax.swing.table.DefaultTableModel;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
+import src.com.fatec.gerenciamentohotel.boundary.window.MainWindow;
+import src.com.fatec.gerenciamentohotel.boundary.window.filtro_usuario.FiltroDeComponentes;
 import src.com.fatec.gerenciamentohotel.control.QuartoControl;
 import src.com.fatec.gerenciamentohotel.control.TipoDeQuartoControl;
+import src.com.fatec.gerenciamentohotel.entity.Hospede;
 import src.com.fatec.gerenciamentohotel.entity.Quarto;
 
 public class ConsultarQuarto extends JInternalFrame implements ActionListener {
@@ -35,6 +38,7 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 	private JLabel lblAndar;
 
 	private JButton btnBuscar;
+	private JButton btnLimpar;
 	private JButton btnCancelar;
 	private JButton btnAlterar;
 	private JButton btnInativar;
@@ -105,6 +109,12 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 		btnBuscar.addActionListener(this);
 		btnBuscar.setBounds(220, 7, 100, 25);
 		getContentPane().add(btnBuscar);
+		
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.setActionCommand("btn_limpar");
+		btnLimpar.addActionListener(this);
+		btnLimpar.setBounds((btnBuscar.getX() + btnBuscar.getWidth()) + 30, 7, 100, 25);
+		getContentPane().add(btnLimpar);
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setActionCommand("btn_cancelar");
@@ -125,6 +135,10 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 		btnInativar.setBounds(450, 278, 114, 25);
 		btnInativar.setEnabled(false);
 		getContentPane().add(btnInativar, BorderLayout.EAST);
+		
+		if (MainWindow.getPessoaLogada().getClass().equals(Hospede.class)) {
+			new FiltroDeComponentes(btnAlterar, btnInativar);
+		}
 
 	}
 
@@ -181,6 +195,8 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 				btnAlterar.setEnabled(true);
 				btnInativar.setEnabled(true);
 			}
+		} else if (nomeEvento.equals("btn_limpar")) {
+			resetarTela();
 		} else if (nomeEvento.equals("btn_alterar")) {
 			new QuartoControl().alterarQuarto(construirObjetoQuarto());
 			resetarTela();
