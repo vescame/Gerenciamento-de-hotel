@@ -17,16 +17,17 @@ import src.com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
 public class CadastroTipoQuarto extends JInternalFrame
 		implements ActionListener {
 	private static final long serialVersionUID = 1L;
+	
+	private JLabel lblDescricao;
+	private JLabel lblValorDiaria;
+	private JLabel lblQuantidadeAdultos;
+	private JLabel lblQuantidadeCriancas;
 
 	private JTextField txtDescricao;
 	private JFormattedTextField txtValor;
 	private JTextField txtQtdDeAdultos;
 	private JTextField txtQtdDeCriancas;
 
-	private JLabel lblDescricao;
-	private JLabel lblValorDiaria;
-	private JLabel lblQuantidadeAdultos;
-	private JLabel lblQuantidadeCriancas;
 
 	private JButton btnCadastrar;
 	private JButton btnCancelar;
