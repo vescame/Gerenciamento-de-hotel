@@ -48,6 +48,7 @@ public class ReservaControl {
 	public void deletarReserva(long cpfHospede) {
 		try {
 			new ReservaDAO().delete(String.valueOf(cpfHospede));
+			userMessage("Reserva", "Reserva deletada!", JOptionPane.INFORMATION_MESSAGE);
 		} catch (DAOException e) {
 			userMessage("Reserva", e.getMessage(), JOptionPane.WARNING_MESSAGE);
 		}
