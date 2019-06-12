@@ -24,7 +24,6 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
-			// omitir o ID já que no banco ele é AUTO_INCREMENT
 			pstmt = con.prepareStatement(
 					" insert into funcionario values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 			pstmt.setString(1, f.getCpf());
@@ -137,13 +136,53 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 
 	@Override
 	public void update(Funcionario f) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt;
+			pstmt = con.prepareStatement(
+					" update funcionario set cep = ?, nome = ?, telefone = ?, celular = ?, email = ?,"
+					+ "dat_nascimento = ?, num_residencia = ? where cpf = ?");
+			pstmt.setString(1, f.getEndereco().getCep());
+			pstmt.setString(2, f.getNome());
+			pstmt.setString(3, f.getTelefone());
+			pstmt.setString(4, f.getCelular());
+			pstmt.setString(5, f.getEmail());
+			DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			String nascString = sdf.format(f.getDataNascimento());
+			Date nasc = sdf.parse(nascString);
+			// f.setDataNascimento(nasc);
+			pstmt.setDate(6, new java.sql.Date(nasc.getTime()));
+			pstmt.setInt(7, f.getNumResidencia());
+			pstmt.setString(8, f.getCpf());
+			final int res = pstmt.executeUpdate();
+			final int resInesperado = 0;
+			if (res == resInesperado) {
+				throw new SQLException();
+			}
+		} catch (SQLException | ParseException e) {
+			e.printStackTrace();
+			throw new DAOException("Impossivel alterar Funcionario");
+		}
 	}
 
 	@Override
 	public void delete(String cpf) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		/* funcionarios nao sao deletados, sao inativados */
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt;
+			pstmt = con.prepareStatement(
+					" update funcionario set status = ? where cpf = ?");
+			pstmt.setString(1, "I");
+			pstmt.setString(2, cpf);
+			final int res = pstmt.executeUpdate();
+			final int resInesperado = 0;
+			if (res == resInesperado) {
+				throw new SQLException();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("Impossivel alterar Funcionario");
+		}
 	}
 }

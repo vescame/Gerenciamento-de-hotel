@@ -4,14 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,7 +23,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
+import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
 import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
+import src.com.fatec.gerenciamentohotel.entity.Endereco;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 
 public class ConsultaFuncionarios extends JInternalFrame
@@ -53,6 +58,8 @@ public class ConsultaFuncionarios extends JInternalFrame
 	private JLabel lblUf;
 
 	private JButton btnBuscar;
+	private JButton btnLimpar;
+	private JButton btnBuscarCep;
 	private JButton btnAlterar;
 	private JButton btnInativar;
 	private JButton btnCancelar;
@@ -78,10 +85,16 @@ public class ConsultaFuncionarios extends JInternalFrame
 		getContentPane().add(txtCpf);
 
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(225, 15, 114, 25);
+		btnBuscar.setBounds(220, 15, 100, 25);
 		btnBuscar.setActionCommand("btn_buscar");
 		btnBuscar.addActionListener(this);
 		getContentPane().add(btnBuscar);
+		
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.setBounds(340, 15, 100, 25);
+		btnLimpar.setActionCommand("btn_limpar");
+		btnLimpar.addActionListener(this);
+		getContentPane().add(btnLimpar);
 
 		lblNome = new JLabel("Nome:");
 		lblNome.setBounds(10, 50, 50, 13);
@@ -146,6 +159,12 @@ public class ConsultaFuncionarios extends JInternalFrame
 		txtCep.setBounds(60, 16, 130, 19);
 		txtCep.setDocument(new JTextFieldLimit(8));
 		panel.add(txtCep);
+
+		btnBuscarCep = new JButton("Buscar CEP");
+		btnBuscarCep.setBounds(((txtCep.getX() + txtCep.getWidth()) + 50), 14, 115, 20);
+		btnBuscarCep.setActionCommand("btn_buscar_cep");
+		btnBuscarCep.addActionListener(this);
+		panel.add(btnBuscarCep);
 
 		lblRua = new JLabel("Rua:");
 		lblRua.setBounds(5, 45, 30, 13);
@@ -222,12 +241,14 @@ public class ConsultaFuncionarios extends JInternalFrame
 		btnAlterar.setBounds(206, 472, 114, 25);
 		btnAlterar.setActionCommand("btn_alterar");
 		btnAlterar.addActionListener(this);
+		btnAlterar.setEnabled(false);
 		getContentPane().add(btnAlterar);
 
 		btnInativar = new JButton("Inativar");
 		btnInativar.setBounds(332, 472, 114, 25);
 		btnInativar.setActionCommand("btn_inativar");
 		btnInativar.addActionListener(this);
+		btnInativar.setEnabled(false);
 		getContentPane().add(btnInativar);
 
 	}
@@ -278,31 +299,110 @@ public class ConsultaFuncionarios extends JInternalFrame
 	public void actionPerformed(ActionEvent e) {
 		final String nomeEvento = e.getActionCommand();
 		if (nomeEvento.equals("btn_buscar")) {
-			if (!txtCpf.getText().trim().isEmpty()) {
-				Funcionario f = new FuncionarioControl()
-						.selectCPF(txtCpf.getText());
-				if (f != null) {
-					txtNome.setText(f.getNome());
-					txtDataNasc.setText(new SimpleDateFormat("dd/MM/yyyy")
-							.format(f.getDataNascimento()));
-					txtCelular.setText(f.getCelular());
-					txtTelefone.setText(f.getTelefone());
-					txtEmail.setText(f.getEmail());
-					txtNumero.setText(String.valueOf(f.getNumResidencia()));
-					txtCep.setText(f.getEndereco().getCep());
-					txtRua.setText(f.getEndereco().getRua());
-					txtCidade.setText(f.getEndereco().getCidade());
-					txtBairro.setText(f.getEndereco().getBairro());
-					txtUf.setText(f.getEndereco().getUf());
-				}
+			Funcionario f = consultarLista(txtCpf.getText());
+			if (f != null) {
+				disporFuncionarioEmTela(f);
+				txtCpf.setEnabled(false);
+				btnAlterar.setEnabled(true);
+				btnInativar.setEnabled(true);
 			}
+		} else if (nomeEvento.equals("btn_limpar")) {
+			resetarTela();
 		} else if (nomeEvento.equals("btn_inativar")) {
-
+			new FuncionarioControl().inativarFuncionario(txtCpf.getText());
+			atualizarModel();
 		} else if (nomeEvento.equals("btn_alterar")) {
+			new FuncionarioControl().alterarFuncionario(construirObjFuncionario());
 			atualizarModel();
 		} else if (nomeEvento.equals("btn_cancelar")) {
 			dispose();
+		} else if (nomeEvento.equals("btn_buscar_cep")) {
+			Endereco end = new EnderecoControl().selectCep(txtCep.getText());
+			if (end != null) {
+				disporEnderecoEmTela(end);
+			}
 		}
+	}
 
+	private void disporFuncionarioEmTela(Funcionario f) {
+		txtNome.setText(f.getNome());
+		txtDataNasc.setText(new SimpleDateFormat("dd/MM/yyyy")
+				.format(f.getDataNascimento()));
+		txtCelular.setText(f.getCelular());
+		txtTelefone.setText(f.getTelefone());
+		txtEmail.setText(f.getEmail());
+		txtNumero.setText(String.valueOf(f.getNumResidencia()));
+		txtCep.setText(f.getEndereco().getCep());
+		txtRua.setText(f.getEndereco().getRua());
+		txtCidade.setText(f.getEndereco().getCidade());
+		txtBairro.setText(f.getEndereco().getBairro());
+		txtUf.setText(f.getEndereco().getUf());
+	}
+	
+	private void disporEnderecoEmTela(Endereco end) {
+		txtRua.setText(end.getRua());
+		txtBairro.setText(end.getBairro());
+		txtCidade.setText(end.getCidade());
+		txtUf.setText(end.getUf());
+	}
+
+	private void resetarTela() {
+		txtCpf.setText("");
+		txtNome.setText("");
+		txtDataNasc.setText("");
+		txtCelular.setText("");
+		txtTelefone.setText("");
+		txtEmail.setText("");
+		txtNumero.setText("");
+		txtCep.setText("");
+		txtRua.setText("");
+		txtCidade.setText("");
+		txtBairro.setText("");
+		txtUf.setText("");
+		txtCpf.setEnabled(true);
+		btnAlterar.setEnabled(false);
+		btnInativar.setEnabled(false);
+	}
+	
+	private Funcionario construirObjFuncionario() {
+		Funcionario f = new Funcionario();
+
+		f.setCpf(txtCpf.getText());
+		f.setEndereco(new EnderecoControl().selectCep(txtCep.getText()));
+		f.setNome(txtNome.getText());
+		f.setTelefone(txtTelefone.getText());
+		f.setCelular(txtCelular.getText());
+		String strDate = txtDataNasc.getText();
+		Date nasc = null;
+		try {
+			DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			nasc = sdf.parse(strDate);
+		} catch (ParseException ex) {
+			ex.printStackTrace();
+			JOptionPane.showMessageDialog(this,
+					"Formate a data, por favor.", "Data inadequada",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		f.setEmail(txtEmail.getText());
+		f.setDataNascimento(nasc);
+		f.setStatus('A');
+		try {
+			f.setNumResidencia(Integer.parseInt(txtNumero.getText()));
+		} catch (NumberFormatException ex) {
+			f.setNumResidencia(0);
+		}
+		f.setLogin(consultarLista(f.getCpf()).getLogin());
+		f.setSenha(consultarLista(f.getCpf()).getSenha());
+		f.setTipoFuncionario(consultarLista(f.getCpf()).getTipoFuncionario());
+		return f;
+	}
+
+	private Funcionario consultarLista(String cpf) {
+		for (Funcionario f : funcionarios) {
+			if (f.getCpf().equals(cpf)) {
+				return f;
+			}
+		}
+		return null;
 	}
 }

@@ -11,6 +11,78 @@ import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 public class FuncionarioControl {
 
 	public void novoFuncionario(Funcionario f) {
+		validarFuncionario(f);
+		try {
+			FuncionarioDAO fdao = new FuncionarioDAO();
+			fdao.insert(f);
+			userMessage("Funcionario", "Funcionario cadastrado!",
+					JOptionPane.NO_OPTION);
+		} catch (DAOException e) {
+			userMessage("Erro Funcionario", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+	public Funcionario selectCPF(String cpf) {
+		try {
+			FuncionarioDAO fdao = new FuncionarioDAO();
+			return fdao.select(cpf);
+		} catch (DAOException e) {
+			userMessage("Funcionario", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
+	}
+
+	public Funcionario selectLogin(String login) {
+		try {
+			FuncionarioDAO fdao = new FuncionarioDAO();
+			return fdao.select(login);
+		} catch (DAOException e) {
+			userMessage("Funcionario", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
+	}
+
+	public void alterarFuncionario(Funcionario f) {
+		validarFuncionario(f);
+		try {
+			new FuncionarioDAO().update(f);
+			userMessage("Funcionario", "Funcionario alterado!",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (DAOException e) {
+			userMessage("Funcionario", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+	public void inativarFuncionario(String cpf) {
+		try {
+			new FuncionarioDAO().delete(cpf);
+			userMessage("Funcionario", "Funcionario inativado!",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (DAOException e) {
+			userMessage("Funcionario", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+	}
+	
+	public List<Funcionario> selectTodos() {
+		try {
+			return new FuncionarioDAO().selectAll("");
+		} catch (DAOException e) {
+			userMessage("Funcionario", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
+	}
+
+	private void userMessage(String titulo, String mensagem, int errorType) {
+		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
+	}
+	
+	private void validarFuncionario(Funcionario f) {
 		if (f.getEndereco() == null) {
 			userMessage("Erro", "Endereco vazio", JOptionPane.ERROR_MESSAGE);
 			return;
@@ -61,50 +133,5 @@ public class FuncionarioControl {
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		try {
-			FuncionarioDAO fdao = new FuncionarioDAO();
-			fdao.insert(f);
-			userMessage("Funcionario", "Funcionario cadastrado!",
-					JOptionPane.NO_OPTION);
-		} catch (DAOException e) {
-			userMessage("Erro Funcionario", e.getMessage(),
-					JOptionPane.WARNING_MESSAGE);
-		}
-	}
-
-	public Funcionario selectCPF(String cpf) {
-		try {
-			FuncionarioDAO fdao = new FuncionarioDAO();
-			return fdao.select(cpf);
-		} catch (DAOException e) {
-			userMessage("Funcionario", e.getMessage(),
-					JOptionPane.WARNING_MESSAGE);
-		}
-		return null;
-	}
-
-	public Funcionario selectLogin(String login) {
-		try {
-			FuncionarioDAO fdao = new FuncionarioDAO();
-			return fdao.select(login);
-		} catch (DAOException e) {
-			userMessage("Funcionario", e.getMessage(),
-					JOptionPane.WARNING_MESSAGE);
-		}
-		return null;
-	}
-
-	public List<Funcionario> selectTodos() {
-		try {
-			return new FuncionarioDAO().selectAll("");
-		} catch (DAOException e) {
-			userMessage("Funcionario", e.getMessage(),
-					JOptionPane.WARNING_MESSAGE);
-		}
-		return null;
-	}
-
-	private void userMessage(String titulo, String mensagem, int errorType) {
-		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 }
