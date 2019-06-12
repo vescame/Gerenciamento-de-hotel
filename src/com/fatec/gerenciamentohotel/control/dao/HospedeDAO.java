@@ -123,13 +123,50 @@ public class HospedeDAO implements IObjectDAO<Hospede, String> {
 
 	@Override
 	public void update(Hospede h) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt;
+			pstmt = con.prepareStatement("update hospede set cep = ?, nome = ?, telefone = ?, celular = ?, email = ?,"
+					+ "dat_nascimento = ?, num_residencia = ? where cpf = ?");
+			pstmt.setString(1, h.getEndereco().getCep());
+			pstmt.setString(2, h.getNome());
+			pstmt.setString(3, h.getTelefone());
+			pstmt.setString(4, h.getCelular());
+			pstmt.setString(5, h.getEmail());
+			DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			String nascString = sdf.format(h.getDataNascimento());
+			Date nasc = sdf.parse(nascString);
+			pstmt.setDate(6, new java.sql.Date(nasc.getTime()));
+			pstmt.setInt(7, h.getNumResidencia());
+			pstmt.setString(8, h.getCpf());
+			final int res = pstmt.executeUpdate();
+			final int resInesperado = 0;{
+				if (res == resInesperado) {
+					throw new SQLException();
+				}
+			}
+		} catch (SQLException | ParseException e) {
+			e.printStackTrace();
+			throw new DAOException("Impossivel alterar Hospede");
+		}
 	}
 
 	@Override
 	public void delete(String cpf) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt;
+			pstmt = con.prepareStatement("update hospede set status = ? where cpf = ?");
+			pstmt.setString(1, "I");
+			pstmt.setString(2, cpf);
+			final int res = pstmt.executeUpdate();
+			final int resInesperado = 0;
+			if( res == resInesperado) {
+				throw new SQLException();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("Impossivel alterar Hospede");
+		}
 	}
 }
