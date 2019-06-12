@@ -10,21 +10,36 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+
+import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.control.QuartoControl;
+import src.com.fatec.gerenciamentohotel.control.TipoDeQuartoControl;
 import src.com.fatec.gerenciamentohotel.entity.Quarto;
 
 public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
+	private JTextField txtNumeroQuarto;
+	private JTextField txtTipo;
+	private JTextField txtAndar;
+
+	private JLabel lblNmeroDoQuarto;
+	private JLabel lblTipoDeQuarto;
+	private JLabel lblAndar;
+
+	private JButton btnBuscar;
 	private JButton btnCancelar;
 	private JButton btnAlterar;
 	private JButton btnInativar;
 
 	private JScrollPane scrollPane;
-
 	private DefaultTableModel dataModel;
 	private JTable tblQuartos;
 
@@ -38,12 +53,39 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 		setBounds(x, y, width, height);
 		setLayout(null);
 
+		lblNmeroDoQuarto = new JLabel("Numero do Quarto:");
+		lblNmeroDoQuarto.setBounds(10, 10, 130, 15);
+		getContentPane().add(lblNmeroDoQuarto);
+
+		txtNumeroQuarto = new JTextField();
+		txtNumeroQuarto.setBounds(150, 7, 50, 25);
+		getContentPane().add(txtNumeroQuarto);
+		txtNumeroQuarto.setDocument(new JTextFieldLimit(4));
+
+		lblAndar = new JLabel("Andar:");
+		lblAndar.setBounds(10, 50, 50, 15);
+		getContentPane().add(lblAndar);
+
+		txtAndar = new JTextField();
+		txtAndar.setDocument(new JTextFieldLimit(2));
+		txtAndar.setBounds(150, 47, 50, 25);
+		getContentPane().add(txtAndar);
+
+		lblTipoDeQuarto = new JLabel("Cod. Tipo Quarto:");
+		lblTipoDeQuarto.setBounds(10, 90, 110, 15);
+		getContentPane().add(lblTipoDeQuarto);
+
+		txtTipo = new JTextField();
+		txtTipo.setBounds(150, 87, 50, 25);
+		getContentPane().add(txtTipo);
+		txtTipo.setDocument(new JTextFieldLimit(2));
+
 		configurarDataModel();
 		tblQuartos = new JTable(dataModel);
 		tblQuartos.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				atualizarModel();
+				/* vazio */
 			}
 
 			@Override
@@ -54,9 +96,15 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 
 		scrollPane = new JScrollPane(tblQuartos);
 		scrollPane.setVisible(true);
-		scrollPane.setBounds(0, 0, this.getWidth(), (height - 100));
+		scrollPane.setBounds(0, 140, this.getWidth(), (height - 220));
 		tblQuartos.setFillsViewportHeight(true);
 		getContentPane().add(scrollPane);
+
+		btnBuscar = new JButton("Buscar");
+		btnBuscar.setActionCommand("btn_buscar");
+		btnBuscar.addActionListener(this);
+		btnBuscar.setBounds(220, 7, 100, 25);
+		getContentPane().add(btnBuscar);
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setActionCommand("btn_cancelar");
@@ -68,12 +116,14 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 		btnAlterar.setActionCommand("btn_alterar");
 		btnAlterar.addActionListener(this);
 		btnAlterar.setBounds(300, 278, 114, 25);
+		btnAlterar.setEnabled(false);
 		getContentPane().add(btnAlterar, BorderLayout.EAST);
 
 		btnInativar = new JButton("Inativar");
 		btnInativar.setActionCommand("btn_inativar");
 		btnInativar.addActionListener(this);
 		btnInativar.setBounds(450, 278, 114, 25);
+		btnInativar.setEnabled(false);
 		getContentPane().add(btnInativar, BorderLayout.EAST);
 
 	}
@@ -123,12 +173,62 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		final String nomeEvento = e.getActionCommand();
-		if (nomeEvento.equals("btn_alterar")) {
-
+		if (nomeEvento.equals("btn_buscar")) {
+			Quarto q = consultaLista(txtNumeroQuarto.getText());
+			if (q != null) {
+				disporDadosNaTela(q);
+				txtNumeroQuarto.setEnabled(false);
+				btnAlterar.setEnabled(true);
+				btnInativar.setEnabled(true);
+			}
+		} else if (nomeEvento.equals("btn_alterar")) {
+			new QuartoControl().alterarQuarto(construirObjetoQuarto());
+			resetarTela();
+			tblQuartos.grabFocus();
 		} else if (nomeEvento.equals("btn_inativar")) {
-
+			new QuartoControl().deletarQuarto(txtNumeroQuarto.getText());
+			resetarTela();
+			tblQuartos.grabFocus();
 		} else if (nomeEvento.equals("btn_cancelar")) {
 			dispose();
 		}
+	}
+	
+	private void disporDadosNaTela(Quarto q) {
+		txtNumeroQuarto.setText(String.valueOf(q.getNumQuarto()));
+		txtTipo.setText(String.valueOf(q.getTipoDeQuarto().getId()));
+		txtAndar.setText(String.valueOf(q.getAndar()));
+	}
+	
+	private void resetarTela() {
+		txtNumeroQuarto.setText("");
+		txtAndar.setText("");
+		txtTipo.setText("");
+		txtNumeroQuarto.setEnabled(true);
+		btnAlterar.setEnabled(false);
+		btnInativar.setEnabled(false);
+	}
+
+	private Quarto consultaLista(String numQuarto) {
+		for (Quarto q : quartos) {
+			try {
+				if (q.getNumQuarto() == Integer.parseInt(numQuarto)) {
+					return q;
+				}
+			} catch (ParseException e) {
+				JOptionPane.showMessageDialog(this, "Erro ao consultar", "ERRO",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		return null;
+	}
+	
+	private Quarto construirObjetoQuarto() {
+		Quarto q = new Quarto();
+		q.setNumQuarto(Short.valueOf(txtNumeroQuarto.getText()));
+		q.setAndar(Short.valueOf(txtAndar.getText()));
+		q.setTipoDeQuarto(new TipoDeQuartoControl().selectTipoQuarto(Long.parseLong(txtTipo.getText())));
+		q.setDisponivel(true);
+		return q;
 	}
 }

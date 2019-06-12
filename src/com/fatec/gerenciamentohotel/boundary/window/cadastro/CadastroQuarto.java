@@ -35,14 +35,14 @@ public class CadastroQuarto extends JInternalFrame implements ActionListener {
 		setBounds(100, 100, 275, 300);
 		getContentPane().setLayout(null);
 
-		lblNmeroDoQuarto = new JLabel("Número do Quarto:");
+		lblNmeroDoQuarto = new JLabel("Numero do Quarto:");
 		lblNmeroDoQuarto.setBounds(12, 12, 131, 15);
 		getContentPane().add(lblNmeroDoQuarto);
 
 		txtNumeroQuarto = new JTextField();
 		txtNumeroQuarto.setBounds(197, 7, 63, 25);
 		getContentPane().add(txtNumeroQuarto);
-		txtNumeroQuarto.setDocument(new JTextFieldLimit(5));
+		txtNumeroQuarto.setDocument(new JTextFieldLimit(4));
 
 		lblAndar = new JLabel("Andar:");
 		lblAndar.setBounds(12, 49, 51, 15);

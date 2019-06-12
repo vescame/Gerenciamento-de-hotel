@@ -18,11 +18,9 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 	@Override
 	public void insert(Quarto q) throws DAOException {
 		try {
-			Connection con = ConnectionDB.getInstance().getConnection();
-			PreparedStatement pstmt;
-			// ID não é AUTO_INCREMENT, representa o numero da porta dos quartos
-			pstmt = con
-					.prepareStatement(" insert into quarto values (?, ?, ?) ");
+			Connection conn = ConnectionDB.getInstance().getConnection();
+			final String sql = " insert into quarto values (?, ?, ?) ";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, q.getNumQuarto());
 			pstmt.setLong(2, q.getTipoDeQuarto().getId());
 			pstmt.setShort(3, q.getAndar());
@@ -63,8 +61,7 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 				} while (rs.next());
 				return quar;
 			} else {
-				throw new DAOException(
-						"Quarto nao encontrado.");
+				throw new DAOException("Quarto nao encontrado.");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Erro ao buscar Quarto");
@@ -95,8 +92,7 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 				} while (rs.next());
 				return l;
 			} else {
-				throw new DAOException(
-						"Nao ha quartos cadastrados.");
+				throw new DAOException("Nao ha quartos cadastrados.");
 			}
 		} catch (SQLException e) {
 			throw new DAOException("Erro ao buscar Quarto");
@@ -123,13 +119,38 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 
 	@Override
 	public void update(Quarto q) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Connection conn = ConnectionDB.getInstance().getConnection();
+			final String sql = " update quarto set id_tipo_quarto = ?, andar = ? where num_quarto = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setLong(1, q.getTipoDeQuarto().getId());
+			pstmt.setShort(2, q.getAndar());
+			pstmt.setInt(3, q.getNumQuarto());
+			final int res = pstmt.executeUpdate();
+			final int resInesperado = 0;
+			if (res == resInesperado) {
+				throw new SQLException();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("Nao foi possivel alterar Quarto");
+		}
 	}
 
 	@Override
 	public void delete(String numQuarto) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Connection conn = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("delete from quarto where num_quarto = ?");
+			pstmt.setLong(1, Long.parseLong(numQuarto));
+			final int res = pstmt.executeUpdate();
+			final int resInesperado = 0;
+			if (res == resInesperado) {
+				throw new SQLException();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("Nao foi possivel inativar Quarto");
+		}
 	}
 }
