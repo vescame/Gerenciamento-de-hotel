@@ -58,7 +58,7 @@ public class CadastroReserva extends JInternalFrame implements ActionListener {
 		getContentPane().add(textFieldHospede);
 		textFieldHospede.setColumns(10);
 
-		btnBuscarHospede = new JButton("Buscar");
+		btnBuscarHospede = new JButton("Confirmar");
 		btnBuscarHospede.setBounds(325, 10, 114, 25);
 		btnBuscarHospede.setActionCommand("btn_buscar_hospede");
 		btnBuscarHospede.addActionListener(this);
@@ -69,7 +69,7 @@ public class CadastroReserva extends JInternalFrame implements ActionListener {
 		textFieldQuarto.setBounds(98, 47, 215, 25);
 		getContentPane().add(textFieldQuarto);
 
-		btnBuscarQuarto = new JButton("Buscar");
+		btnBuscarQuarto = new JButton("Confirmar");
 		btnBuscarQuarto.setBounds(325, 47, 114, 25);
 		btnBuscarQuarto.setActionCommand("btn_buscar_quarto");
 		btnBuscarQuarto.addActionListener(this);

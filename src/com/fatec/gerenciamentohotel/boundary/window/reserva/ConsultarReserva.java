@@ -21,11 +21,14 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
+import src.com.fatec.gerenciamentohotel.boundary.window.MainWindow;
+import src.com.fatec.gerenciamentohotel.boundary.window.filtro_usuario.FiltroDeComponentes;
 import src.com.fatec.gerenciamentohotel.control.ReservaControl;
+import src.com.fatec.gerenciamentohotel.entity.Hospede;
+import src.com.fatec.gerenciamentohotel.entity.Pessoa;
 import src.com.fatec.gerenciamentohotel.entity.Reserva;
 
-public class ConsultarReserva extends JInternalFrame
-		implements ActionListener {
+public class ConsultarReserva extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JLabel lblHospede;
 	private JLabel lblQuarto;
@@ -158,13 +161,17 @@ public class ConsultarReserva extends JInternalFrame
 		btnLimpar.addActionListener(this);
 		btnLimpar.setEnabled(false);
 		getContentPane().add(btnLimpar);
-		
+
 		btnDeletar = new JButton("Deletar");
 		btnDeletar.setBounds(450, 330, 115, 25);
 		btnDeletar.setActionCommand("btn_deletar");
 		btnDeletar.addActionListener(this);
 		btnDeletar.setEnabled(false);
 		getContentPane().add(btnDeletar);
+
+		if (MainWindow.getPessoaLogada().getClass().equals(Hospede.class)) {
+			new FiltroDeComponentes(btnDeletar, btnCheckout);
+		}
 	}
 
 	private void configurarDataModel() {
@@ -199,9 +206,19 @@ public class ConsultarReserva extends JInternalFrame
 
 	private void inserirLinhasModel() {
 		String cpfHospede = "";
+
+		// sempre priorizar busca especifica por cpf
 		if (!cpfVazio()) {
 			cpfHospede = txtHospede.getText();
 		}
+
+		// forca o sistema a buscar apenas os registros do hospede, garantindo
+		// que cada um veja apenas suas reservas
+		Pessoa p = MainWindow.getPessoaLogada();
+		if (p.getClass().equals(Hospede.class)) {
+			cpfHospede = p.getCpf();
+		}
+
 		this.reservas = new ReservaControl()
 				.selectHistoricoReservas(cpfHospede);
 		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -292,23 +309,23 @@ public class ConsultarReserva extends JInternalFrame
 			atualizarModel();
 		}
 	}
-	
+
 	private void disporDadosNaTela(Reserva r) {
 		txtQuarto.setText(String.valueOf(r.getQuarto().getNumQuarto()));
-		txtCheckin.setText(new SimpleDateFormat("dd/MM/yyyy")
-				.format(r.getCheckIn()));
+		txtCheckin.setText(
+				new SimpleDateFormat("dd/MM/yyyy").format(r.getCheckIn()));
 		int dias = (int) diasDeReserva(r.getCheckIn());
 		txtDias.setText(String.valueOf(dias));
 		DecimalFormat df = new DecimalFormat("#0.00");
 		String valor = df.format(Double.valueOf(
-				r.getQuarto().getTipoDeQuarto().getValorDiaria()
-						* dias));
+				r.getQuarto().getTipoDeQuarto().getValorDiaria() * dias));
 		txtValor.setText(valor);
 	}
-	
+
 	private Reserva consultaLista(String cpfHospede) {
 		for (Reserva rr : reservas) {
-			if ((rr.getHospede().getCpf().equals(cpfHospede)) && (rr.getStatus() == 'A')) {
+			if ((rr.getHospede().getCpf().equals(cpfHospede))
+					&& (rr.getStatus() == 'A')) {
 				return rr;
 			}
 		}

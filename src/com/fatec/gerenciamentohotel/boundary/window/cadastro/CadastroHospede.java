@@ -227,13 +227,14 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 			try {
 				DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				nasc = sdf.parse(strDate);
+				h.setNumResidencia(Integer.parseInt(txtNumero.getText()));
 			} catch (ParseException except) {
-				JOptionPane.showMessageDialog(null, "Senhas não conferem",
-						"Senha", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Insira a data de nascimento",
+						"Data", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			h.setDataNascimento(nasc);
-			h.setNumResidencia(Integer.parseInt(txtNumero.getText()));
+			
 			h.setEmail(txtEmail.getText());
 			h.setNome(txtNome.getText());
 			h.setTelefone(txtTelefone.getText());
