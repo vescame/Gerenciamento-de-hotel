@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 public class ConnectionDB {
 	private static ConnectionDB instance;
 	private Connection conn;
@@ -28,8 +30,15 @@ public class ConnectionDB {
 	}
 
 	public Connection getConnection() throws SQLException {
-		if (conn == null || conn.isClosed()) {
-			conn = DriverManager.getConnection(connectionURL, user, psswrd);
+		try {
+			if (conn == null || conn.isClosed()) {
+				conn = DriverManager.getConnection(connectionURL, user, psswrd);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,
+					"Nao foi possivel conectar ao banco", "Erro ao conectar-se",
+					JOptionPane.ERROR_MESSAGE);
 		}
 		return conn;
 	}
