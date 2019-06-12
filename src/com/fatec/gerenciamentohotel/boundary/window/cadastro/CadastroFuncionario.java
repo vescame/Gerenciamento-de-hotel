@@ -331,7 +331,7 @@ public class CadastroFuncionario extends JInternalFrame
 
 			new FuncionarioControl().novoFuncionario(f);
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			dispose();
+			hide();
 		}
 	}
 }

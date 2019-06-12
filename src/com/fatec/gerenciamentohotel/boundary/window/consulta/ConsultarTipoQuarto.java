@@ -126,7 +126,7 @@ public class ConsultarTipoQuarto extends JInternalFrame
 		} else if (nomeEvento.equals("btn_inativar")) {
 
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			dispose();
+			hide();
 		}
 	}
 }

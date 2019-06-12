@@ -93,7 +93,7 @@ public class CadastroQuarto extends JInternalFrame implements ActionListener {
 
 			new QuartoControl().insert(quarto);
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			dispose();
+			hide();
 		} else if (nomeEvento.equals("btn_procurar")) {
 			JInternalFrame tq = new ConsultarTipoQuarto();
 			getParent().add(tq);

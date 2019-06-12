@@ -190,7 +190,7 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 			resetarTela();
 			tblQuartos.grabFocus();
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			dispose();
+			hide();
 		}
 	}
 	

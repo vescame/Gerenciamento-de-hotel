@@ -149,7 +149,7 @@ public class CadastroReserva extends JInternalFrame implements ActionListener {
 
 			new ReservaControl().insert(r);
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			dispose();
+			hide();
 		}
 
 	}

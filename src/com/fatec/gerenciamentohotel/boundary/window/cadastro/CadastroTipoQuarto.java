@@ -111,7 +111,7 @@ public class CadastroTipoQuarto extends JInternalFrame
 		} else if (nomeEvento.equals("btn_buscar")) {
 
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			dispose();
+			hide();
 		}
 
 	}

@@ -24,7 +24,7 @@ import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.control.ReservaControl;
 import src.com.fatec.gerenciamentohotel.entity.Reserva;
 
-public class ConsultarReservas extends JInternalFrame
+public class ConsultarReserva extends JInternalFrame
 		implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JLabel lblHospede;
@@ -51,7 +51,7 @@ public class ConsultarReservas extends JInternalFrame
 	private DefaultTableModel dataModel;
 	private List<Reserva> reservas = new ArrayList<>();
 
-	public ConsultarReservas() {
+	public ConsultarReserva() {
 		setTitle("Consulta Reservas");
 		setClosable(true);
 		setIconifiable(true);
@@ -277,7 +277,7 @@ public class ConsultarReservas extends JInternalFrame
 		} else if (nomeEvento.equals("btn_limpar")) {
 			resetarTela();
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			dispose();
+			hide();
 		} else if (nomeEvento.equals("btn_deletar")) {
 			final String cpfHospede = txtHospede.getText();
 			if (cpfVazio()) {

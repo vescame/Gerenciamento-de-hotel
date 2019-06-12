@@ -257,7 +257,7 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 				}
 			}
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			dispose();
+			hide();
 		}
 
 	}

@@ -27,10 +27,10 @@ import src.com.fatec.gerenciamentohotel.boundary.window.cadastro.CadastroFuncion
 import src.com.fatec.gerenciamentohotel.boundary.window.cadastro.CadastroHospede;
 import src.com.fatec.gerenciamentohotel.boundary.window.cadastro.CadastroQuarto;
 import src.com.fatec.gerenciamentohotel.boundary.window.cadastro.CadastroTipoQuarto;
-import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultaFuncionarios;
-import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarHospedes;
+import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarFuncionario;
+import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarHospede;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarQuarto;
-import src.com.fatec.gerenciamentohotel.boundary.window.reserva.ConsultarReservas;
+import src.com.fatec.gerenciamentohotel.boundary.window.reserva.ConsultarReserva;
 import src.com.fatec.gerenciamentohotel.boundary.window.consulta.ConsultarTipoQuarto;
 import src.com.fatec.gerenciamentohotel.boundary.window.reserva.CadastroReserva;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
@@ -54,15 +54,15 @@ public class MainWindow extends JFrame implements ActionListener {
 			mItemCadastrarTipoQuarto, mItemConsultarTipos;
 	private JSeparator separatorQuartos;
 	private CadastroFuncionario cadastroFuncionario;
-	private ConsultaFuncionarios consultaFuncionarios;
-	private CadastroHospede cadadastroHospede;
-	private ConsultarHospedes consultarHospedes;
+	private ConsultarFuncionario consultaFuncionario;
+	private CadastroHospede cadastroHospede;
+	private ConsultarHospede consultaHospede;
 	private CadastroQuarto cadastroQuarto;
 	private ConsultarQuarto consultarQuarto;
 	private CadastroTipoQuarto cadastroTipoQuarto;
 	private ConsultarTipoQuarto consultarTipoQuarto;
 	private CadastroReserva cadastroReserva;
-	private ConsultarReservas consultarReservas;
+	private ConsultarReserva consultarReserva;
 	private Timer timer;
 	private static Hospede hospedeLogado = null;
 	private static Funcionario funcionarioLogado = null;
@@ -210,17 +210,49 @@ public class MainWindow extends JFrame implements ActionListener {
 
 		lblHora = new JLabel("Hora");
 		StatusBar.add(lblHora, BorderLayout.WEST);
-
+		
+		cadastroFuncionario = new CadastroFuncionario();
+		cadastroFuncionario.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		cadastroHospede = new CadastroHospede();
+		cadastroHospede.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		cadastroReserva = new CadastroReserva();
+		cadastroReserva.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		cadastroQuarto = new CadastroQuarto();
+		cadastroQuarto.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		cadastroTipoQuarto = new CadastroTipoQuarto();
+		cadastroTipoQuarto.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
+		consultaFuncionario = new ConsultarFuncionario();
+		consultaFuncionario.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		consultaHospede = new ConsultarHospede();
+		consultaHospede.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		consultarReserva = new ConsultarReserva();
+		consultarReserva.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		consultarQuarto = new ConsultarQuarto();
+		consultarQuarto.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		consultarTipoQuarto = new ConsultarTipoQuarto();
+		consultarTipoQuarto.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
+		desktopPane.add(cadastroFuncionario);
+		desktopPane.add(cadastroHospede);
+		desktopPane.add(cadastroReserva);
+		desktopPane.add(cadastroQuarto);
+		desktopPane.add(cadastroTipoQuarto);
+		
+		desktopPane.add(consultaFuncionario);
+		desktopPane.add(consultaHospede);
+		desktopPane.add(consultarReserva);
+		desktopPane.add(consultarQuarto);
+		desktopPane.add(consultarTipoQuarto);
+		
 	}
 
 	private void abrirJanelas(JInternalFrame frame) {
-		if (frame.isVisible()) {
-			frame.requestFocus();
-			frame.toFront();
-		} else {
-			desktopPane.add(frame);
+		if (!frame.isVisible()) {
 			frame.setVisible(true);
 		}
+		frame.requestFocus();
+		frame.toFront();
 	}
 
 	@Override
@@ -230,54 +262,64 @@ public class MainWindow extends JFrame implements ActionListener {
 		if (nomeEvento.equals("mitem_cad_funcionario")) {
 			if (cadastroFuncionario == null) {
 				cadastroFuncionario = new CadastroFuncionario();
+				cadastroFuncionario.setDefaultCloseOperation(HIDE_ON_CLOSE);
 			}
 			abrirJanelas(cadastroFuncionario);
 		} else if (nomeEvento.equals("mitem_cad_hospede")) {
-			if (cadadastroHospede == null) {
-				cadadastroHospede = new CadastroHospede();
+			if (cadastroHospede == null) {
+				cadastroHospede = new CadastroHospede();
+				cadastroHospede.setDefaultCloseOperation(HIDE_ON_CLOSE);
 			}
-			abrirJanelas(cadadastroHospede);
+			abrirJanelas(cadastroHospede);
 		} else if (nomeEvento.equals("mitem_cad_reserva")) {
 			if (cadastroReserva == null) {
 				cadastroReserva = new CadastroReserva();
+				cadastroReserva.setDefaultCloseOperation(HIDE_ON_CLOSE);
 			}
 			abrirJanelas(cadastroReserva);
 		} else if (nomeEvento.equals("mitem_cad_quarto")) {
 			if (cadastroQuarto == null) {
 				cadastroQuarto = new CadastroQuarto();
+				cadastroQuarto.setDefaultCloseOperation(HIDE_ON_CLOSE);
 			}
 			abrirJanelas(cadastroQuarto);
 		} else if (nomeEvento.equals("mitem_cad_tipo_quarto")) {
 			if (cadastroTipoQuarto == null) {
 				cadastroTipoQuarto = new CadastroTipoQuarto();
+				cadastroTipoQuarto.setDefaultCloseOperation(HIDE_ON_CLOSE);
 			}
 			abrirJanelas(cadastroTipoQuarto);
 		}
 
 		// eventos de consultas
 		if (nomeEvento.equals("mitem_cons_funcionario")) {
-			if (consultaFuncionarios == null) {
-				consultaFuncionarios = new ConsultaFuncionarios();
+			if (consultaFuncionario == null) {
+				consultaFuncionario = new ConsultarFuncionario();
+				consultaFuncionario.setDefaultCloseOperation(HIDE_ON_CLOSE);
 			}
-			abrirJanelas(consultaFuncionarios);
+			abrirJanelas(consultaFuncionario);
 		} else if (nomeEvento.equals("mitem_cons_hospede")) {
-			if (consultarHospedes == null) {
-				consultarHospedes = new ConsultarHospedes();
+			if (consultaHospede == null) {
+				consultaHospede = new ConsultarHospede();
+				consultaHospede.setDefaultCloseOperation(HIDE_ON_CLOSE);
 			}
-			abrirJanelas(consultarHospedes);
+			abrirJanelas(consultaHospede);
 		} else if (nomeEvento.equals("mitem_cons_reserva")) {
-			if (consultarReservas == null) {
-				consultarReservas = new ConsultarReservas();
+			if (consultarReserva == null) {
+				consultarReserva = new ConsultarReserva();
+				consultarReserva.setDefaultCloseOperation(HIDE_ON_CLOSE);
 			}
-			abrirJanelas(consultarReservas);
+			abrirJanelas(consultarReserva);
 		} else if (nomeEvento.equals("mitem_cons_quarto")) {
 			if (consultarQuarto == null) {
 				consultarQuarto = new ConsultarQuarto();
+				consultarQuarto.setDefaultCloseOperation(HIDE_ON_CLOSE);
 			}
 			abrirJanelas(consultarQuarto);
 		} else if (nomeEvento.equals("mitem_cons_tipo_quarto")) {
 			if (consultarTipoQuarto == null) {
 				consultarTipoQuarto = new ConsultarTipoQuarto();
+				consultarTipoQuarto.setDefaultCloseOperation(HIDE_ON_CLOSE);
 			}
 			abrirJanelas(consultarTipoQuarto);
 		}

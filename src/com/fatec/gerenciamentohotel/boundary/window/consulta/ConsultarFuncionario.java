@@ -28,7 +28,7 @@ import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
 import src.com.fatec.gerenciamentohotel.entity.Endereco;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 
-public class ConsultaFuncionarios extends JInternalFrame
+public class ConsultarFuncionario extends JInternalFrame
 		implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtCpf;
@@ -68,7 +68,7 @@ public class ConsultaFuncionarios extends JInternalFrame
 	private JTable tblFuncionarios;
 	private List<Funcionario> funcionarios;
 
-	public ConsultaFuncionarios() {
+	public ConsultarFuncionario() {
 		setTitle("Consulta Funcionarios");
 		setClosable(true);
 		setIconifiable(true);
@@ -315,7 +315,7 @@ public class ConsultaFuncionarios extends JInternalFrame
 			new FuncionarioControl().alterarFuncionario(construirObjFuncionario());
 			atualizarModel();
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			dispose();
+			hide();
 		} else if (nomeEvento.equals("btn_buscar_cep")) {
 			Endereco end = new EnderecoControl().selectCep(txtCep.getText());
 			if (end != null) {

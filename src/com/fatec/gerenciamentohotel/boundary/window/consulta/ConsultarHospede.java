@@ -23,7 +23,7 @@ import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.control.HospedeControl;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
 
-public class ConsultarHospedes extends JInternalFrame
+public class ConsultarHospede extends JInternalFrame
 		implements ActionListener {
 	private static final long serialVersionUID = 2733433101749296723L;
 	private JTextField txtCpf;
@@ -61,7 +61,7 @@ public class ConsultarHospedes extends JInternalFrame
 	private JTable tblHospedes;
 	private List<Hospede> hospedes;
 
-	public ConsultarHospedes() {
+	public ConsultarHospede() {
 		setTitle("Consulta Hospedes");
 		setClosable(true);
 		setIconifiable(true);
@@ -292,7 +292,7 @@ public class ConsultarHospedes extends JInternalFrame
 				}
 			}
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			dispose();
+			hide();
 		} else if (nomeEvento.equals("btn_alterar")) {
 			atualizarModel();
 		} else if (nomeEvento.equals("btn_inativar")) {
