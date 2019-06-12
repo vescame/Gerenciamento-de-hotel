@@ -68,7 +68,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	private static Funcionario funcionarioLogado = null;
 
 	public MainWindow(Object logado) {
-		if (logado.getClass().toString().contains("Funcionario")) {
+		if (logado.getClass().equals(Funcionario.class)) {
 			MainWindow.funcionarioLogado = (Funcionario) logado;
 		} else {
 			MainWindow.hospedeLogado = (Hospede) logado;
