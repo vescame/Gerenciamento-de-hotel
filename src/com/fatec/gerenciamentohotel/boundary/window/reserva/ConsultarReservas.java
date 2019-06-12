@@ -230,7 +230,7 @@ public class ConsultarReservas extends JInternalFrame
 		return dias;
 	}
 
-	private void resertarTela() {
+	private void resetarTela() {
 		txtHospede.setEditable(true);
 		btnLimpar.setEnabled(false);
 		btnDeletar.setEnabled(false);
@@ -255,16 +255,7 @@ public class ConsultarReservas extends JInternalFrame
 			}
 			Reserva r = consultaLista(cpfHospede);
 			if (r != null) {
-				txtQuarto.setText(String.valueOf(r.getQuarto().getNumQuarto()));
-				txtCheckin.setText(new SimpleDateFormat("dd/MM/yyyy")
-						.format(r.getCheckIn()));
-				int dias = (int) diasDeReserva(r.getCheckIn());
-				txtDias.setText(String.valueOf(dias));
-				DecimalFormat df = new DecimalFormat("#0.00");
-				String valor = df.format(Double.valueOf(
-						r.getQuarto().getTipoDeQuarto().getValorDiaria()
-								* dias));
-				txtValor.setText(valor);
+				disporDadosNaTela(r);
 				txtHospede.setEditable(false);
 				btnLimpar.setEnabled(true);
 				btnDeletar.setEnabled(true);
@@ -279,14 +270,12 @@ public class ConsultarReservas extends JInternalFrame
 				if (r != null) {
 					r.setTotal(Float.valueOf(txtValor.getText()));
 					rc.update(r);
-					btnLimpar.setEnabled(false);
-					resertarTela();
-					txtHospede.setEditable(true);
+					resetarTela();
 					tblReservas.grabFocus();
 				}
 			}
 		} else if (nomeEvento.equals("btn_limpar")) {
-			resertarTela();
+			resetarTela();
 		} else if (nomeEvento.equals("btn_cancelar")) {
 			dispose();
 		} else if (nomeEvento.equals("btn_deletar")) {
@@ -299,9 +288,22 @@ public class ConsultarReservas extends JInternalFrame
 			}
 			Reserva r = consultaLista(cpfHospede);
 			new ReservaControl().deletarReserva(r.getId());
-			resertarTela();
+			resetarTela();
 			atualizarModel();
 		}
+	}
+	
+	private void disporDadosNaTela(Reserva r) {
+		txtQuarto.setText(String.valueOf(r.getQuarto().getNumQuarto()));
+		txtCheckin.setText(new SimpleDateFormat("dd/MM/yyyy")
+				.format(r.getCheckIn()));
+		int dias = (int) diasDeReserva(r.getCheckIn());
+		txtDias.setText(String.valueOf(dias));
+		DecimalFormat df = new DecimalFormat("#0.00");
+		String valor = df.format(Double.valueOf(
+				r.getQuarto().getTipoDeQuarto().getValorDiaria()
+						* dias));
+		txtValor.setText(valor);
 	}
 	
 	private Reserva consultaLista(String cpfHospede) {
