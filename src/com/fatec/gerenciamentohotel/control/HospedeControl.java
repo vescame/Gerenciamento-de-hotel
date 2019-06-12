@@ -11,10 +11,69 @@ import src.com.fatec.gerenciamentohotel.entity.Hospede;
 public class HospedeControl {
 
 	public void insert(Hospede h) {
+		try {
+			HospedeDAO hdao = new HospedeDAO();
+			hdao.insert(h);
+			userMessage("Hospede", "Hospede Cadastrado!",
+					JOptionPane.NO_OPTION);
+		} catch (DAOException e) {
+			userMessage("Hospede", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+	public Hospede selectCPF(String cpf) {
+		try {
+			HospedeDAO hdao = new HospedeDAO();
+			return hdao.select(cpf);
+		} catch (DAOException e) {
+			userMessage("Hospede", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
+	}
+	
+	public void alterarHospede(Hospede h) {
+		validarHospede(h);
+		try {
+			new HospedeDAO().update(h);
+			userMessage("Hospede", "Hospede alterado!",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (DAOException e) {
+			userMessage("Hospede", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+	public void inativarHospede(String cpf) {
+		try {
+			new HospedeDAO().delete(cpf);
+			userMessage("Hospede", "Funcionatio inativado!",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (DAOException e) {
+			userMessage("Funcionario", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+	}
+	
+	
+	public List<Hospede> selectTodos() {
+		try {
+			return new HospedeDAO().selectAll("");
+		} catch (DAOException e) {
+			userMessage("Hospede", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
+	}
+	
+	private void userMessage(String titulo, String mensagem, int errorType) {
+		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
+	}
+	
+	private void validarHospede(Hospede h) {
 		if (h.getEndereco() == null) {
-			userMessage("Erro", "Insira um EndereÃ§o valido",
-					JOptionPane.ERROR_MESSAGE);
-			return;
+			userMessage("Erro", "Endereço vazio", JOptionPane.ERROR_MESSAGE);
 		}
 		if (h.getCpf().trim().isEmpty()) {
 			userMessage("Erro", "CPF de hospede vazio", JOptionPane.ERROR_MESSAGE);
@@ -49,36 +108,5 @@ public class HospedeControl {
 				return;
 			}
 		}
-		try {
-			HospedeDAO hdao = new HospedeDAO();
-			hdao.insert(h);
-			userMessage("Hospede", "Hospede Cadastrado!", JOptionPane.WARNING_MESSAGE);
-		} catch (DAOException e) {
-			userMessage("Hospede", e.getMessage(), JOptionPane.WARNING_MESSAGE);
-		}
-	}
-
-	public Hospede selectCPF(String cpf) {
-		try {
-			HospedeDAO hdao = new HospedeDAO();
-			return hdao.select(cpf);
-		} catch (DAOException e) {
-			userMessage("Hospede", e.getMessage(), JOptionPane.WARNING_MESSAGE);
-		}
-		return null;
-	}
-
-	public List<Hospede> selectTodos() {
-		try {
-			return new HospedeDAO().selectAll("");
-		} catch (DAOException e) {
-			userMessage("Hospede", e.getMessage(),
-					JOptionPane.WARNING_MESSAGE);
-		}
-		return null;
-	}
-	
-	private void userMessage(String titulo, String mensagem, int errorType) {
-		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 }

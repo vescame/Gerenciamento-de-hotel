@@ -4,14 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
+import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
 import src.com.fatec.gerenciamentohotel.control.HospedeControl;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
 
@@ -277,27 +281,58 @@ public class ConsultarHospede extends JInternalFrame
 			if (!txtCpf.getText().trim().isEmpty()) {
 				Hospede h = new HospedeControl().selectCPF(txtCpf.getText());
 				if (h != null) {
-					txtNome.setText(h.getNome());
-					txtDataNasc.setText(new SimpleDateFormat("dd/MM/yyyy")
-							.format(h.getDataNascimento()));
-					txtCelular.setText(h.getCelular());
-					txtTelefone.setText(h.getTelefone());
-					txtEmail.setText(h.getEmail());
-					txtCep.setText(h.getEndereco().getCep());
-					txtRua.setText(h.getEndereco().getRua());
-					txtCidade.setText(h.getEndereco().getCidade());
-					txtBairro.setText(h.getEndereco().getBairro());
-					txtUf.setText(h.getEndereco().getUf());
-					txtNumero.setText(String.valueOf(h.getNumResidencia()));
+					disporHospedeEmTela(h);
+					txtCpf.setEnabled(false);
+					btnAlterar.setEnabled(true);
+					btnInativar.setEnabled(true);
 				}
 			}
 		} else if (nomeEvento.equals("btn_cancelar")) {
 			hide();
 		} else if (nomeEvento.equals("btn_alterar")) {
+			new HospedeControl().alterarHospede(construirObjHospede());
 			atualizarModel();
 		} else if (nomeEvento.equals("btn_inativar")) {
 			atualizarModel();
 		}
 	}
 
+	private void disporHospedeEmTela(Hospede h) {
+		txtNome.setText(h.getNome());
+		txtDataNasc.setText(new SimpleDateFormat("dd/MM/yyyy")
+				.format(h.getDataNascimento()));
+		txtCelular.setText(h.getCelular());
+		txtTelefone.setText(h.getTelefone());
+		txtEmail.setText(h.getEmail());
+		txtCep.setText(h.getEndereco().getCep());
+		txtRua.setText(h.getEndereco().getRua());
+		txtCidade.setText(h.getEndereco().getCidade());
+		txtBairro.setText(h.getEndereco().getBairro());
+		txtUf.setText(h.getEndereco().getUf());
+		txtNumero.setText(String.valueOf(h.getNumResidencia()));
+	}
+
+	private Hospede construirObjHospede() {
+		Hospede h = new Hospede();
+		
+		h.setCpf(txtCpf.getText());
+		h.setEndereco(new EnderecoControl().selectCep(txtCep.getText()));
+		h.setNome(txtNome.getText());
+		h.setTelefone(txtTelefone.getText());
+		h.setCelular(txtCelular.getText());
+		String strDate = txtDataNasc.getText();
+		Date nasc = null;
+		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			nasc = sdf.parse(strDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Formate a data, por favor.",
+					"Data inadequada", JOptionPane.ERROR_MESSAGE);
+		}
+		h.setEmail(txtEmail.getText());
+		h.setDataNascimento(nasc);
+		h.setStatus('A');
+		return h;
+	}
 }
