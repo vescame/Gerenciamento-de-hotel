@@ -45,6 +45,7 @@ public class ConsultarReservas extends JInternalFrame
 	private JButton btnLimpar;
 	private JButton btnCheckout;
 	private JButton btnBuscar;
+	private JButton btnDeletar;
 
 	private JTable tblReservas;
 	private DefaultTableModel dataModel;
@@ -135,7 +136,7 @@ public class ConsultarReservas extends JInternalFrame
 		});
 		JScrollPane scrollPane = new JScrollPane(tblReservas);
 		scrollPane.setVisible(true);
-		scrollPane.setBounds(0, 130, this.getWidth(), 138);
+		scrollPane.setBounds(0, 160, this.getWidth(), 140);
 		tblReservas.setFillsViewportHeight(true);
 		getContentPane().add(scrollPane);
 
@@ -152,11 +153,18 @@ public class ConsultarReservas extends JInternalFrame
 		getContentPane().add(btnCancelar);
 
 		btnLimpar = new JButton("Limpar");
-		btnLimpar.setBounds(450, 330, 115, 25);
+		btnLimpar.setBounds(400, 115, 115, 25);
 		btnLimpar.setActionCommand("btn_limpar");
 		btnLimpar.addActionListener(this);
 		btnLimpar.setEnabled(false);
 		getContentPane().add(btnLimpar);
+		
+		btnDeletar = new JButton("Deletar");
+		btnDeletar.setBounds(450, 330, 115, 25);
+		btnDeletar.setActionCommand("btn_deletar");
+		btnDeletar.addActionListener(this);
+		btnDeletar.setEnabled(false);
+		getContentPane().add(btnDeletar);
 	}
 
 	private void configurarDataModel() {
@@ -222,7 +230,10 @@ public class ConsultarReservas extends JInternalFrame
 		return dias;
 	}
 
-	private void limparCampos() {
+	private void resertarTela() {
+		txtHospede.setEditable(true);
+		btnLimpar.setEnabled(false);
+		btnDeletar.setEnabled(false);
 		txtHospede.setText("");
 		txtDias.setText("");
 		txtQuarto.setText("");
@@ -242,7 +253,7 @@ public class ConsultarReservas extends JInternalFrame
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			Reserva r = new ReservaControl().selectReserva(cpfHospede);
+			Reserva r = consultaLista(cpfHospede);
 			if (r != null) {
 				txtQuarto.setText(String.valueOf(r.getQuarto().getNumQuarto()));
 				txtCheckin.setText(new SimpleDateFormat("dd/MM/yyyy")
@@ -256,6 +267,7 @@ public class ConsultarReservas extends JInternalFrame
 				txtValor.setText(valor);
 				txtHospede.setEditable(false);
 				btnLimpar.setEnabled(true);
+				btnDeletar.setEnabled(true);
 			} else {
 				JOptionPane.showMessageDialog(this, "Nao ha reserva ativa",
 						"Reserva", JOptionPane.WARNING_MESSAGE);
@@ -268,17 +280,36 @@ public class ConsultarReservas extends JInternalFrame
 					r.setTotal(Float.valueOf(txtValor.getText()));
 					rc.update(r);
 					btnLimpar.setEnabled(false);
-					limparCampos();
+					resertarTela();
 					txtHospede.setEditable(true);
 					tblReservas.grabFocus();
 				}
 			}
 		} else if (nomeEvento.equals("btn_limpar")) {
-			txtHospede.setEditable(true);
-			btnLimpar.setEnabled(false);
-			limparCampos();
+			resertarTela();
 		} else if (nomeEvento.equals("btn_cancelar")) {
 			dispose();
+		} else if (nomeEvento.equals("btn_deletar")) {
+			final String cpfHospede = txtHospede.getText();
+			if (cpfVazio()) {
+				JOptionPane.showMessageDialog(this,
+						"CPF do hospede vazio, tente novamente.", "ERRO",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			Reserva r = consultaLista(cpfHospede);
+			new ReservaControl().deletarReserva(r.getId());
+			resertarTela();
+			atualizarModel();
 		}
+	}
+	
+	private Reserva consultaLista(String cpfHospede) {
+		for (Reserva rr : reservas) {
+			if ((rr.getHospede().getCpf().equals(cpfHospede)) && (rr.getStatus() == 'A')) {
+				return rr;
+			}
+		}
+		return null;
 	}
 }

@@ -54,7 +54,7 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 
 		scrollPane = new JScrollPane(tblQuartos);
 		scrollPane.setVisible(true);
-		scrollPane.setBounds(0, 0, getWidth(), getHeight() - 100);
+		scrollPane.setBounds(0, 0, this.getWidth(), (height - 100));
 		tblQuartos.setFillsViewportHeight(true);
 		getContentPane().add(scrollPane);
 

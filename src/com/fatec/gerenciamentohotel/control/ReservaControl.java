@@ -41,7 +41,15 @@ public class ReservaControl {
 			return rdao.select(cpfHospede);
 		} catch (DAOException e) {
 			userMessage("Reserva", e.getMessage(), JOptionPane.WARNING_MESSAGE);
-			return new Reserva();
+			return null;
+		}
+	}
+	
+	public void deletarReserva(long cpfHospede) {
+		try {
+			new ReservaDAO().delete(String.valueOf(cpfHospede));
+		} catch (DAOException e) {
+			userMessage("Reserva", e.getMessage(), JOptionPane.WARNING_MESSAGE);
 		}
 	}
 

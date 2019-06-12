@@ -160,8 +160,9 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 			PreparedStatement pstmt = con.prepareStatement(
 					" delete from reserva where id = ?");
 			pstmt.setLong(1, Long.parseLong(id));
-			ResultSet rs = pstmt.executeQuery();
-			if (!rs.rowDeleted()) {
+			int res = pstmt.executeUpdate();
+			final int resultadoInesperado = 0;
+			if (res == resultadoInesperado) {
 				throw new SQLException();
 			}
 		} catch (SQLException e) {
