@@ -120,4 +120,16 @@ public class HospedeDAO implements IObjectDAO<Hospede, String> {
 			throw new DAOException("Erro ao buscar Hospede");
 		}
 	}
+
+	@Override
+	public void update(Hospede h) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(String cpf) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
 }

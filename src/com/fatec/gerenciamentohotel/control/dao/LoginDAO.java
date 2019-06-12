@@ -4,17 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import src.com.fatec.gerenciamentohotel.control.connection.ConnectionDB;
 import src.com.fatec.gerenciamentohotel.control.dao.exceptions.DAOException;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
-import src.com.fatec.gerenciamentohotel.entity.Pessoa;
-import src.com.fatec.gerenciamentohotel.entity.dao.IObjectDAO;
 import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
 
-public class LoginDAO implements IObjectDAO<Pessoa, String> {
+public class LoginDAO {
 
 	public Hospede hospede(String cpf) throws DAOException {
 		return new HospedeDAO().select(cpf);
@@ -58,22 +55,5 @@ public class LoginDAO implements IObjectDAO<Pessoa, String> {
 			except.printStackTrace();
 			throw new DAOException("Erro ao buscar Login");
 		}
-	}
-
-	@Override
-	public List<Pessoa> selectAll(String docFuncionario) throws DAOException {
-		return null;
-	}
-
-	@Override
-	public Pessoa select(String obj) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void insert(Pessoa obj) throws DAOException {
-		// TODO Auto-generated method stub
-
 	}
 }

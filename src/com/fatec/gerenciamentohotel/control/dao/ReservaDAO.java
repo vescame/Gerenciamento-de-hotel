@@ -148,4 +148,26 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 		}
 	}
 
+	@Override
+	public void update(Reserva r) throws DAOException {
+		/* reserva nao e alterada */
+	}
+
+	@Override
+	public void delete(String id) throws DAOException {
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con.prepareStatement(
+					" delete from reserva where id = ?");
+			pstmt.setLong(1, Long.parseLong(id));
+			ResultSet rs = pstmt.executeQuery();
+			if (!rs.rowDeleted()) {
+				throw new SQLException();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("Registro nao pode ser deletado");
+		}
+	}
+
 }

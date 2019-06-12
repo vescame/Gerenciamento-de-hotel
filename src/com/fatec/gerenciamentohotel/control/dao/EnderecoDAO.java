@@ -69,4 +69,16 @@ public class EnderecoDAO implements IObjectDAO<Endereco, String> {
 		return null;
 	}
 
+	@Override
+	public void update(Endereco e) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(String cep) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

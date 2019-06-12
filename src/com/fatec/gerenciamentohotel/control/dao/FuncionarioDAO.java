@@ -134,4 +134,16 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 			throw new DAOException("Erro ao buscar funcionario");
 		}
 	}
+
+	@Override
+	public void update(Funcionario f) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(String cpf) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
 }

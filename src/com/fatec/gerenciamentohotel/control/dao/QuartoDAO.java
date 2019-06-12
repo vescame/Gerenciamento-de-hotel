@@ -120,4 +120,16 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 		}
 		return false;
 	}
+
+	@Override
+	public void update(Quarto q) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(String numQuarto) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
 }

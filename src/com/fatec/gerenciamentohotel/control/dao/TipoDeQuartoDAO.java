@@ -92,4 +92,16 @@ public class TipoDeQuartoDAO implements IObjectDAO<TipoDeQuarto, String> {
 			throw new DAOException("Erro ao buscar Tipo de Quarto");
 		}
 	}
+
+	@Override
+	public void update(TipoDeQuarto obj) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(String id) throws DAOException {
+		// TODO Auto-generated method stub
+		
+	}
 }
