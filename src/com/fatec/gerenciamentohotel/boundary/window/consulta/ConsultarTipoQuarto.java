@@ -242,10 +242,10 @@ public class ConsultarTipoQuarto extends JInternalFrame
 		} else if (nomeEvento.equals("btn_limpar")) {
 			resetarTela();
 		} else if (nomeEvento.equals("btn_alterar")) {
-			// new TipoDeQuartoControl().alterarTipoQuarto(construirObjTipoQuarto());
+			 new TipoDeQuartoControl().alterarTipoQuarto(construirObjTipoQuarto());
 			resetarTela();
 		} else if (nomeEvento.equals("btn_deletar")) {
-			// new TipoDeQuartoControl().alterarTipoQuarto(txtId.getText());
+			 new TipoDeQuartoControl().excluirTipoQuarto(txtId.getText());
 			resetarTela();
 			tblTipoQuartos.grabFocus();
 		} else if (nomeEvento.equals("btn_cancelar")) {

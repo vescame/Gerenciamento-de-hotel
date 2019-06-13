@@ -95,13 +95,40 @@ public class TipoDeQuartoDAO implements IObjectDAO<TipoDeQuarto, String> {
 
 	@Override
 	public void update(TipoDeQuarto obj) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con.prepareStatement("update tipo_quarto set preco = ?,"
+					+ " qtd_adultos = ?, qtd_criancas = ? where id = ?");
+			pstmt.setFloat(1, obj.getValorDiaria());
+			pstmt.setShort(2, obj.getQuantidadeAdultos());
+			pstmt.setShort(3, obj.getQuantidadeCriancas());
+			pstmt.setLong(4, obj.getId());
+			final int res = pstmt.executeUpdate();
+			final int resInesperado = 0;
+			if(res == resInesperado) {
+				throw new SQLException();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("Impossivel alterar Tipo de Quarto");
+		}
 	}
 
 	@Override
 	public void delete(String id) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con.prepareStatement("delete from tipo_quarto"
+					+ " where id = ?");
+			pstmt.setInt(1, Integer.parseInt(id));
+			final int res = pstmt.executeUpdate();
+			final int resInesperado = 0;
+			if(res == resInesperado) {
+				throw new SQLException();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("Impossivel exlcuir Tipo de Quarto");
+		}
 	}
 }

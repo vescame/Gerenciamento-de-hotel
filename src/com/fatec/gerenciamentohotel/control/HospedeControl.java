@@ -11,6 +11,7 @@ import src.com.fatec.gerenciamentohotel.entity.Hospede;
 public class HospedeControl {
 
 	public void insert(Hospede h) {
+		validarHospede(h);
 		try {
 			HospedeDAO hdao = new HospedeDAO();
 			hdao.insert(h);

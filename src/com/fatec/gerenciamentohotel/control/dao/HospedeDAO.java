@@ -140,11 +140,10 @@ public class HospedeDAO implements IObjectDAO<Hospede, String> {
 			pstmt.setInt(7, h.getNumResidencia());
 			pstmt.setString(8, h.getCpf());
 			final int res = pstmt.executeUpdate();
-			final int resInesperado = 0;{
+			final int resInesperado = 0;
 				if (res == resInesperado) {
 					throw new SQLException();
 				}
-			}
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
 			throw new DAOException("Impossivel alterar Hospede");

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
@@ -66,19 +67,69 @@ public class EnderecoDAO implements IObjectDAO<Endereco, String> {
 
 	@Override
 	public List<Endereco> selectAll(String cep) throws DAOException {
-		return null;
+		Endereco end;
+		List<Endereco> l = new ArrayList<>();
+		Connection con;
+		try {
+			con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con.prepareStatement("select * from endereco");
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.first()) {
+				do {
+					end = new Endereco();
+					end.setCep(rs.getString("cep"));
+					end.setBairro(rs.getString("bairro"));
+					end.setCidade(rs.getString("cidade"));
+					end.setRua(rs.getString("rua"));
+					end.setUf(rs.getString("uf"));
+					l.add(end);
+				} while (rs.next());
+				return l;
+			} else {
+				throw new DAOException("Nao ha enderecos");
+			}
+		} catch (SQLException e) {
+			throw new DAOException("Erro ao buscar endereco");
+		}
 	}
 
 	@Override
 	public void update(Endereco e) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con.prepareStatement("update endereco set rua = ?, bairro = ?,"
+					+ " cidade = ?, uf = ? where cep = ?");
+			pstmt.setString(1, e.getRua());
+			pstmt.setString(2, e.getBairro());
+			pstmt.setString(3, e.getCidade());
+			pstmt.setString(3, e.getUf());
+			pstmt.setString(4, e.getCep());
+			final int res = pstmt.executeUpdate();
+			final int resInesperado = 0;
+			if(res == resInesperado) {
+				throw new SQLException();			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			throw new DAOException("Impossivel alterar endereco");
+		}
 	}
 
 	@Override
 	public void delete(String cep) throws DAOException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Connection con = ConnectionDB.getInstance().getConnection();
+			PreparedStatement pstmt = con.prepareStatement("delete from endereco"
+					+ " where cep = ?");
+			pstmt.setString(1, cep);
+			final int res = pstmt.executeUpdate();
+			final int resInesperado = 0;
+			if(res == resInesperado) {
+				throw new SQLException();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DAOException("Impossivel excluir endereco");
+		}
 	}
 
 }

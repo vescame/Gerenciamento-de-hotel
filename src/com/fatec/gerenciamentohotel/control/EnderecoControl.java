@@ -1,5 +1,7 @@
 package src.com.fatec.gerenciamentohotel.control;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import src.com.fatec.gerenciamentohotel.control.dao.EnderecoDAO;
@@ -8,6 +10,64 @@ import src.com.fatec.gerenciamentohotel.entity.Endereco;
 
 public class EnderecoControl {
 	public void insert(Endereco e) {
+		validarEndereco(e);
+		try {
+			EnderecoDAO edao = new EnderecoDAO();
+			edao.insert(e);
+			userMessage("Endereco", "Endereco cadastrado!", JOptionPane.NO_OPTION);
+		} catch (DAOException ex) {
+			userMessage("Endereco", ex.getMessage(), JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+	public Endereco selectCep(String cep) {
+		try {
+			EnderecoDAO edao = new EnderecoDAO();
+			return edao.select(cep);
+		} catch (DAOException e) {
+			userMessage("Endereco", e.getMessage(), JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
+	}
+	
+	public List<Endereco> selectTodos(){
+		try {
+			return new EnderecoDAO().selectAll("");
+		} catch (DAOException e) {
+			userMessage("Endereco", e.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+		return null;
+	}
+	
+	public void alterarEndereco(Endereco e) {
+		validarEndereco(e);
+		try {
+			new EnderecoDAO().update(e);
+			userMessage("Endereco", "Endereco alterado!",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (DAOException ex) {
+			userMessage("Hospede", ex.getMessage(),
+					JOptionPane.WARNING_MESSAGE);
+		}
+	}
+	
+	public void excluirEndereco(String cep) {
+		try {
+			new EnderecoDAO().delete(cep);
+			userMessage("Endereco", "Endereco Excluido!",
+					JOptionPane.INFORMATION_MESSAGE);
+		} catch (DAOException e) {
+			userMessage("Endereco", e.getMessage(),
+					 JOptionPane.WARNING_MESSAGE);
+		}
+	}	
+
+	private void userMessage(String titulo, String mensagem, int errorType) {
+		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
+	}
+	
+	private void validarEndereco(Endereco e) {
 		if (e.getCep().trim().isEmpty()) {
 			userMessage("Erro", "Cep Vazio", JOptionPane.ERROR_MESSAGE);
 			return;
@@ -28,26 +88,5 @@ public class EnderecoControl {
 			userMessage("Erro", "UF Vazio", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		try {
-			EnderecoDAO edao = new EnderecoDAO();
-			edao.insert(e);
-			userMessage("Endereco", "Endereco cadastrado!", JOptionPane.NO_OPTION);
-		} catch (DAOException ex) {
-			userMessage("Endereco", ex.getMessage(), JOptionPane.WARNING_MESSAGE);
-		}
-	}
-
-	public Endereco selectCep(String cep) {
-		try {
-			EnderecoDAO edao = new EnderecoDAO();
-			return edao.select(cep);
-		} catch (DAOException e) {
-			userMessage("Endereco", e.getMessage(), JOptionPane.WARNING_MESSAGE);
-		}
-		return null;
-	}
-
-	private void userMessage(String titulo, String mensagem, int errorType) {
-		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 }
