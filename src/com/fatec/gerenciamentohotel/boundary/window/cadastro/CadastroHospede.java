@@ -57,10 +57,10 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 	private JButton btnCancelar;
 	private JButton btnCadastrar;
 	private JButton btnNovoEndereco;
-	private CadastroEndereco dialog;
 
 	private Endereco end = null;
-
+	private JDialog enderecoDialog = null;
+	
 	public CadastroHospede() {
 		setClosable(true);
 		setIconifiable(true);
@@ -241,11 +241,12 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 			h.setStatus('A');
 			new HospedeControl().insert(h);
 		} else if (nomeEvento.equals("btn_novo_endereco")) {
-			if (dialog == null) {
-				dialog = new CadastroEndereco();
+			if (enderecoDialog == null) {
+				enderecoDialog = new CadastroEndereco();
 			}
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
+			enderecoDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			enderecoDialog.setVisible(true);
+			enderecoDialog.requestFocus();
 		} else if (nomeEvento.equals("btn_buscar_endereco")) {
 			final String cep = txtCep.getText().trim();
 			if (!cep.equals("")) {

@@ -73,9 +73,9 @@ public class CadastroFuncionario extends JInternalFrame
 	private JButton btnCancelar;
 
 	private JComboBox<EFuncionario> cmbPermissoes;
-	private CadastroEndereco enderecoDialog;
 
 	private Endereco end = null;
+	private JDialog enderecoDialog = null;
 
 	public CadastroFuncionario() {
 		setTitle("Cadastro de Funcionarios");
@@ -287,6 +287,7 @@ public class CadastroFuncionario extends JInternalFrame
 			}
 			enderecoDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			enderecoDialog.setVisible(true);
+			enderecoDialog.requestFocus();
 		} else if (nomeEvento.equals("btn_cadastrar")) {
 			Funcionario f = new Funcionario();
 

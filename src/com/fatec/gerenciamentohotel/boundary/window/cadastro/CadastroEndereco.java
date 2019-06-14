@@ -21,7 +21,7 @@ import src.com.fatec.gerenciamentohotel.entity.Endereco;
 
 public class CadastroEndereco extends JDialog implements ActionListener {
 	private static final long serialVersionUID = -8951536181922325988L;
-	private JPanel contentPanel = new JPanel();
+	private JPanel contentPanel;
 	private JPanel panel;
 
 	private JLabel lblCep;
@@ -40,12 +40,15 @@ public class CadastroEndereco extends JDialog implements ActionListener {
 	private JButton btnCadastrar;
 
 	public CadastroEndereco() {
-		setResizable(false);
 		setTitle("Cadastro de Endereco");
 		setBounds(100, 100, 450, 235);
 		getContentPane().setLayout(new BorderLayout());
+		setResizable(false);
+
+		contentPanel = new JPanel();
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPanel.setVisible(true);
 		contentPanel.setLayout(null);
 
 		panel = new JPanel();
@@ -54,10 +57,12 @@ public class CadastroEndereco extends JDialog implements ActionListener {
 				new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true),
 						"Endereco", TitledBorder.LEFT, TitledBorder.TOP));
 		panel.setBounds(12, 12, 416, 153);
+		panel.setVisible(true);
 		contentPanel.add(panel);
 
 		lblCep = new JLabel("CEP:");
 		lblCep.setBounds(12, 22, 66, 15);
+		lblCep.setVisible(true);
 		panel.add(lblCep);
 
 		lblRua = new JLabel("Rua:");
@@ -133,7 +138,7 @@ public class CadastroEndereco extends JDialog implements ActionListener {
 
 			new EnderecoControl().insert(end);
 		} else if (nomeEvento.equals("btn_cancelar")) {
-			setVisible(false);
+			this.setVisible(false);
 		}
 
 	}

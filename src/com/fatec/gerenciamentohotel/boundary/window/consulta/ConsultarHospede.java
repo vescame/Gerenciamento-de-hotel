@@ -27,8 +27,7 @@ import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
 import src.com.fatec.gerenciamentohotel.control.HospedeControl;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
 
-public class ConsultarHospede extends JInternalFrame
-		implements ActionListener {
+public class ConsultarHospede extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = 2733433101749296723L;
 	private JTextField txtCpf;
 	private JTextField txtNome;
@@ -57,6 +56,7 @@ public class ConsultarHospede extends JInternalFrame
 	private JLabel lblUf;
 
 	private JButton btnBuscar;
+	private JButton btnLimpar;
 	private JButton btnAlterar;
 	private JButton btnInativar;
 	private JButton btnCancelar;
@@ -82,10 +82,16 @@ public class ConsultarHospede extends JInternalFrame
 		getContentPane().add(txtCpf);
 
 		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(225, 15, 114, 25);
+		btnBuscar.setBounds(220, 15, 100, 25);
 		btnBuscar.setActionCommand("btn_buscar");
 		btnBuscar.addActionListener(this);
 		getContentPane().add(btnBuscar);
+
+		btnLimpar = new JButton("Limpar");
+		btnLimpar.setBounds((btnBuscar.getX() + btnBuscar.getWidth()) + 25, btnBuscar.getY(), 100, 25);
+		btnLimpar.setActionCommand("btn_limpar");
+		btnLimpar.addActionListener(this);
+		getContentPane().add(btnLimpar);
 
 		lblNome = new JLabel("Nome:");
 		lblNome.setBounds(10, 50, 50, 13);
@@ -225,12 +231,14 @@ public class ConsultarHospede extends JInternalFrame
 		btnAlterar.setBounds(206, 472, 114, 25);
 		btnAlterar.setActionCommand("btn_alterar");
 		btnAlterar.addActionListener(this);
+		btnAlterar.setEnabled(false);
 		getContentPane().add(btnAlterar);
 
 		btnInativar = new JButton("Inativar");
 		btnInativar.setBounds(332, 472, 114, 25);
 		btnInativar.setActionCommand("btn_inativar");
 		btnInativar.addActionListener(this);
+		btnInativar.setEnabled(false);
 		getContentPane().add(btnInativar);
 	}
 
@@ -278,23 +286,42 @@ public class ConsultarHospede extends JInternalFrame
 	public void actionPerformed(ActionEvent e) {
 		final String nomeEvento = e.getActionCommand();
 		if (nomeEvento.equals("btn_buscar")) {
-			if (!txtCpf.getText().trim().isEmpty()) {
-				Hospede h = new HospedeControl().selectCPF(txtCpf.getText());
-				if (h != null) {
-					disporHospedeEmTela(h);
-					txtCpf.setEnabled(false);
-					btnAlterar.setEnabled(true);
-					btnInativar.setEnabled(true);
-				}
+			Hospede h = consultarLista(txtCpf.getText());
+			if (h != null) {
+				disporHospedeEmTela(h);
+				txtCpf.setEnabled(false);
+				btnAlterar.setEnabled(true);
+				btnInativar.setEnabled(true);
 			}
+		} else if (nomeEvento.equals("btn_limpar")) {
+			resetarTela();
 		} else if (nomeEvento.equals("btn_cancelar")) {
 			hide();
 		} else if (nomeEvento.equals("btn_alterar")) {
 			new HospedeControl().alterarHospede(construirObjHospede());
 			atualizarModel();
 		} else if (nomeEvento.equals("btn_inativar")) {
+			new HospedeControl().inativarHospede(txtCpf.getText());
 			atualizarModel();
 		}
+	}
+
+	private void resetarTela() {
+		txtCpf.setEnabled(true);
+		btnAlterar.setEnabled(false);
+		btnInativar.setEnabled(false);
+		txtCpf.setText("");
+		txtNome.setText("");
+		txtDataNasc.setText("");
+		txtCelular.setText("");
+		txtTelefone.setText("");
+		txtEmail.setText("");
+		txtNumero.setText("");
+		txtCep.setText("");
+		txtRua.setText("");
+		txtCidade.setText("");
+		txtBairro.setText("");
+		txtUf.setText("");
 	}
 
 	private void disporHospedeEmTela(Hospede h) {
@@ -314,7 +341,7 @@ public class ConsultarHospede extends JInternalFrame
 
 	private Hospede construirObjHospede() {
 		Hospede h = new Hospede();
-		
+
 		h.setCpf(txtCpf.getText());
 		h.setEndereco(new EnderecoControl().selectCep(txtCep.getText()));
 		h.setNome(txtNome.getText());
@@ -330,9 +357,19 @@ public class ConsultarHospede extends JInternalFrame
 			JOptionPane.showMessageDialog(this, "Formate a data, por favor.",
 					"Data inadequada", JOptionPane.ERROR_MESSAGE);
 		}
+		h.setNumResidencia(Integer.parseInt(txtNumero.getText()));
 		h.setEmail(txtEmail.getText());
 		h.setDataNascimento(nasc);
 		h.setStatus('A');
 		return h;
+	}
+
+	private Hospede consultarLista(String cpf) {
+		for (Hospede f : hospedes) {
+			if (f.getCpf().equals(cpf)) {
+				return f;
+			}
+		}
+		return null;
 	}
 }
