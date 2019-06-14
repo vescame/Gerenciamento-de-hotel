@@ -153,10 +153,15 @@ public class HospedeDAO implements IObjectDAO<Hospede, String> {
 	@Override
 	public void delete(String cpf) throws DAOException {
 		try {
+			Hospede f = select(cpf);
+			String ativarOuInativar = "I";
+			if (f.getStatus() == 'I') {
+				ativarOuInativar = "A";
+			}
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
 			pstmt = con.prepareStatement("update hospede set status = ? where cpf = ?");
-			pstmt.setString(1, "I");
+			pstmt.setString(1, ativarOuInativar);
 			pstmt.setString(2, cpf);
 			final int res = pstmt.executeUpdate();
 			final int resInesperado = 0;
