@@ -140,8 +140,14 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
 			pstmt = con.prepareStatement(
-					" update funcionario set cep = ?, nome = ?, telefone = ?, celular = ?, email = ?,"
-					+ "dat_nascimento = ?, num_residencia = ? where cpf = ?");
+					" update funcionario set cep = ?, "
+					+ "nome = ?,"
+					+ "telefone = ?, celular = ?,"
+					+ "email = ?,"
+					+ "dat_nascimento = ?,"
+					+ "num_residencia = ?,"
+					+ "login = ?, senha = ?,"
+					+ "tipo_funcionario = ? where cpf = ?");
 			pstmt.setString(1, f.getEndereco().getCep());
 			pstmt.setString(2, f.getNome());
 			pstmt.setString(3, f.getTelefone());
@@ -150,10 +156,12 @@ public class FuncionarioDAO implements IObjectDAO<Funcionario, String> {
 			DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			String nascString = sdf.format(f.getDataNascimento());
 			Date nasc = sdf.parse(nascString);
-			// f.setDataNascimento(nasc);
 			pstmt.setDate(6, new java.sql.Date(nasc.getTime()));
 			pstmt.setInt(7, f.getNumResidencia());
-			pstmt.setString(8, f.getCpf());
+			pstmt.setString(8, f.getLogin());
+			pstmt.setString(9, f.getSenha());
+			pstmt.setString(10, f.getTipoFuncionario().role);
+			pstmt.setString(11, f.getCpf());
 			final int res = pstmt.executeUpdate();
 			final int resInesperado = 0;
 			if (res == resInesperado) {
