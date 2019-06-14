@@ -59,7 +59,7 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 	private JButton btnNovoEndereco;
 
 	private Endereco end = null;
-	private JDialog enderecoDialog = null;
+	private JInternalFrame enderecoDialog = null;
 	
 	public CadastroHospede() {
 		setClosable(true);
@@ -243,8 +243,9 @@ public class CadastroHospede extends JInternalFrame implements ActionListener {
 		} else if (nomeEvento.equals("btn_novo_endereco")) {
 			if (enderecoDialog == null) {
 				enderecoDialog = new CadastroEndereco();
+				getParent().add(enderecoDialog);
 			}
-			enderecoDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			enderecoDialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 			enderecoDialog.setVisible(true);
 			enderecoDialog.requestFocus();
 		} else if (nomeEvento.equals("btn_buscar_endereco")) {

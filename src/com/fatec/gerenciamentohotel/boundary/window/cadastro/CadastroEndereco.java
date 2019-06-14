@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -19,7 +19,7 @@ import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
 import src.com.fatec.gerenciamentohotel.entity.Endereco;
 
-public class CadastroEndereco extends JDialog implements ActionListener {
+public class CadastroEndereco extends JInternalFrame implements ActionListener {
 	private static final long serialVersionUID = -8951536181922325988L;
 	private JPanel contentPanel;
 	private JPanel panel;
