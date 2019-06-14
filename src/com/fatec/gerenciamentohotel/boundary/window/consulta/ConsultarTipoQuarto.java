@@ -63,7 +63,7 @@ public class ConsultarTipoQuarto extends JInternalFrame
 		lblId.setBounds(10, 10, 60, 15);
 		lblId.setSize(150, lblId.getHeight());
 		getContentPane().add(lblId);
-		
+
 		lblDescricao = new JLabel("Descricao:");
 		lblDescricao.setBounds(10, 45, 65, 15);
 		lblDescricao.setSize(150, lblDescricao.getHeight());
@@ -86,19 +86,21 @@ public class ConsultarTipoQuarto extends JInternalFrame
 		txtId.setBounds(150, 7, 50, 25);
 		txtId.setDocument(new JTextFieldLimit(4));
 		getContentPane().add(txtId);
-		
+
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.setActionCommand("btn_buscar");
 		btnBuscar.addActionListener(this);
-		btnBuscar.setBounds((txtId.getX() + txtId.getWidth()) + 25, txtId.getY(), 114, 25);
+		btnBuscar.setBounds((txtId.getX() + txtId.getWidth()) + 25,
+				txtId.getY(), 114, 25);
 		getContentPane().add(btnBuscar);
-		
+
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.setActionCommand("btn_limpar");
 		btnLimpar.addActionListener(this);
-		btnLimpar.setBounds((btnBuscar.getX() + btnBuscar.getWidth()) + 25, txtId.getY(), 114, 25);
+		btnLimpar.setBounds((btnBuscar.getX() + btnBuscar.getWidth()) + 25,
+				txtId.getY(), 114, 25);
 		getContentPane().add(btnLimpar);
-		
+
 		txtDescricao = new JTextField();
 		txtDescricao.setBounds(150, 42, 200, 25);
 		txtDescricao.setDocument(new JTextFieldLimit(25));
@@ -157,7 +159,7 @@ public class ConsultarTipoQuarto extends JInternalFrame
 		btnDeletar.addActionListener(this);
 		btnDeletar.setBounds(370, buttonsY, 114, 25);
 		getContentPane().add(btnDeletar);
-		
+
 		if (MainWindow.getPessoaLogada().getClass().equals(Hospede.class)) {
 			new FiltroDeComponentes(btnAlterar, btnDeletar);
 		}
@@ -193,7 +195,7 @@ public class ConsultarTipoQuarto extends JInternalFrame
 			dataModel.removeRow(0);
 		}
 	}
-	
+
 	private void resetarTela() {
 		btnAlterar.setEnabled(false);
 		btnDeletar.setEnabled(false);
@@ -223,7 +225,8 @@ public class ConsultarTipoQuarto extends JInternalFrame
 		t.setQuantidadeAdultos(Short.parseShort(txtQtdDeAdultos.getText()));
 		t.setQuantidadeCriancas(Short.parseShort(txtQtdDeCriancas.getText()));
 		try {
-			t.setValorDiaria(Float.valueOf(txtValor.getText().replaceAll(",", ".")));
+			t.setValorDiaria(
+					Float.valueOf(txtValor.getText().replaceAll(",", ".")));
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "Valor invalido", "Erro Valor",
 					JOptionPane.ERROR_MESSAGE);
@@ -242,17 +245,18 @@ public class ConsultarTipoQuarto extends JInternalFrame
 		} else if (nomeEvento.equals("btn_limpar")) {
 			resetarTela();
 		} else if (nomeEvento.equals("btn_alterar")) {
-			 new TipoDeQuartoControl().alterarTipoQuarto(construirObjTipoQuarto());
+			new TipoDeQuartoControl()
+					.alterarTipoQuarto(construirObjTipoQuarto());
 			resetarTela();
 		} else if (nomeEvento.equals("btn_deletar")) {
-			 new TipoDeQuartoControl().excluirTipoQuarto(txtId.getText());
+			new TipoDeQuartoControl().excluirTipoQuarto(txtId.getText());
 			resetarTela();
 			tblTipoQuartos.grabFocus();
 		} else if (nomeEvento.equals("btn_cancelar")) {
 			hide();
 		}
 	}
-	
+
 	private void disposTipoQuartoEmTela(TipoDeQuarto q) {
 		txtId.setEnabled(false);
 		txtDescricao.setText(q.getDescricao());
@@ -260,13 +264,18 @@ public class ConsultarTipoQuarto extends JInternalFrame
 		txtQtdDeAdultos.setText(String.valueOf(q.getQuantidadeAdultos()));
 		txtQtdDeCriancas.setText(String.valueOf(q.getQuantidadeCriancas()));
 	}
-	
+
 	private TipoDeQuarto buscarEmLista(String id) {
-		long tq = Long.valueOf(id);
-		for (TipoDeQuarto q : tipoQuartos) {
-			if (q.getId() == tq) {
-				return q;
+		try {
+			final long tq = Long.valueOf(id);
+			for (TipoDeQuarto q : tipoQuartos) {
+				if (q.getId() == tq) {
+					return q;
+				}
 			}
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "Valor invalido", "ERRO",
+					JOptionPane.ERROR_MESSAGE);
 		}
 		return null;
 	}

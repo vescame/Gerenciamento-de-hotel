@@ -25,6 +25,7 @@ import javax.swing.text.MaskFormatter;
 import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
 import src.com.fatec.gerenciamentohotel.control.HospedeControl;
+import src.com.fatec.gerenciamentohotel.entity.Endereco;
 import src.com.fatec.gerenciamentohotel.entity.Hospede;
 
 public class ConsultarHospede extends JInternalFrame implements ActionListener {
@@ -57,6 +58,7 @@ public class ConsultarHospede extends JInternalFrame implements ActionListener {
 
 	private JButton btnBuscar;
 	private JButton btnLimpar;
+	private JButton btnBuscarCep;
 	private JButton btnAlterar;
 	private JButton btnInativar;
 	private JButton btnCancelar;
@@ -156,6 +158,12 @@ public class ConsultarHospede extends JInternalFrame implements ActionListener {
 		txtCep.setColumns(10);
 		txtCep.setBounds(60, 16, 130, 19);
 		panel.add(txtCep);
+		
+		btnBuscarCep = new JButton("Buscar CEP");
+		btnBuscarCep.setBounds(((txtCep.getX() + txtCep.getWidth()) + 50), 14, 115, 20);
+		btnBuscarCep.setActionCommand("btn_buscar_cep");
+		btnBuscarCep.addActionListener(this);
+		panel.add(btnBuscarCep);
 
 		lblRua = new JLabel("Rua:");
 		lblRua.setBounds(5, 45, 30, 13);
@@ -234,7 +242,7 @@ public class ConsultarHospede extends JInternalFrame implements ActionListener {
 		btnAlterar.setEnabled(false);
 		getContentPane().add(btnAlterar);
 
-		btnInativar = new JButton("Inativar");
+		btnInativar = new JButton("In/Ativar");
 		btnInativar.setBounds(332, 472, 114, 25);
 		btnInativar.setActionCommand("btn_inativar");
 		btnInativar.addActionListener(this);
@@ -303,6 +311,11 @@ public class ConsultarHospede extends JInternalFrame implements ActionListener {
 		} else if (nomeEvento.equals("btn_inativar")) {
 			new HospedeControl().inativarHospede(txtCpf.getText());
 			atualizarModel();
+		} else if (nomeEvento.equals("btn_buscar_cep")) {
+			Endereco end = new EnderecoControl().selectCep(txtCep.getText());
+			if (end != null) {
+				disporEnderecoEmTela(end);
+			}
 		}
 	}
 
@@ -337,6 +350,13 @@ public class ConsultarHospede extends JInternalFrame implements ActionListener {
 		txtBairro.setText(h.getEndereco().getBairro());
 		txtUf.setText(h.getEndereco().getUf());
 		txtNumero.setText(String.valueOf(h.getNumResidencia()));
+	}
+	
+	private void disporEnderecoEmTela(Endereco end) {
+		txtRua.setText(end.getRua());
+		txtBairro.setText(end.getBairro());
+		txtCidade.setText(end.getCidade());
+		txtUf.setText(end.getUf());
 	}
 
 	private Hospede construirObjHospede() {

@@ -10,12 +10,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -27,6 +30,7 @@ import src.com.fatec.gerenciamentohotel.control.EnderecoControl;
 import src.com.fatec.gerenciamentohotel.control.FuncionarioControl;
 import src.com.fatec.gerenciamentohotel.entity.Endereco;
 import src.com.fatec.gerenciamentohotel.entity.Funcionario;
+import src.com.fatec.gerenciamentohotel.entity.enums.EFuncionario;
 
 public class ConsultarFuncionario extends JInternalFrame
 		implements ActionListener {
@@ -43,6 +47,9 @@ public class ConsultarFuncionario extends JInternalFrame
 	private JTextField txtBairro;
 	private JTextField txtCidade;
 	private JTextField txtUf;
+	private JTextField txtLogin;
+	private JPasswordField txtPsswdSenha;
+	private JPasswordField txtPsswdConfirmarSenha;
 
 	private JLabel lblCpf;
 	private JLabel lblNome;
@@ -56,6 +63,10 @@ public class ConsultarFuncionario extends JInternalFrame
 	private JLabel lblBairro;
 	private JLabel lblCidade;
 	private JLabel lblUf;
+	private JLabel lblPermissoes;
+	private JLabel lblLogin;
+	private JLabel lblSenha;
+	private JLabel lblConfirmarSenha;
 
 	private JButton btnBuscar;
 	private JButton btnLimpar;
@@ -63,6 +74,8 @@ public class ConsultarFuncionario extends JInternalFrame
 	private JButton btnAlterar;
 	private JButton btnInativar;
 	private JButton btnCancelar;
+	
+	private JComboBox<EFuncionario> cmbPermissoes;
 
 	private DefaultTableModel dataModel;
 	private JTable tblFuncionarios;
@@ -73,7 +86,7 @@ public class ConsultarFuncionario extends JInternalFrame
 		setClosable(true);
 		setIconifiable(true);
 		setLayout(null);
-		setBounds(100, 100, 470, 540);
+		setBounds(30, 30, 480, 600);
 
 		lblCpf = new JLabel("CPF:");
 		lblCpf.setBounds(10, 20, 31, 13);
@@ -133,7 +146,7 @@ public class ConsultarFuncionario extends JInternalFrame
 		getContentPane().add(txtEmail);
 
 		lblDataNasc = new JLabel("Dat. Nasc.:");
-		lblDataNasc.setBounds(232, 107, 80, 19);
+		lblDataNasc.setBounds(232, 110, 80, 19);
 		getContentPane().add(lblDataNasc);
 
 		try {
@@ -148,7 +161,7 @@ public class ConsultarFuncionario extends JInternalFrame
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setToolTipText("");
-		panel.setBounds(10, 145, 435, 140);
+		panel.setBounds(10, 140, 435, 140);
 		getContentPane().add(panel);
 
 		lblCep = new JLabel("CEP:");
@@ -210,6 +223,43 @@ public class ConsultarFuncionario extends JInternalFrame
 		txtUf.setBounds(329, 104, 96, 19);
 		txtUf.setDocument(new JTextFieldLimit(2));
 		panel.add(txtUf);
+		
+		lblPermissoes = new JLabel("Permissoes:");
+		lblPermissoes.setBounds(10, 295, 98, 15);
+		getContentPane().add(lblPermissoes);
+		
+		cmbPermissoes = new JComboBox<>();
+		cmbPermissoes
+				.setModel(new DefaultComboBoxModel<>(EFuncionario.values()));
+		cmbPermissoes.setBounds(155, 292, 147, 25);
+		getContentPane().add(cmbPermissoes);
+
+		lblLogin = new JLabel("Login:");
+		lblLogin.setBounds(10, 325, 66, 15);
+		getContentPane().add(lblLogin);
+		
+		txtLogin = new JTextField();
+		txtLogin.setBounds(81, 322, 221, 25);
+		getContentPane().add(txtLogin);
+		txtLogin.setDocument(new JTextFieldLimit(15));
+
+		lblSenha = new JLabel("Senha:");
+		lblSenha.setBounds(10, 355, 66, 15);
+		getContentPane().add(lblSenha);
+		
+		txtPsswdSenha = new JPasswordField();
+		txtPsswdSenha.setBounds(81, 352, 98, 25);
+		txtPsswdSenha.setDocument(new JTextFieldLimit(15));
+		getContentPane().add(txtPsswdSenha);
+
+		lblConfirmarSenha = new JLabel("Confirmar Senha:");
+		lblConfirmarSenha.setBounds(188, 355, 147, 15);
+		getContentPane().add(lblConfirmarSenha);
+		
+		txtPsswdConfirmarSenha = new JPasswordField();
+		txtPsswdConfirmarSenha.setBounds(314, 352, 98, 25);
+		txtPsswdConfirmarSenha.setDocument(new JTextFieldLimit(15));
+		getContentPane().add(txtPsswdConfirmarSenha);
 
 		configurarDataModel();
 		tblFuncionarios = new JTable(dataModel);
@@ -227,25 +277,27 @@ public class ConsultarFuncionario extends JInternalFrame
 		});
 		JScrollPane scrollPane = new JScrollPane(tblFuncionarios);
 		scrollPane.setVisible(true);
-		scrollPane.setBounds(0, 300, getWidth(), 150);
+		scrollPane.setBounds(0, 390, getWidth(), 125);
 		tblFuncionarios.setFillsViewportHeight(true);
 		getContentPane().add(scrollPane);
 
+		final int btnsYPos = getHeight() - 75;
+		
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(10, 472, 114, 25);
+		btnCancelar.setBounds(10, btnsYPos, 114, 25);
 		btnCancelar.setActionCommand("btn_cancelar");
 		btnCancelar.addActionListener(this);
 		getContentPane().add(btnCancelar);
 
 		btnAlterar = new JButton("Alterar");
-		btnAlterar.setBounds(206, 472, 114, 25);
+		btnAlterar.setBounds(215, btnsYPos, 114, 25);
 		btnAlterar.setActionCommand("btn_alterar");
 		btnAlterar.addActionListener(this);
 		btnAlterar.setEnabled(false);
 		getContentPane().add(btnAlterar);
 
-		btnInativar = new JButton("Inativar");
-		btnInativar.setBounds(332, 472, 114, 25);
+		btnInativar = new JButton("In/Ativar");
+		btnInativar.setBounds(350, btnsYPos, 114, 25);
 		btnInativar.setActionCommand("btn_inativar");
 		btnInativar.addActionListener(this);
 		btnInativar.setEnabled(false);
@@ -337,6 +389,20 @@ public class ConsultarFuncionario extends JInternalFrame
 		txtCidade.setText(f.getEndereco().getCidade());
 		txtBairro.setText(f.getEndereco().getBairro());
 		txtUf.setText(f.getEndereco().getUf());
+		txtLogin.setText(f.getLogin());
+		cmbPermissoes.setSelectedIndex(ajustarComboBox(f.getTipoFuncionario()));
+		txtPsswdSenha.setText(f.getSenha());
+		txtPsswdConfirmarSenha.setText(f.getSenha());
+	}
+	
+	private int ajustarComboBox(EFuncionario ef) {
+		int cmbSize = cmbPermissoes.getItemCount();
+		for (int i = 0; i < cmbSize; ++i) {
+			if (cmbPermissoes.getItemAt(i).equals(ef)) {
+				return i;
+			}
+		}
+		return 0;
 	}
 	
 	private void disporEnderecoEmTela(Endereco end) {
@@ -359,6 +425,9 @@ public class ConsultarFuncionario extends JInternalFrame
 		txtCidade.setText("");
 		txtBairro.setText("");
 		txtUf.setText("");
+		txtLogin.setText("");
+		txtPsswdSenha.setText("");
+		txtPsswdConfirmarSenha.setText("");
 		txtCpf.setEnabled(true);
 		btnAlterar.setEnabled(false);
 		btnInativar.setEnabled(false);
@@ -391,9 +460,15 @@ public class ConsultarFuncionario extends JInternalFrame
 		} catch (NumberFormatException ex) {
 			f.setNumResidencia(0);
 		}
-		f.setLogin(consultarLista(f.getCpf()).getLogin());
-		f.setSenha(consultarLista(f.getCpf()).getSenha());
-		f.setTipoFuncionario(consultarLista(f.getCpf()).getTipoFuncionario());
+		f.setTipoFuncionario(EFuncionario.valueOf(cmbPermissoes.getSelectedItem().toString()));
+		f.setLogin(txtLogin.getText());
+		final String pswd = String.valueOf(txtPsswdSenha.getPassword());
+		final String confPswd = String.valueOf(txtPsswdConfirmarSenha.getPassword());
+		if (pswd.equals(confPswd)) {
+			f.setSenha(String.valueOf(txtPsswdSenha.getPassword()));
+		} else {
+			JOptionPane.showMessageDialog(this, "Senhas nao conferem", "Erro", JOptionPane.ERROR_MESSAGE);
+		}
 		return f;
 	}
 

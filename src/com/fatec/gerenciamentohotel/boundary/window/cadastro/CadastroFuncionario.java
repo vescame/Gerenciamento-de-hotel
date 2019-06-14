@@ -229,8 +229,7 @@ public class CadastroFuncionario extends JInternalFrame
 		txtCelular.setBounds(304, 47, 124, 25);
 		getContentPane().add(txtCelular);
 		txtCelular.setDocument(new JTextFieldLimit(15));
-
-		// txtData = new JTextField();
+		
 		try {
 			txtData = new JFormattedTextField(new MaskFormatter("##/##/####"));
 		} catch (ParseException e) {

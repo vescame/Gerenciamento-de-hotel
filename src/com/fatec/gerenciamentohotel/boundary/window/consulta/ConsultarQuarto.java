@@ -17,8 +17,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
-
 import src.com.fatec.gerenciamentohotel.boundary.utils.JTextFieldLimit;
 import src.com.fatec.gerenciamentohotel.boundary.window.MainWindow;
 import src.com.fatec.gerenciamentohotel.boundary.window.filtro_usuario.FiltroDeComponentes;
@@ -109,11 +107,12 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 		btnBuscar.addActionListener(this);
 		btnBuscar.setBounds(220, 7, 100, 25);
 		getContentPane().add(btnBuscar);
-		
+
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.setActionCommand("btn_limpar");
 		btnLimpar.addActionListener(this);
-		btnLimpar.setBounds((btnBuscar.getX() + btnBuscar.getWidth()) + 30, 7, 100, 25);
+		btnLimpar.setBounds((btnBuscar.getX() + btnBuscar.getWidth()) + 30, 7,
+				100, 25);
 		getContentPane().add(btnLimpar);
 
 		btnCancelar = new JButton("Cancelar");
@@ -135,7 +134,7 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 		btnInativar.setBounds(450, 278, 114, 25);
 		btnInativar.setEnabled(false);
 		getContentPane().add(btnInativar, BorderLayout.EAST);
-		
+
 		if (MainWindow.getPessoaLogada().getClass().equals(Hospede.class)) {
 			new FiltroDeComponentes(btnAlterar, btnInativar);
 		}
@@ -209,13 +208,13 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 			hide();
 		}
 	}
-	
+
 	private void disporDadosNaTela(Quarto q) {
 		txtNumeroQuarto.setText(String.valueOf(q.getNumQuarto()));
 		txtTipo.setText(String.valueOf(q.getTipoDeQuarto().getId()));
 		txtAndar.setText(String.valueOf(q.getAndar()));
 	}
-	
+
 	private void resetarTela() {
 		txtNumeroQuarto.setText("");
 		txtAndar.setText("");
@@ -226,24 +225,33 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 	}
 
 	private Quarto consultaLista(String numQuarto) {
-		for (Quarto q : quartos) {
-			try {
-				if (q.getNumQuarto() == Integer.parseInt(numQuarto)) {
+
+		try {
+			final short nQ = Short.parseShort(numQuarto);
+			for (Quarto q : quartos) {
+
+				if (q.getNumQuarto() == nQ) {
 					return q;
 				}
-			} catch (ParseException e) {
-				JOptionPane.showMessageDialog(this, "Erro ao consultar", "ERRO",
-						JOptionPane.ERROR_MESSAGE);
 			}
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "Valor invalido", "ERRO",
+					JOptionPane.ERROR_MESSAGE);
 		}
+
 		return null;
 	}
-	
+
 	private Quarto construirObjetoQuarto() {
 		Quarto q = new Quarto();
-		q.setNumQuarto(Short.valueOf(txtNumeroQuarto.getText()));
-		q.setAndar(Short.valueOf(txtAndar.getText()));
-		q.setTipoDeQuarto(new TipoDeQuartoControl().selectTipoQuarto(Long.parseLong(txtTipo.getText())));
+		try {
+			q.setNumQuarto(Short.valueOf(txtNumeroQuarto.getText()));
+			q.setAndar(Short.valueOf(txtAndar.getText()));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		q.setTipoDeQuarto(new TipoDeQuartoControl()
+				.selectTipoQuarto(Long.parseLong(txtTipo.getText())));
 		q.setDisponivel(true);
 		return q;
 	}
