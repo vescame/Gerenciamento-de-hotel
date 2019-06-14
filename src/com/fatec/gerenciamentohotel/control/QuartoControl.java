@@ -74,7 +74,7 @@ public class QuartoControl {
 			return false;
 		}
 		if (q.getAndar() == 0) {
-			userMessage("Erro", "O número do andar não pode ser \"0\"",
+			userMessage("Erro", "O numero do andar nao pode ser \"0\"",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

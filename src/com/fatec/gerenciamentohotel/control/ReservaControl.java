@@ -83,7 +83,7 @@ public class ReservaControl {
 			return false;
 		}
 		if (r.getHospede() == null) {
-			userMessage("Erro", "A reserva deve conter um hóspede valido",
+			userMessage("Erro", "A reserva deve conter um hospede valido",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

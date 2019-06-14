@@ -78,7 +78,7 @@ public class HospedeControl {
 	
 	private boolean validarHospede(Hospede h) {
 		if (h.getEndereco() == null) {
-			userMessage("Erro", "Endere�o vazio", JOptionPane.ERROR_MESSAGE);
+			userMessage("Erro", "Endereco vazio", JOptionPane.ERROR_MESSAGE);
 		}
 		if (h.getCpf().trim().isEmpty()) {
 			userMessage("Erro", "CPF de hospede vazio", JOptionPane.ERROR_MESSAGE);
