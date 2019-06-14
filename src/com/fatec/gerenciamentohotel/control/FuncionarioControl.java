@@ -64,7 +64,7 @@ public class FuncionarioControl {
 	public void inativarFuncionario(String cpf) {
 		try {
 			new FuncionarioDAO().delete(cpf);
-			userMessage("Funcionario", "Funcionario inativado!",
+			userMessage("Funcionario", "Funcionario In / Ativado!",
 					JOptionPane.INFORMATION_MESSAGE);
 		} catch (DAOException e) {
 			userMessage("Funcionario", e.getMessage(),

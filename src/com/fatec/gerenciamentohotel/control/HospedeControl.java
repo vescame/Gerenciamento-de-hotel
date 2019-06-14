@@ -53,7 +53,7 @@ public class HospedeControl {
 	public void inativarHospede(String cpf) {
 		try {
 			new HospedeDAO().delete(cpf);
-			userMessage("Hospede", "Hospede inativado!",
+			userMessage("Hospede", "Hospede In / Ativado!",
 					JOptionPane.INFORMATION_MESSAGE);
 		} catch (DAOException e) {
 			userMessage("Hospede", e.getMessage(),
