@@ -69,10 +69,9 @@ public class ReservaControl {
 	}
 	
 	private boolean validarCampos(Reserva r) {
-		boolean validados = false;
 		if (r.getCheckIn() == null) {
 			userMessage("Erro", "CheckIn Vazio", JOptionPane.ERROR_MESSAGE);
-			return validados;
+			return false;
 		}
 		// checkout pode ser null, assim validamos se esta ou não ativo o
 		if (r.getFuncionario() == null) {
@@ -81,30 +80,30 @@ public class ReservaControl {
 			// informacoes no banco
 			userMessage("Erro", "Funcionario Vazio, contate um administrador",
 					JOptionPane.ERROR_MESSAGE);
-			return validados;
+			return false;
 		}
 		if (r.getHospede() == null) {
 			userMessage("Erro", "A reserva deve conter um hóspede valido",
 					JOptionPane.ERROR_MESSAGE);
-			return validados;
+			return false;
 		}
 		if (r.getQuarto() == null) {
 			userMessage("Erro", "A reserva deve conter um quarto valido",
 					JOptionPane.ERROR_MESSAGE);
-			return validados;
+			return false;
 		}
 		if (r.getStatus() == Character.MIN_VALUE) {
 			userMessage("Erro", "Status Vazio", JOptionPane.ERROR_MESSAGE);
-			return validados;
+			return false;
 		} else if (r.getStatus() != 'A') {
 			if (r.getStatus() != 'I') {
 				userMessage("Status Incorreto",
 						"Status deve ser A (Ativo) ou I (Inativo)",
 						JOptionPane.ERROR_MESSAGE);
-				return validados;
+				return false;
 			}
 		}
-		validados = true;
-		return validados;
+
+		return true;
 	}
 }

@@ -11,7 +11,9 @@ import src.com.fatec.gerenciamentohotel.entity.TipoDeQuarto;
 public class TipoDeQuartoControl {
 
 	public void insert(TipoDeQuarto t) {
-		validarTipoDeQuarto(t);
+		if (!validarTipoDeQuarto(t)) {
+			return;
+		}
 		try {
 			TipoDeQuartoDAO tqdao = new TipoDeQuartoDAO();
 			tqdao.insert(t);
@@ -45,7 +47,9 @@ public class TipoDeQuartoControl {
 	}
 	
 	public void alterarTipoQuarto(TipoDeQuarto t) {
-		validarTipoDeQuarto(t);
+		if (!validarTipoDeQuarto(t)) {
+			return;
+		}
 		try {
 			new TipoDeQuartoDAO().update(t);
 			userMessage("Tipo de Quarto", "Tipo de Quarto alterado!",
@@ -71,20 +75,21 @@ public class TipoDeQuartoControl {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 	
-	private void validarTipoDeQuarto(TipoDeQuarto t) {
+	private boolean validarTipoDeQuarto(TipoDeQuarto t) {
 		if (t.getDescricao().trim().isEmpty()) {
 			userMessage("Erro", "Escolha um tipo de Quarto valido",
 					JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (t.getValorDiaria() == 0) {
 			userMessage("Erro", "Diaria Vazia", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (t.getQuantidadeAdultos() == 0) {
 			userMessage("Erro", "Quantidade Adultos nao pode ser \"0\"",
 					JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
+		return true;
 	}
 }

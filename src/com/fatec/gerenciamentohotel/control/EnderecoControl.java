@@ -10,7 +10,9 @@ import src.com.fatec.gerenciamentohotel.entity.Endereco;
 
 public class EnderecoControl {
 	public void insert(Endereco e) {
-		validarEndereco(e);
+		if (!validarEndereco(e)) {
+			return;
+		}
 		try {
 			EnderecoDAO edao = new EnderecoDAO();
 			edao.insert(e);
@@ -41,7 +43,9 @@ public class EnderecoControl {
 	}
 	
 	public void alterarEndereco(Endereco e) {
-		validarEndereco(e);
+		if (!validarEndereco(e)) {
+			return;
+		}
 		try {
 			new EnderecoDAO().update(e);
 			userMessage("Endereco", "Endereco alterado!",
@@ -67,26 +71,27 @@ public class EnderecoControl {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 	
-	private void validarEndereco(Endereco e) {
+	private boolean validarEndereco(Endereco e) {
 		if (e.getCep().trim().isEmpty()) {
 			userMessage("Erro", "Cep Vazio", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (e.getRua().trim().isEmpty()) {
 			userMessage("Erro", "Rua Vazia", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (e.getBairro().trim().isEmpty()) {
 			userMessage("Erro", "Bairro Vazio", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (e.getCidade().trim().isEmpty()) {
 			userMessage("Erro", "Cidade Vazia", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (e.getUf().trim().isEmpty()) {
 			userMessage("Erro", "UF Vazio", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
+		return true;
 	}
 }

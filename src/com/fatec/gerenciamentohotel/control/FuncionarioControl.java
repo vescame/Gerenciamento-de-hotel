@@ -11,7 +11,9 @@ import src.com.fatec.gerenciamentohotel.entity.Funcionario;
 public class FuncionarioControl {
 
 	public void novoFuncionario(Funcionario f) {
-		validarFuncionario(f);
+		if (!validarFuncionario(f)) {
+			return;
+		}
 		try {
 			FuncionarioDAO fdao = new FuncionarioDAO();
 			fdao.insert(f);
@@ -46,7 +48,9 @@ public class FuncionarioControl {
 	}
 
 	public void alterarFuncionario(Funcionario f) {
-		validarFuncionario(f);
+		if (!validarFuncionario(f)) {
+			return;
+		}
 		try {
 			new FuncionarioDAO().update(f);
 			userMessage("Funcionario", "Funcionario alterado!",
@@ -82,56 +86,57 @@ public class FuncionarioControl {
 		JOptionPane.showMessageDialog(null, mensagem, titulo, errorType);
 	}
 	
-	private void validarFuncionario(Funcionario f) {
+	private boolean validarFuncionario(Funcionario f) {
 		if (f.getEndereco() == null) {
 			userMessage("Erro", "Endereco vazio", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (f.getCpf().trim().isEmpty()) {
 			userMessage("Erro", "Cpf vazio", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (f.getNome().trim().isEmpty()) {
 			userMessage("Erro", "Nome vazio", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (f.getTelefone().trim().isEmpty()) {
 			userMessage("Erro", "Telefone vazio", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (f.getDataNascimento() == null) {
 			userMessage("Erro", "Data de Nascimento vazia",
 					JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (f.getLogin().trim().isEmpty()) {
 			userMessage("Erro", "Login vazio", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (f.getSenha().trim().isEmpty()) {
 			userMessage("Erro", "Senha vazia", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (f.getStatus() == Character.MIN_VALUE) {
 			userMessage("Erro", "Status vazio", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		} else if (f.getStatus() != 'A') {
 			if (f.getStatus() != 'I') {
 				userMessage("Status Incorreto",
 						"Status deve ser A (Ativo) ou I (Inativo)",
 						JOptionPane.ERROR_MESSAGE);
-				return;
+				return false;
 			}
 		}
 		if (f.getTipoFuncionario() == null) {
 			userMessage("Erro", "Tipo funcionario vazio",
 					JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (f.getNumResidencia() == 0) {
 			userMessage("Erro", "Numero da casa vazio",
 					JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
+		return true;
 	}
 }

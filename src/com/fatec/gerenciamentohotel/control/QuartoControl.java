@@ -11,7 +11,9 @@ import src.com.fatec.gerenciamentohotel.entity.Quarto;
 public class QuartoControl {
 
 	public void insert(Quarto q) {
-		validarQuarto(q);
+		if (!validarQuarto(q)) {
+			return;
+		}
 		try {
 			QuartoDAO qdao = new QuartoDAO();
 			qdao.insert(q);
@@ -32,7 +34,9 @@ public class QuartoControl {
 	}
 	
 	public void alterarQuarto(Quarto q) {
-		validarQuarto(q);
+		if (!validarQuarto(q)) {
+			return;
+		}
 		try {
 			new QuartoDAO().update(q);
 			userMessage("Quarto", "Quarto atualizado!",	JOptionPane.INFORMATION_MESSAGE);
@@ -59,21 +63,22 @@ public class QuartoControl {
 		return null;
 	}
 	
-	private void validarQuarto(Quarto q) {
+	private boolean validarQuarto(Quarto q) {
 		if (q.getNumQuarto() == 0) {
 			userMessage("Erro", "Numero do Quarto nao pode ser \"0\"",
 					JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (q.getTipoDeQuarto() == null) {
 			userMessage("Erro", "Tipo de Quarto Vazio", JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
 		if (q.getAndar() == 0) {
 			userMessage("Erro", "O número do andar não pode ser \"0\"",
 					JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
 		}
+		return true;
 	}
 	
 	private void userMessage(String titulo, String mensagem, int errorType) {
