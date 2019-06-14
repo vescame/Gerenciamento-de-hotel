@@ -80,10 +80,9 @@ public class QuartoDAO implements IObjectDAO<Quarto, String> {
 			if (rs.first()) {
 				do {
 					quar = new Quarto();
-					TipoDeQuartoControl tqc = new TipoDeQuartoControl();
+					
 					quar.setNumQuarto(rs.getInt("num_quarto"));
-					quar.setTipoDeQuarto(
-							tqc.selectTipoQuarto(rs.getInt("id_tipo_quarto")));
+					quar.setTipoDeQuarto(new TipoDeQuartoDAO().select(rs.getString("id_tipo_quarto")));
 					quar.setAndar(rs.getShort("andar"));
 					if (quartoDisponível(quar.getNumQuarto())) {
 						quar.setDisponivel(true);

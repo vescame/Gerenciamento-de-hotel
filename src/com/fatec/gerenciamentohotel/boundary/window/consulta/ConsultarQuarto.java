@@ -225,7 +225,6 @@ public class ConsultarQuarto extends JInternalFrame implements ActionListener {
 	}
 
 	private Quarto consultaLista(String numQuarto) {
-
 		try {
 			final short nQ = Short.parseShort(numQuarto);
 			for (Quarto q : quartos) {

@@ -222,13 +222,16 @@ public class ConsultarReserva extends JInternalFrame implements ActionListener {
 		this.reservas = new ReservaControl()
 				.selectHistoricoReservas(cpfHospede);
 		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		for (Reserva t : this.reservas) {
-			dataModel.addRow(new Object[] { t.getId(), t.getHospede().getCpf(),
-					sdf.format(t.getCheckIn()),
-					t.getCheckOut() != null ? sdf.format(t.getCheckOut())
-							: "NULL",
-					t.getQuarto().getTipoDeQuarto().getValorDiaria(),
-					t.getTotal(), t.getStatus() == 'A' ? "Ativo" : "Inativo" });
+		if (reservas != null) {
+			for (Reserva t : this.reservas) {
+				dataModel.addRow(new Object[] { t.getId(),
+						t.getHospede().getCpf(), sdf.format(t.getCheckIn()),
+						t.getCheckOut() != null ? sdf.format(t.getCheckOut())
+								: "NULL",
+						t.getQuarto().getTipoDeQuarto().getValorDiaria(),
+						t.getTotal(),
+						t.getStatus() == 'A' ? "Ativo" : "Inativo" });
+			}
 		}
 	}
 

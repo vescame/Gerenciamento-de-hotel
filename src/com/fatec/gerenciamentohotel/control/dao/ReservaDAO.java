@@ -30,8 +30,7 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 					&& r.getQuarto().isDisponivel();
 			if (!podeCadastrar) {
 				throw new DAOException(
-						"Já existe uma reserva ativa para o CPF:\n"
-								+ r.getHospede().getCpf());
+						"Já existe uma reserva ativa ou para o Quarto,\nou para o CPF informado.");
 			}
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt;
@@ -157,8 +156,8 @@ public class ReservaDAO implements IObjectDAO<Reserva, String> {
 	public void delete(String id) throws DAOException {
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
-			PreparedStatement pstmt = con.prepareStatement(
-					" delete from reserva where id = ?");
+			PreparedStatement pstmt = con
+					.prepareStatement(" delete from reserva where id = ?");
 			pstmt.setLong(1, Long.parseLong(id));
 			int res = pstmt.executeUpdate();
 			final int resultadoInesperado = 0;

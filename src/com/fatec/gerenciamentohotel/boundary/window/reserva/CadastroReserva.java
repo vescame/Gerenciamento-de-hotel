@@ -121,9 +121,12 @@ public class CadastroReserva extends JInternalFrame implements ActionListener {
 		} else if (nomeEvento.equals("btn_buscar_quarto")) {
 			q = new QuartoControl()
 					.selectNumQuarto(Long.parseLong(textFieldQuarto.getText()));
-			if (q != null) {
+			if (q != null && q.isDisponivel()) {
 				JOptionPane.showMessageDialog(null, "Quarto OK", "Informativo",
 						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "Quarto Ja esta sendo utilizado", "Erro",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (nomeEvento.equals("btn_dat_checkin")) {
 			textFieldCheckIn.setText(String.valueOf(
