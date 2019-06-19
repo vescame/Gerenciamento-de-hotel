@@ -23,7 +23,7 @@ public class LoginDAO {
 		try {
 			Connection con = ConnectionDB.getInstance().getConnection();
 			PreparedStatement pstmt = con.prepareStatement(
-					"select * from funcionario where login = ? and senha = ? and status = \"A\"");
+					"select * from funcionario where login = ? and senha = ? and status = 'A'");
 			pstmt.setString(1, login);
 			pstmt.setString(2, senha);
 			ResultSet rs = pstmt.executeQuery();

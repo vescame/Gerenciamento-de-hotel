@@ -47,7 +47,7 @@ public class LoginWindow extends JFrame implements ActionListener {
 		panelFuncionarios = new JPanel();
 		panelFuncionarios.setBorder(new TitledBorder(
 				new LineBorder(new Color(0, 0, 0), 1, true), "Funcionarios",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, TitledBorder.TOP));
 		getContentPane().add(panelFuncionarios);
 		panelFuncionarios.setLayout(null);
 
@@ -77,7 +77,7 @@ public class LoginWindow extends JFrame implements ActionListener {
 		panelClientes = new JPanel();
 		panelClientes.setBorder(new TitledBorder(
 				new LineBorder(new Color(0, 0, 0), 1, true), "Hospedes",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+				TitledBorder.LEADING, TitledBorder.TOP));
 		getContentPane().add(panelClientes);
 		panelClientes.setLayout(null);
 
